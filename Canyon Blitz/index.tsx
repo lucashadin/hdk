@@ -1,7 +1,6 @@
 import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel, useRandom } from '@hiber3d/hdk-react';
 import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition,RandomTilt, Spawnpoint } from '@hiber3d/hdk-react-components';
-import { ComponentBaseProps } from "../types/ComponentBase";
-import { MaterialId } from "../types/Material";
+
 
 
 // type Props = {
