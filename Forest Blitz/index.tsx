@@ -114,8 +114,8 @@ const TippingRocks: HDKComponent<TippingRocksProps> = ({ rx = 0, ...props }) => 
 const GroundGroup = () => (
   <HNode>
     {/* <Ground hilly={0.5} y=s{-0.5} material="t_sand_01" water="True" repeatX={1} repeatZ={1} /> */}
-    <Ground hilly={0} material="t_sand_01" scaleX={0.2} scaleZ={0.075} repeatX={1} repeatZ={1} />
-    <Ground hilly={10} y={40} rotZ={180} scaleX={5} scaleZ={5} material="t_bark_02" repeatX={1} repeatZ={1} />
+    <Ground hilly={0} material="t_sand_01" scaleX={0.2} scaleZ={0.2} repeatX={1} repeatZ={1} />
+    {/* <Ground hilly={10} y={40} rotZ={180} scaleX={5} scaleZ={5} material="t_bark_02" repeatX={1} repeatZ={1} /> */}
   </HNode>
 )
 
@@ -124,14 +124,11 @@ const ValleyWalls = () => {
   return (
   <Path
     showPoints={false}
-    numberOfItems={50}
+    numberOfItems={100}
     tension={0.8}
     points={[
-      [10, 0, 10],
-      [90, 0, 40],
-      [40, 0, 130],
-      [180, 0, 180],
-      [290, 0, 130]
+      [45, 0, 30], [45, 0, 99], [75, 0, 171], [126, 0, 207], [165, 0, 240], [216, 0, 273], [297, 0, 270], [363, 0, 240], [390, 0, 168], [348, 0, 96], [288, 0, 87], [246, 0, 111], [192, 0, 159], [159, 0, 207], [117, 0, 240], [96, 0, 288], [87, 0, 345], [90, 0, 414], [84, 0, 477], [105, 0, 519], [144, 0, 537], [201, 0, 525], [255, 0, 507], [294, 0, 504], [342, 0, 483], [393, 0, 483], [441, 0, 507], [441, 0, 573], [408, 0, 624], [339, 0, 657], [252, 0, 633], [249, 0, 591], [249, 0, 546], [243, 0, 456], [255, 0, 408], [306, 0, 378], [366, 0, 372], [450, 0, 369]
+
 
 
       // [400, 0, 300],
@@ -142,7 +139,7 @@ const ValleyWalls = () => {
 
     renderItem={step => {
       console.log(step.rotation[1])
-      if(step.position[0] >30 && step.position[0] < 38){
+      if(step.position[0] >125 && step.position[0] < 140){
         return null
       }
       return (
@@ -152,6 +149,7 @@ const ValleyWalls = () => {
             id="cliff_01_wall"
             material="t_rock_02"
             scaleY={3}
+            scaleZ={3}
             rotY={90}
             x={-15}
           // scale={0.5 + Math.sin(step.progress * Math.PI) * 1}
@@ -161,6 +159,7 @@ const ValleyWalls = () => {
             id="cliff_01_wall"
             material="t_rock_02"
             scaleY={3}
+            scaleZ={3}
             rotY={90}
             x={15}
           // scale={0.5 + Math.sin(step.progress * Math.PI) * 1}
@@ -168,8 +167,8 @@ const ValleyWalls = () => {
           />
 
           <GroundGroup />
-          <PlantsDecoration />
-          <RocksDecoration />
+          {/* <PlantsDecoration /> */}
+          {/* <RocksDecoration /> */}
 
 
 
@@ -348,18 +347,18 @@ const WelcomeSign: HDKComponent = props => (
 
 const World = () => (
   <HNode>
-    <Spawnpoint y={0} x={-5} z={8.7} rotY={-90} />
+    <Spawnpoint x={39.2} y={4.8} z={25.8} rotY={-90} />
     <ValleyWalls/>
     <Goal />
-    <Treehouse />
-    <MossyMound />
-    <WelcomeSign x={-0.5} y={0.4} z={6} rotY={-90} />
+    {/* <Treehouse /> */}
+    {/* <MossyMound /> */}
+    {/* <WelcomeSign x={-0.5} y={0.4} z={6} rotY={-90} /> */}
 
 
   </HNode >
 );
 
-render(<World />, { environment: 'hiberpunk_smog_01' });
+render(<World />, { environment: 'midday_clear_01' });
 
 // questions
 // two prefabs in one step
