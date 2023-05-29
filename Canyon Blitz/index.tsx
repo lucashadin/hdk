@@ -314,6 +314,24 @@ const MossyMound = () => (
     }}></Path>
 )
 
+const PythonPath = () => (
+<Path
+  points={[
+    [0, 0, 0],
+    [30, 0, 0],
+    [20, 20, 40],
+    [30, 0, 80],
+  ]}
+  numberOfItems={50}
+  renderItem={() => (
+    <>
+      <Prefab id="cube_01" />
+      {/* <Prefab id="gpl_booster_plate_01" y={3} rotY={-180} /> */}
+    </>
+  )}
+/>
+)
+
 
 const WelcomeSign: HDKComponent = props => (
   <InfoPanel

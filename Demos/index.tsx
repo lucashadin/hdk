@@ -5,6 +5,7 @@ import {
   Distribute,
   Ground,
   Orbiting,
+  Path,
   RandomTilt,
   Room,
   Spawnpoint,
@@ -74,16 +75,39 @@ const Building: HDKComponent = props => {
   );
 };
  
+
+const PythonPath: HDKComponent = props => (
+  <Path
+  {...props}
+    points={[
+      [57, 0, 45], [57, 0, 96], [66, 0, 156], [120, 0, 195], [177, 0, 216], [234, 0, 189], [285, 0, 132], [261, 0, 45], [216, 0, 33], [180, 0, 54], [150, 0, 108], [129, 0, 156], [102, 0, 231], [96, 0, 282], [105, 0, 357], [120, 0, 405], [153, 0, 432], [198, 0, 453], [261, 0, 462], [312, 0, 462], [375, 0, 435], [411, 0, 342], [393, 0, 282], [339, 0, 273], [300, 0, 297], [261, 0, 360], [240, 0, 411], [225, 0, 474], [222, 0, 531], [222, 0, 579], [243, 0, 606], [270, 0, 639], [315, 0, 666], [366, 0, 684], [417, 0, 678], [474, 0, 651], [531, 0, 609], [573, 0, 537]
+
+
+    ]}
+    numberOfItems={100}
+    tension={0.8}
+    showPoints={true}
+    renderItem={() => (
+      <>
+        <Prefab id="cube_01" scaleZ={10}/>
+        {/* <Prefab id="gpl_booster_plate_01" y={3} rotY={-180} /> */}
+      </>
+    )}
+  />
+  )
+  
+
 const World = () => (
   <HNode>
-    <Foliage y={-1.5} />
+    {/* <Foliage y={-1.5} /> */}
     {/* <OrbitingAsteroids y={20} /> */}
-    <Building y={0} z={20} />
+    {/* <Building y={0} z={20} /> */}
     <Spawnpoint />
-    <Ground hilly={0} material="t_gore_01" />
-    <Ground hilly={0} material="t_swamp_ground" water={true} y={-1}/>
-    <Ground hilly={30} y={45} rotZ={180} material="t_cobble_stone_01" />
+    <PythonPath y={1}/>
+    <Ground hilly={0} material="t_grass_01" />
+    {/* <Ground hilly={0} material="t_swamp_ground" water={true} y={-1}/> */}
+    {/* <Ground hilly={30} y={45} rotZ={180} material="t_cobble_stone_01" /> */}
   </HNode>
 );
  
-render(<World />, { environment: 'sunrise_01' });
+render(<World />, { environment: 'midday_clear_01' });
