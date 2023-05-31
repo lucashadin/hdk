@@ -1,5 +1,5 @@
 import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel, useRandom } from '@hiber3d/hdk-react';
-import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging } from '@hiber3d/hdk-react-components';
+import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound } from '@hiber3d/hdk-react-components';
 
 
 
@@ -115,10 +115,33 @@ const TippingRocks: HDKComponent<TippingRocksProps> = ({ rx = 0, ...props }) => 
 const GroundGroup = () => (
   <HNode>
     {/* <Ground hilly={0.5} y=s{-0.5} material="t_sand_01" water="True" repeatX={1} repeatZ={1} /> */}
-    <Ground hilly={0.0} material="t_bark_01" scaleX={0.2} scaleZ={0.1} repeatX={1} repeatZ={1} />
+    <Ground hilly={0.0} material="t_bark_01" scaleY = {3} scaleX={0.2} scaleZ={0.1} repeatX={1} repeatZ={1} />
     {/* <Ground hilly={10} y={40} rotZ={180} scaleX={5} scaleZ={5} material="t_bark_02" repeatX={1} repeatZ={1} /> */}
   </HNode>
 )
+
+const InvisibleCollectible: HDKComponent = props => {
+
+
+  return (
+    <HNode
+      {...props}
+      engineProps={{
+        rendering: {
+          materialID: "rock_cube_01_t2",
+          meshID: "en_p_trampled_path_01",
+        },
+        collectible: {
+          type: "MANDATORY",
+          grabbingRadius: 40,
+        }
+      }}
+    />
+
+  )
+}
+
+
 
 const Sides: HDKComponent = props => {
   const random = useRandom()
@@ -224,7 +247,7 @@ const ValleyWalls = () => {
 
             )}
 
-            {step.index % 10 === 1 && step.index > 20 && (
+            {/* {step.index % 10 === 1 && step.index > 20 && (
 
               <Prefab
                 id="flag_01"
@@ -234,7 +257,7 @@ const ValleyWalls = () => {
                 scale={5}
               />
 
-            )}
+            )} */}
 
             {step.index % 15 == 0 && step.index > 10 && (
               <>
@@ -246,7 +269,7 @@ const ValleyWalls = () => {
                     // rotY={90} 
                     x={-8}
                     scale={4}
-                    
+
                   />
                 </Animation>
 
@@ -268,13 +291,7 @@ const ValleyWalls = () => {
 
             {step.index % 50 === 1 && step.index > 20 && (
 
-              <Prefab
-                id="checkpoint_01"
-                // material='t_rainbow_02'
-                y={0}
-                rotY={90}
-                scale={5}
-              />
+              <InvisibleCollectible />
 
             )}
 
@@ -328,6 +345,8 @@ const WelcomeSign: HDKComponent = props => (
   </InfoPanel>
 )
 
+
+
 const World = () => (
   <HNode>
     <Spawnpoint x={72.2} y={0.0} z={56.5} rotY={-120} />
@@ -336,12 +355,16 @@ const World = () => (
     {/* <Treehouse /> */}
     <GoalDecoration />
     <WelcomeSign x={74.4} y={0.0} z={57.5} rotY={-90} />
+    <OmnipresentSound id="a_am_raven_forest_01" volume={1}/>
+    <OmnipresentSound id="a_mu_creepy_hallow_01" volume={1}/>
+    <OmnipresentSound id="a_mu_ancient_rite_01" volume={0.5}/>
+
 
 
   </HNode >
 );
 
-render(<World />, { environment: 'midday_01' });
+render(<World />, { environment: 'hiberpunk_smog_01' });
 
 // questions
 // two prefabs in one step
