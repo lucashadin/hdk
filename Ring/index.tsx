@@ -1,31 +1,13 @@
 import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel, useRandom } from '@hiber3d/hdk-react';
-import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound, Orbiting, Spinning } from '@hiber3d/hdk-react-components';
+import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound, Orbiting, Spinning, Portal } from '@hiber3d/hdk-react-components';
 
 
 
 
 
-type TippingRocksProps = {
-  rx?: number;
-  zc?: number;
-};
 
-const TippingRocks: HDKComponent<TippingRocksProps> = ({ rx = 0, ...props }) => (
-  <Animation
-    {...props}
-    animation={{
-      x: [0, 0],
-      y: [0, 0],
-      z: [0, 5],
-      rotX: [0, 90],
-      duration: 5,
-      loop: 'REVERSE',
-      easing: 'EASE_IN_CUBIC',
-    }}
-  >
-    <Prefab id="neon_sign_03" />
-  </Animation>
-);
+
+
 
 const GroundGroup = () => (
   <HNode>
@@ -135,8 +117,7 @@ const ValleyWalls = () => {
 
 
             <GroundGroup />
-            {/* <PlantsDecoration /> */}
-            {/* <RocksDecoration /> */}
+
 
 
 
@@ -158,10 +139,11 @@ const ValleyWalls = () => {
 
 
 
-            {step.index % 10 === 1 && step.index > 20 && (
-
-              <TippingRocks x={-10} y={5} rotY={90} scale={2} />
-
+            {step.index % 1 === 0 && (
+              <>
+                <BoopingWalls />
+                <GetToTheGoal />
+              </>
             )}
 
             {/* {step.index % 10 === 1 && step.index > 20 && (
@@ -213,11 +195,18 @@ const ValleyWalls = () => {
 
             )}
 
-            {step.index % 15 === 1 && (
+            {/* {step.index % 15 === 1 && (
+              <Prefab
+                    id="collectible_heart_01"
+                    // material='t_rainbow_02'
+                    y={0}
+                    rotX={90}
+                    x={8}
+                    scale={5}
+                  />
+              
 
-              <TippingRocks x={10} y={5} rotY={-90} scale={2} />
-
-            )}
+            )} */}
 
           </HNode>
         )
@@ -225,54 +214,214 @@ const ValleyWalls = () => {
   )
 }
 
-const Goal: HDKComponent = props => {
-  return (
-    <>
-  <Animation animation={{
-    x: [0, 0, 0, 0],
-    y: [-30, -30, 0, 0],
-    rotY: [0, 0, 0, 0],
-    scale: [1, 1, 1, 1],
-    steps: [0, 5, 6, 7],
-    // duration: 3,
-    loop: 'RESTART',
-    easing: 'EASE_IN_OUT_CUBIC',
-  }}>
-  <HNode>
-    <Prefab
-      id="goal_01"
-      material="t_rainbow_02"
-      scale={5}
-      x={120.5} y={0} z={151.1}
-      />
-    <Prefab
-      id="fx_particlesystem_fireworks_01"
-      material="t_rainbow_02"
-      scale={1}
-      x={120.5} y={0} z={151.1}
-/> 
+const BoopingWalls: HDKComponent = props => {
+  const random = useRandom();
+  var addToSteps = random.range(1, 20);
+  var stepsInput = [0, 2, 8, 11, 12];
 
-</HNode>
-</Animation>
-</>
+
+  return (
+    <Animation animation={{
+      x: [0, 2, 0, 30, 35],
+      y: [0, 0, 0, 0, 0],
+      rotY: [0, 0, 0, 0, 0],
+      // scale: [1, 1, 1, 1, 0],
+      scaleX: [1, 1, 1, 1, 0.05],
+      scaleY: [1, 1, 1, 1, 0.05],
+      scaleZ: [1, 1, 1, 1, 0.05],
+      steps: stepsInput.map(num => num + addToSteps),
+      // duration: 3,
+      loop: 'RESTART',
+      easing: 'EASE_IN_CUBIC',
+    }}>
+      <Prefab
+        id="plastic_wall_01"
+        material='t_neon_red_01'
+        y={-1}
+        // rotY={90} 
+        x={-10}
+        scaleX={2}
+        scaleZ={3}
+        scaleY={3}
+        rotY={90}
+
+      />
+    </Animation>
+
+  )
+}
+
+
+const GetToTheGoal: HDKComponent = props => {
+  return (
+    <Animation animation={{
+      x: [0, 5, 5, 0, 0],
+      y: [0, 0, 0, 0, 0],
+      rotY: [0, 0, 0, 0, 0],
+      // scale: [1, 1, 1, 1, 0],
+      scaleX: [1, 1, 1, 1, 1],
+      scaleY: [1, 1, 1, 1, 1],
+      scaleZ: [1, 1, 1, 1, 1],
+      steps: [0, 12, 14, 16, 60],
+      // duration: 3,
+      loop: 'RESTART',
+      easing: 'EASE_IN_CUBIC',
+    }}>
+      <Prefab
+        id="hovering_sign_02"
+        // material='t_neon_red_01'
+        y={14}
+        // rotY={90} 
+        x={-10}
+        scaleX={2}
+        scaleZ={2}
+        scaleY={2}
+        rotY={90}
+
+      />
+    </Animation>
+
   )
 }
 
 
 
 
+const Goal: HDKComponent = props => {
+  return (
+    <>
+    
+      <Animation animation={{
+        x: [0, 0, 0, 0],
+        y: [0, 0, 0, 0],
+        rotY: [0, 0, 0, 0],
+        // scale: [1, 1, 1, 1],
+        scaleX: [1, 1, 1, 1],
+        steps: [0, 15, 40, 60],
+        // duration: 3,
+        loop: 'RESTART',
+        easing: 'EASE_IN_OUT_CUBIC',
+      }}>
+        <HNode x={114.2} y={40} z={91.3}>
+          <Prefab
+            id="goal_01"
+            material="t_neon_red_01"
+            scale={1}
+            x={0} y={0} z={0}
+          />
+          <Animation animation={{
+        x: [0, 0, 0],
+        y: [0, 10, 0],
+        rotY: [0, 0, 0],
+        // scale: [1, 1, 1, 1],
+        scaleX: [1, 1, 1],
+        steps: [0, 5, 10],
+        // duration: 3,
+        loop: 'RESTART',
+        easing: 'EASE_IN_CUBIC',
+      }}>
+          <Prefab
+            id="cube_01"
+            material="t_neon_red_01"            
+            x={-5} y={0} z={0}
+            scaleX={1}
+            scaleZ={1}
+            scaleY={0.2}
+          />
+          </Animation>
+          {/* <Prefab
+            id="fx_particlesystem_fireworks_01"
+            material="t_rainbow_02"
+            scale={1}
+            x={0} y={0} z={0}
+          /> */}
+          <Prefab
+            id="cube_01"
+            material="glass"
+            x={0} y={-2.5} z={0}
+            rotY={-180}
+            // rotX={20}
+            scaleX={5}
+            scaleZ={5}
+            scaleY={1}
+          />
+          <Prefab
+            id="sofa_01_t2"
+            // material="glass"
+            x={0} y={-0.4} z={-4}
+            // rotY={-180}
+            // rotX={20}
+            scaleX={1}
+            scaleZ={1}
+            scaleY={1}
+          />
+          <Prefab
+            id="sofa_01_t2"
+            // material="glass"
+            x={-2} y={-0.4} z={-2}
+            rotY={90}
+            // rotX={20}
+            scaleX={1}
+            scaleZ={1}
+            scaleY={1}
+          />
+          <Prefab
+            id="fridge_01"
+            material="t_neon_red_01"
+            x={4} y={-0.4} z={4}
+            rotY={210}
+            // rotX={20}
+            scaleX={1}
+            scaleZ={1}
+            scaleY={1}
+          />
+          <Prefab
+            id="vase_cactus_01"
+            // material="glass"
+            x={4} y={-0.4} z={-4}
+            rotY={210}
+            // rotX={20}
+            scaleX={2}
+            scaleZ={2}
+            scaleY={2}
+          />
+
+        </HNode>
+      </Animation>
+    </>
+  )
+}
+
+const PortalPlatform: HDKComponent = props => (
+  <HNode x={105} y={49.7} z={92.0}>
+  
+  <Portal worldId="4x4LudA2J"  z={-1.5} x={-1} y={1} rotY={90} scale={0.75}/>
+  <Portal worldId="4wQdjSa21" z={1.5} x={-1} y={1} rotY={90} scale={0.75}/>
+  <Prefab
+            id="cube_01"
+            material="t_neon_red_01"            
+            x={0} y={0} z={0}
+            scaleX={2}
+            scaleZ={4}
+            scaleY={0.2}
+          />  
+  </HNode>
+)
+
+
 const WelcomeSign: HDKComponent = props => (
   <InfoPanel
 
     header="Welcome Cyber Battle Royale!"
-    body="Wait a minute and the game will restart"
+    body="Survive for 50 seconds and the platform in the middle will take you to the goal!"
     // url="https://developer.hiber3d.com/docs"
     openUrlInNewTab={true}>
     <Prefab
       {...props}
-      id="sign_wooden_01_wait" 
-      rotY={90}
-      x={-5}/>
+      id="sign_wooden_01_wait"
+      rotY={180}
+      x={0}
+      z={5} />
   </InfoPanel>
 )
 
@@ -289,37 +438,15 @@ const FirePit: HDKComponent = props => (
 
 
 
-const FlyingTrash: HDKComponent = props => {
 
-  return (
-    
-    <Orbiting
-      
-      duration={8}
-      radius ={1}>      
-      <Prefab
-      {...props}
-        id="gpl_simple_rotating_cylinder_01"
-        material="t_neon_grid_01"
-        rotY={0}
-        rotX={0}
-        scaleX={3}
-        scaleZ={3}
-        scaleY={3}
-      />
-    </Orbiting>
-    
-  )
-
-}
-
-const HotAirBalloon: HDKComponent = ({
+const FlyingDeath: HDKComponent = ({
   ...props
 }) => {
   const random = useRandom();
-  const duration = random.range(2, 4);
-  const direction = random.fromArray([-1, 1]);
-  const startAt = random.range(0, 1);
+  const duration = random.range(13, 20);
+  const direction = random.fromArray([-1, -1]);
+  const startAt = random.range(0, 20);
+  var zRange = random.range(50, 70);
 
   return (
     <HNode {...props}>
@@ -329,9 +456,9 @@ const HotAirBalloon: HDKComponent = ({
         direction={direction}
         startAt={startAt}
       >
-        
-          <Prefab y={0} z={60} id="h_blade_01" material='t_neon_grid_01' scale={3} rotY={90} />
-        
+
+        <Prefab y={0} z={zRange} id="h_blade_01" material='t_neon_grid_01' scale={3} rotY={90} />
+
       </Spinning>
     </HNode>
   );
@@ -343,121 +470,177 @@ const SpectatorPlatform: HDKComponent = props => {
 
   return (
     <>
-    <Animation animation={{
-      x: [0, 0, -60, 0],
-      y: [0, 0, -25, 0],
-      rotY: [0, 0, 0, 0],
-      scale: [1, 1, 1, 1],
-      steps: [0, 50, 60, 70],
-      // duration: 3,
-      loop: 'RESTART',
-      easing: 'EASE_IN_OUT_CUBIC',
-    }}>
-    
-    <HNode x={114.2} y={26.3} z={91.3}>
-    <WelcomeSign/>
-    <Spawnpoint rotY={90}/>
-    <Prefab
-    id="cube_01"
-    material="t_sci_fi_tile_03"
-    x={0} y={-2.5} z={0}
-    rotY={-180}
-    // rotX={20}
-    scaleX={5}
-    scaleZ={5}
-    scaleY={1} 
-  />
-  <HNode>
-  <Animation animation={{
-      x: [0, 0, 0, 0],
-      y: [0, 0, -6, 0],
-      scale: [1,  1, 1, 1],
-      steps: [0, 50, 60, 70],
-      // duration: 3,
-      loop: 'RESTART',
-      easing: 'EASE_IN_OUT_CUBIC',
-    }}>  
-  <Prefab
-    id="cube_01"
-    material="glass"
-    x={5} y={0} z={0}
-    rotZ={90}
-    // rotX={20}
-    scaleX={5}
-    scaleZ={5}
-    scaleY={0.2} 
-  />
-  <Prefab
-    id="cube_01"
-    material="glass"
-    x={-5} y={0} z={0}
-    rotZ={90}
-    // rotX={20}
-    scaleX={5}
-    scaleZ={5}
-    scaleY={0.2} 
-  />
-  <Prefab
-    id="cube_01"
-    material="glass"
-    x={0} y={0} z={5}
-    rotZ={90}
-    rotX={90}
-    scaleX={5}
-    scaleZ={5}
-    scaleY={0.2} 
-  />
-  <Prefab
-    id="cube_01"
-    material="glass"
-    x={0} y={0} z={-5}
-    rotZ={90}
-    rotX={90}
-    // rotX={20}
-    scaleX={5}
-    scaleZ={5}
-    scaleY={0.2} 
-  />
-  </Animation>
-  </HNode>
-  </HNode>
-  </Animation>
+      <Animation animation={{
+        x: [0, 0, 0, 0, 0],
+        y: [0, 0, 0, 0, 0],
+        rotY: [0, 0, 0, 0, 0],
+        scale: [1, 1, 1, 1, 1],
+        steps: [0, 10, 28, 33, 60],
+        // duration: 3,
+        loop: 'RESTART',
+        easing: 'EASE_IN_OUT_CUBIC',
+      }}>
 
-</> 
+        <HNode x={114.2} y={29.5} z={91.3}>
+          <WelcomeSign />
+          <Spawnpoint rotY={90} y={0} x={3} />
+          <Prefab
+            id="cube_01"
+            material="glass"
+            x={0} y={-2.5} z={0}
+            rotY={-180}
+            // rotX={20}
+            scaleX={5}
+            scaleZ={5}
+            scaleY={1}
+          />
+          <HNode>
+
+            <Prefab
+              id="cube_01"
+              material="glass"
+              x={5} y={0} z={0}
+              rotZ={90}
+              // rotX={20}
+              scaleX={7}
+              scaleZ={5}
+              scaleY={0.2}
+            />
+            <Animation animation={{
+              x: [0, 0, 0, 0, 0],
+              y: [0, 0, -10, 0, 0],
+              scale: [1, 1, 1, 1, 1],
+              steps: [0, 20, 25, 27, 60],
+              // duration: 3,
+              loop: 'RESTART',
+              easing: 'EASE_IN_OUT_CUBIC',
+            }}>
+              <Prefab
+                id="cube_01"
+                material="glass"
+                x={-5} y={0} z={0}
+                rotZ={90}
+                // rotX={20}
+                scaleX={7}
+                scaleZ={5}
+                scaleY={0.2}
+              />
+            </Animation>
+            <Animation animation={{
+              x: [0, 0, 0, 0, 0],
+              y: [0, 0, 1.5, 0, 0],
+              scale: [1, 1, 1, 1, 1],
+              steps: [0, 22, 25, 30, 60],
+              // duration: 3,
+              loop: 'RESTART',
+              easing: 'EASE_IN_OUT_CUBIC',
+            }}>
+              <Prefab
+                id="gpl_booster_plate_02"
+                // material="glass"
+                x={0} y={-1} z={0}
+                rotZ={0}
+                rotX={5}
+                rotY={90}
+                scaleX={4}
+                scaleZ={4}
+                scaleY={1}
+              />
+            </Animation>
+            <Prefab
+              id="cube_01"
+              material="glass"
+              x={0} y={0} z={5}
+              rotZ={90}
+              rotX={90}
+              scaleX={7}
+              scaleZ={5}
+              scaleY={0.2}
+            />
+            <Prefab
+              id="cube_01"
+              material="glass"
+              x={0} y={0} z={-5}
+              rotZ={90}
+              rotX={90}
+              // rotX={20}
+              scaleX={6.3}
+              scaleZ={5}
+              scaleY={0.2}
+            />
+
+          </HNode>
+        </HNode>
+      </Animation>
+
+    </>
   )
 
 }
 
+const WinnersRing: HDKComponent = props => {
 
+  return (
+    <>
+
+
+      <HNode x={114.2} y={0} z={91.3}>
+        <Animation animation={{
+          x: [0, 0, 0, 30, 10, 10, 0],
+          y: [0, 0, 0, 20, 40, 40, 0],
+          rotY: [0, 0, 0, 0, 0, 0, 0],
+          scaleX: [0, 45, 10, 5, 3, 0, 0],
+          scaleZ: [0, 45, 10, 5, 3, 0, 0],
+          scaleY: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+          steps: [0, 15, 20, 22, 30, 35, 60],
+          // duration: 3,
+          loop: 'RESTART',
+          easing: 'EASE_IN_OUT_CUBIC',
+        }}>
+          <Prefab
+            id="sphere_01"
+            material="t_hex_disco_01"
+            x={0} y={-2.5} z={0}
+
+          />
+        </Animation>
+      </HNode>
+
+
+    </>
+  )
+
+}
 
 const World = () => (
   <HNode>
-    
+
     <ValleyWalls />
     <Goal />
-
+    <WinnersRing />
+    <PortalPlatform />
     <FirePit />
 
     <SpectatorPlatform />
-    <HotAirBalloon x={99.8} y={0} z={90.7}/>
-    <HotAirBalloon x={99.8} y={0} z={90.7}/>
-    <HotAirBalloon x={99.8} y={0} z={90.7}/>
-    <HotAirBalloon x={99.8} y={0} z={90.7}/>
-    <HotAirBalloon x={99.8} y={0} z={90.7}/>
-    <HotAirBalloon x={99.8} y={15} z={90.7}/>
-    <HotAirBalloon x={99.8} y={15} z={90.7}/>
+    <FlyingDeath x={99.8} y={0} z={90.7} />
+    <FlyingDeath x={99.8} y={0} z={90.7} />
+    <FlyingDeath x={99.8} y={0} z={90.7} />
+    <FlyingDeath x={99.8} y={0} z={90.7} />
+    <FlyingDeath x={99.8} y={0} z={90.7} />
+    <FlyingDeath x={99.8} y={0} z={90.7} />
+    <FlyingDeath x={99.8} y={0} z={90.7} />
 
 
 
-    <OmnipresentSound id="a_mu_creepy_hallow_01" volume={1}/>
-    <OmnipresentSound id="a_mu_ancient_rite_01" volume={0.5}/> *
+    <OmnipresentSound id="a_mu_border_of_neo_tokyo_01" volume={1} />
+    {/* <OmnipresentSound id="a_mu_ancient_rite_01" volume={0.5} /> */}
 
 
 
   </HNode >
 );
 
-render(<World />, { environment: 'midday_01' });
+render(<World />, { environment: 'above_clouds_01' });
 
 // questions
 // two prefabs in one step
