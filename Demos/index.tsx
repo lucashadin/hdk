@@ -21,8 +21,8 @@ const Foliage: HDKComponent = props => {
         const random = useRandom();
  
         return (
-          <RandomTilt scale={random.range(1, 5)}>
-            <Prefab id={random.fromArray(['candy_straps', 'trashcontainer_01_t1', 'mushroom_01_t3'])} />
+          <RandomTilt scale={random.range(1, 2)}>
+            <Prefab id={random.fromArray(['tree_02', 'dead_tree_02', 'mushroom_01_t3'])} />
           </RandomTilt>
         );
       }}
@@ -99,14 +99,14 @@ const PythonPath: HDKComponent = props => (
 
 const World = () => (
   <HNode>
-    {/* <Foliage y={-1.5} /> */}
-    {/* <OrbitingAsteroids y={20} /> */}
-    {/* <Building y={0} z={20} /> */}
+    <Foliage y={-1.5} />
+    <OrbitingAsteroids y={20} />
+    <Building y={0} z={20} />
     <Spawnpoint />
-    <PythonPath y={1}/>
-    <Ground hilly={0} material="t_grass_01" />
-    {/* <Ground hilly={0} material="t_swamp_ground" water={true} y={-1}/> */}
-    {/* <Ground hilly={30} y={45} rotZ={180} material="t_cobble_stone_01" /> */}
+    {/* <PythonPath y={1}/> */}
+    <Ground hilly={3} material="t_grass_03" />
+    <Ground hilly={3} material="t_swamp_ground" water={true} y={-1}/>
+    <Ground hilly={20} y={45} rotZ={180} material="t_cobble_stone_01" />
   </HNode>
 );
  
