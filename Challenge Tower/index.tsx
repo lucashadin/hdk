@@ -44,7 +44,7 @@ const TransportRing: HDKComponent<LevelProps> = ({ colourLight, colourDark, ...p
       scaleX: [100, 100, 75, 35, 15, 0, 0, 0],
       scaleY: [0, 0, 3, 3, 1, 0, 0, 0],
       scaleZ: [100, 100, 75, 35, 15, 0, 0, 0],
-      steps: [1, 5, 6, 12, 26, 28, 30, 60],
+      steps: [1, 5, 6, 8, 10, 13, 15, 60],
       // duration: 3,
       loop: 'RESTART',
       easing: 'EASE_IN_QUAD',
@@ -108,6 +108,21 @@ const RingArena: HDKComponent = ({ ...props }) => {
               </>
             )}
 
+            {step.index % 2 === 0 && (
+              <>
+                <Prefab
+                  id={random.fromArray(['jungle_tree_small', 'apple_tree_01_t2', 'birch_01_t1'])}
+                  // id={random.fromArray(['billboard_01_t3', 'en_p_jungle_flower_03', 'neon_sign_03'])}
+                  // material={colourDark}
+                  x={15}
+                  y={2.5}
+                  rotY={0}
+                  rotX={0}
+                  scale={2}
+                />
+              </>
+
+            )}
             {step.index % 4 === 0 && (
               <>
                 <Prefab
@@ -207,12 +222,14 @@ type LevelProps = {
   colourLight: MaterialId;
   colourDark: MaterialId;
   boopMultiplier: number;
+  decorationAssets: string;
 };
 
 const LevelConfigContext = React.createContext<LevelProps>({
   colourLight: 'palette_01_green',
   colourDark: 'palette_02_green',
   boopMultiplier: 1,
+  decorationAssets: ['bush_01', 'bush_02', 'en_p_tumbleweed_01', 'en_p_jungle_grass_01'],
 });
 
 const Level: HDKComponent<LevelProps> = ({ colourLight, colourDark, boopMultiplier, ...props }) => {
@@ -257,9 +274,10 @@ const BoopingWalls: HDKComponent = ({ ...props }) => {
       loop: 'RESTART',
       easing: 'EASE_IN_CUBIC',
     }}>
+      <HNode>
       <Prefab
-        id="plastic_wall_01"
-        material='t_neon_grid_01'
+        id='plastic_wall_01'
+        material='t_grass_02'
         y={1}
         // rotY={90} 
         x={-10}
@@ -267,8 +285,21 @@ const BoopingWalls: HDKComponent = ({ ...props }) => {
         scaleZ={3}
         scaleY={3}
         rotY={90}
-
+        
       />
+      <Prefab
+        id={random.fromArray(['jungle_tree_small', 'apple_tree_01_t2', 'birch_01_t1'])}
+        // material='t_neon_grid_01'
+        y={1}
+        // rotY={90} 
+        x={-10}
+        scaleX={1}
+        scaleZ={1}
+        scaleY={1}
+        rotY={0}
+        
+      />
+      </HNode>
     </Animation>
 
   )
@@ -620,8 +651,8 @@ const LevelOne: HDKComponent = props => {
       <PointSound y={30} x={0} id="a_mu_breath_of_the_wind_01" radius={90} volume={3}/>
       
       <Level
-        colourLight="palette_01_green"
-        colourDark="palette_02_green"        
+        colourLight="t_rainbow_02"
+        colourDark="t_rainbow_02"        
         boopMultiplier={2}
       />
       <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
@@ -741,3 +772,6 @@ const World = () => (
 
 render(<World />, { environment: 'above_clouds_01' });
 
+// Questions
+// Should the levels above/below be blocked off? Or is it cool to see down? 
+// What gameplay can we add to each level?
