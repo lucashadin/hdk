@@ -108,7 +108,7 @@ const RingArena: HDKComponent = ({ ...props }) => {
               </>
             )}
 
-            {step.index % 2 === 0 && (
+            {/* {step.index % 2 === 0 && (
               <>
                 <Prefab
                   id={random.fromArray(['jungle_tree_small', 'apple_tree_01_t2', 'birch_01_t1'])}
@@ -121,8 +121,9 @@ const RingArena: HDKComponent = ({ ...props }) => {
                   scale={2}
                 />
               </>
+            )} */}
 
-            )}
+
             {step.index % 4 === 0 && (
               <>
                 <Prefab
@@ -277,7 +278,7 @@ const BoopingWalls: HDKComponent = ({ ...props }) => {
       <HNode>
       <Prefab
         id='plastic_wall_01'
-        material='t_grass_02'
+        material='t_neon_red_01'
         y={1}
         // rotY={90} 
         x={-10}
@@ -287,7 +288,7 @@ const BoopingWalls: HDKComponent = ({ ...props }) => {
         rotY={90}
         
       />
-      <Prefab
+      {/* <Prefab
         id={random.fromArray(['jungle_tree_small', 'apple_tree_01_t2', 'birch_01_t1'])}
         // material='t_neon_grid_01'
         y={1}
@@ -298,7 +299,7 @@ const BoopingWalls: HDKComponent = ({ ...props }) => {
         scaleY={1}
         rotY={0}
         
-      />
+      /> */}
       </HNode>
     </Animation>
 
@@ -511,7 +512,7 @@ const SpectatorPlatform: HDKComponent<LevelProps> = ({ colourLight, colourDark, 
             x: [100, 0, 0, 100, 100],
             y: [100, 0, 0, 100, 100],
             scale: [1, 1, 1, 1, 1],
-            steps: [0, 28, 29, 30, 60],
+            steps: [0, 13, 15, 16, 60],
             // duration: 3,
             loop: 'RESTART',
             easing: 'EASE_IN_OUT_CUBIC',
@@ -651,8 +652,8 @@ const LevelOne: HDKComponent = props => {
       <PointSound y={30} x={0} id="a_mu_breath_of_the_wind_01" radius={90} volume={3}/>
       
       <Level
-        colourLight="t_rainbow_02"
-        colourDark="t_rainbow_02"        
+        colourLight="palette_01_green"
+        colourDark="palette_02_green"        
         boopMultiplier={2}
       />
       <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
