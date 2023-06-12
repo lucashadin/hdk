@@ -1,6 +1,6 @@
 import { MaterialId } from '@hiber3d/hdk-core';
 import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel, useRandom } from '@hiber3d/hdk-react';
-import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound, Orbiting, Spinning, Portal, Checkpoint, PointSound, For } from '@hiber3d/hdk-react-components';
+import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound, Orbiting, Spinning, Portal, Checkpoint, PointSound, For, ImagePanel } from '@hiber3d/hdk-react-components';
 import React from 'react';
 
 
@@ -36,12 +36,12 @@ const Sides: HDKComponent = props => {
 
 const TransportRing: HDKComponent = ({ ...props }) => {
 
-  const { levelNumberValue, boopMultiplier, colourLight, colourDark, lavaDamageAmount } = useLevelConfig();
+  const { colourDark } = useLevelConfig();
 
   return (
     <Animation animation={{
       x: [0, 0, 0, 0, 0, 0, 0, 0],
-      y: [-5, -5, -5, 30, 160, 160, -5, -5],
+      y: [-5, -5, -5, 30, 200, 200, -5, -5],
       rotY: [0, 0, 0, 0, 0, 0, 0, 0],
       scaleX: [100, 100, 75, 35, 15, 0, 0, 0],
       scaleY: [0, 0, 3, 3, 1, 0, 0, 0],
@@ -68,7 +68,57 @@ const TransportRing: HDKComponent = ({ ...props }) => {
   )
 }
 
+const Trap: HDKComponent = ({ ...props }) => {
+  const random = useRandom();
+  var addToSteps = random.range(1, 3);
+  var stepsInput = [0, 0.3, 1, 4, 4.1, 8];
+  const { colourLight, colourDark, trapScale } = useLevelConfig();
 
+  return (
+
+    <Animation animation={{
+      x: [0, 0, 0, -30, 0, 0],
+      y: [4, -8, -8, -8, 4, 4],
+      rotY: [0, 0, 0, 0, 0, 0],
+      // scale: [1, 0, 1, 1, 1, 0],
+      scaleX: [1, trapScale, trapScale, 0, 1, 1],
+      scaleZ: [1, trapScale, trapScale, 0, 1, 1],
+      scaleY: [1, 1, 1, 1, 1, 1],
+      steps: stepsInput.map(num => (num + addToSteps)),
+      // duration: 3,
+      loop: 'RESTART',
+      easing: 'EASE_IN_OUT_CUBIC',
+    }}>
+      <HNode
+        {...props}
+        z={0}
+        x={0}
+        rotY={0}
+        y={10}
+        scaleX={3}
+        scaleY={2}
+        scaleZ={2}
+        engineProps={{
+          rendering: {
+            castShadow: true,
+            materialID: 'palette_01_black',
+            meshID: "h_cage_trap_01",
+          },
+          collider: {
+            collider: {
+              meshId: "h_cage_trap_01_collision",
+              // size: [1, 1, 1],
+              offset: [0, 0, 0],
+              form: "mesh",
+
+            }
+          }
+        }}
+      />
+
+    </Animation>
+  )
+}
 
 const RingArena: HDKComponent = ({ ...props }) => {
   const random = useRandom();
@@ -96,7 +146,7 @@ const RingArena: HDKComponent = ({ ...props }) => {
             {step.index % 8 == 1 && levelNumber > 1 ? (
               <>
                 {/* lava floor */}
-                <Damaging amount={lavaDamage} knockbackStrength={150} >
+                <Damaging amount={lavaDamage} knockbackStrength={400} >
                   <Floor id="cube_01" material={'t_lava_01'} x={5} rotX={0} rotY={90} rotZ={0} scaleX={3.3} scaleY={1} scaleZ={11.5} />
                   <Floor id="pyramid" material={'t_lava_01'} x={16} z={5} y={1} rotX={-4} rotY={0} rotZ={87.7} scaleX={1} scaleY={12} scaleZ={2} />
                 </Damaging>
@@ -109,13 +159,25 @@ const RingArena: HDKComponent = ({ ...props }) => {
               </>
             )}
 
+            {step.index % 8 == 7 && levelNumber > 2 ? (
+              <>
+                {/* lava floor */}
+                <Trap />
+              </>
+            ) : (
+              /* else block */
+              <>
+
+              </>
+            )}
+
             <Floor id="cube_01" material={colourDark} x={5} y={-80} rotX={180} rotY={90} rotZ={0} scaleX={3.3} scaleY={1} scaleZ={11.5} />
             <Floor id="pyramid" material={colourLight} x={16} y={-80} z={5} rotX={-4} rotY={0} rotZ={95} scaleX={1} scaleY={12} scaleZ={2} />
 
 
 
             {/* Outer Side */}
-            <Sides id="cliff_01_pillar" material={colourDark} rotY={90} x={18} scaleX={3} scaleY={10} scaleZ={1} />
+            <Sides id="cliff_01_pillar" material={colourDark} rotY={90} x={18} scaleX={3} scaleY={16} scaleZ={1} />
 
             {/* Inner Side */}
             <Sides id="cliff_01_pillar" material={colourDark} y={-50} rotY={90} x={0} scaleX={3} scaleY={10} scaleZ={1} />
@@ -151,74 +213,10 @@ const RingArena: HDKComponent = ({ ...props }) => {
 
 
 
-            {/* {step.index % 1 === 0 && (
-              <>
-                <BoopingWalls />
-       
-              </>
-            )} */}
-
-            {/* {step.index % 10 === 1 && step.index > 20 && (
-
-              <Prefab
-                id="flag_01"
-                material='t_dirt_01'
-                y={0}
-                // rotY={90}
-                scale={5}
-              />
-
-            )} */}
-
-            {/* {step.index % 15 == 0 && step.index > 10 && (
-              <>
-                <Animation animation={{ y: [0, 10], x: [0, 0], rotY: [0, 0], duration: 2 }}>
-                  <Prefab
-                    id="h_sawblade_01"
-                    // material='t_rainbow_02'
-                    y={0}
-                    // rotY={90} 
-                    x={-8}
-                    scale={5}
-                    rotX={90}
-
-                  />
-                </Animation>
-
-                <Animation animation={{ y: [10, 0], x: [0, 0], rotY: [0, 0], duration: 2 }}>
-                  <Prefab
-                    id="h_sawblade_01"
-                    // material='t_rainbow_02'
-                    y={0}
-                    rotX={90}
-                    x={8}
-                    scale={5}
-                  />
-                </Animation>
-              </>
-
-            )} */}
 
 
 
-            {/* {step.index % 50 === 1 && step.index > 20 && (
 
-              <InvisibleCollectible />
-
-            )} */}
-
-            {/* {step.index % 15 === 1 && (
-              <Prefab
-                    id="collectible_heart_01"
-                    // material='t_rainbow_02'
-                    y={0}
-                    rotX={90}
-                    x={8}
-                    scale={5}
-                  />
-              
-
-            )} */}
 
           </HNode>
         )
@@ -233,7 +231,10 @@ type LevelProps = {
   colourLight: MaterialId;
   colourDark: MaterialId;
   boopMultiplier: number;
-  lavaDamage: number
+  lavaDamage: number;
+  flyingDamage: number;
+  trapScale: number;
+  spectatorImage: string;
 };
 
 const LevelConfigContext = React.createContext<LevelProps>({
@@ -241,14 +242,17 @@ const LevelConfigContext = React.createContext<LevelProps>({
   colourLight: 'palette_01_green',
   colourDark: 'palette_02_green',
   boopMultiplier: 1,
-  lavaDamage: 50
+  lavaDamage: 50,
+  flyingDamage: 50,
+  trapScale: 1,
+  spectatorImage: 'None'
 });
 
-const LevelProvider: HDKComponent<LevelProps> = ({ colourLight, colourDark, boopMultiplier, levelNumber, lavaDamage, children, ...props }) => {
+const LevelProvider: HDKComponent<LevelProps> = ({ colourLight, colourDark, boopMultiplier, levelNumber, lavaDamage, flyingDamage, trapScale, spectatorImage, children, ...props }) => {
 
   return (
 
-    <LevelConfigContext.Provider value={{ colourLight, colourDark, boopMultiplier, levelNumber, lavaDamage }}>
+    <LevelConfigContext.Provider value={{ colourLight, colourDark, boopMultiplier, levelNumber, lavaDamage, flyingDamage, trapScale, spectatorImage }}>
       {children}
 
     </LevelConfigContext.Provider>
@@ -294,18 +298,7 @@ const BoopingWalls: HDKComponent = ({ ...props }) => {
           rotY={90}
 
         />
-        {/* <Prefab
-        id={random.fromArray(['jungle_tree_small', 'apple_tree_01_t2', 'birch_01_t1'])}
-        // material='t_neon_grid_01'
-        y={1}
-        // rotY={90} 
-        x={-10}
-        scaleX={1}
-        scaleZ={1}
-        scaleY={1}
-        rotY={0}
-        
-      /> */}
+
       </HNode>
     </Animation>
 
@@ -333,8 +326,8 @@ const Goal: HDKComponent = props => {
         loop: 'RESTART',
         easing: 'EASE_IN_OUT_CUBIC',
       }}>
-        <HNode x={0.0} y={500} z={0.0}>
-          <PointSound y={30} x={0} id="a_mu_district_h_01" radius={100} volume={5} />
+        <HNode x={0.0} y={680} z={0.0}>
+          <PointSound y={30} x={0} id="a_mu_district_h_01" radius={100} volume={1} />
           <Prefab
             id="goal_01"
             material="t_neon_red_01"
@@ -417,7 +410,9 @@ const Goal: HDKComponent = props => {
             scaleZ={2}
             scaleY={2}
           />
-
+          <PortalPlatform />
+          <ThumbnailAll/>
+          
         </HNode>
       </Animation>
     </>
@@ -425,16 +420,18 @@ const Goal: HDKComponent = props => {
 }
 
 const PortalPlatform: HDKComponent = props => (
-  <HNode x={-7.9} y={511} z={0.9}>
-
-    <Portal worldId="4x4LudA2J" z={-1.5} x={-1} y={1} rotY={90} scale={0.75} />
-    <Portal worldId="4wQdjSa21" z={1.5} x={-1} y={1} rotY={90} scale={0.75} />
+  <HNode x={-8} y={10} z={0.0}>
+    <HNode x={-1} z={-3}>
+    <Portal worldId="4x4LudA2J" z={0} x={0} y={1} rotY={90} scale={0.75} />
+    <Portal worldId="4wQdjSa21" z={3} x={0} y={1} rotY={90} scale={0.75} />
+    <Portal worldId="4xNjH4g28" z={6} x={0} y={1} rotY={90} scale={0.75} />
+    </HNode>
     <Prefab
       id="cube_01"
       material="t_neon_red_01"
       x={0} y={0} z={0}
       scaleX={2}
-      scaleZ={4}
+      scaleZ={5}
       scaleY={0.2}
     />
   </HNode>
@@ -482,12 +479,35 @@ const Hole: HDKComponent = props => (
 
 
 
+const ThumbnailAll: HDKComponent = props => (
+<HNode x={10} z={-6}>
+<ImagePanel src="https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
+ratio={1400 / 750} z={0} y={6} x={0} rotY={90} scale={3} />
+<ImagePanel src="https://images.unsplash.com/photo-1579202601184-34a979c427bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
+ratio={1400 / 750} z={11.2} y={6} x={0} rotY={90} scale={3} />
+<ImagePanel src="https://images.unsplash.com/photo-1674718744870-13c46484fc0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+ratio={1400 / 750} z={0} y={0} x={0} rotY={90} scale={3} />
+<ImagePanel src="https://images.unsplash.com/photo-1517825738774-7de9363ef735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1410&q=80" 
+ratio={1400 / 750} z={11.2} y={0} x={0} rotY={90} scale={3} />
 
+</HNode>
+
+)
+
+
+const Thumbnail: HDKComponent = props => (
+
+  <ImagePanel src="https://images.unsplash.com/photo-1517825738774-7de9363ef735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1410&q=80" 
+  ratio={1400 / 750} x={-20} y={490} z={-0.1} rotY={90} rotX={90} rotZ={20} scale={3} />
+  
+
+  
+  )
 
 
 const SpectatorPlatform: HDKComponent = ({ ...props }) => {
 
-  const { levelNumberValue, boopMultiplier, colourLight, colourDark, lavaDamageAmount } = useLevelConfig();
+  const { spectatorImage } = useLevelConfig();
 
   return (
     <>
@@ -505,6 +525,7 @@ const SpectatorPlatform: HDKComponent = ({ ...props }) => {
         <HNode x={0} y={30} z={0}>
 
           <WelcomeSign />
+          <ImagePanel src={spectatorImage} ratio={1000 / 750} x={5} rotY={90} scale={3} />
           <Prefab
             id="cube_01"
             material="glass"
@@ -580,7 +601,7 @@ const SpectatorPlatform: HDKComponent = ({ ...props }) => {
             }}>
               <Prefab
                 id="gpl_booster_plate_02"
-                material={colourDark}
+                // material={colourDark}
                 x={0} y={-1} z={0}
                 rotZ={0}
                 rotX={5}
@@ -628,9 +649,9 @@ const FlyingDeath: HDKComponent<{ durationMin: number; durationMax: number, dire
   const random = useRandom();
   const duration = random.range(durationMin, durationMin);
   const startAt = random.range(0, 20);
-  var zRange = random.range(50, 70);
+  var zRange = random.range(60, 70);
 
-  const { boopMultiplier, colourLight, colourDark, } = useLevelConfig();
+  const { boopMultiplier, colourLight, colourDark, flyingDamage } = useLevelConfig();
 
   return (
     <HNode {...props}>
@@ -640,8 +661,20 @@ const FlyingDeath: HDKComponent<{ durationMin: number; durationMax: number, dire
         direction={direction}
         startAt={startAt}
       >
-
-        <Prefab y={0} z={zRange} id="h_blade_01" material='t_neon_red_01' scale={3} rotY={90} />
+        <Animation animation={{
+          x: [0, 0, 0],
+          y: [0, 5, 0],
+          z: [-15, -10, -15],
+          scale: [1, 1, 1],
+          steps: [0, 4, 8],
+          // duration: 3,
+          loop: 'REVERSE',
+          easing: 'EASE_IN_OUT_CUBIC',
+        }}>
+          <Damaging amount={flyingDamage} knockbackStrength={400} >
+            <Prefab y={3} z={zRange} id="cupola" material='t_neon_red_01' scale={3} rotY={90} rotX={90} />
+          </Damaging>
+        </Animation>
 
       </Spinning>
     </HNode>
@@ -660,19 +693,26 @@ const LevelOne: HDKComponent = props => {
   var colourDarkValue: MaterialId = "palette_02_green"
   var boopMultiplierValue = 2
   var lavaDamageValue = 0
+  var flyingDamageValue = 0
+  var trapScaleValue = 0
   var musicId = "a_mu_breath_of_the_wind_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
 
   return (
 
     <HNode y={0}>
-      <PointSound y={30} x={0} id={musicId} radius={90} volume={3} />
+      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
         colourLight={colourLightValue}
         colourDark={colourDarkValue}
-        boopMultiplier={boopMultiplierValue}      
-        lavaDamage={lavaDamageValue} >
+        boopMultiplier={boopMultiplierValue}
+        lavaDamage={lavaDamageValue}
+        flyingDamage={flyingDamageValue}
+        trapScale={trapScaleValue}
+        spectatorImage={spectatorImageUrl}
+      >
 
         <RingArena />
         <SpectatorPlatform />
@@ -693,26 +733,33 @@ const LevelOne: HDKComponent = props => {
 
 const LevelTwo: HDKComponent = props => {
   var levelNumberValue = 2
-  var flyingDeathCount = 6
-  var flyingDurationMin = 20
-  var flyingDurationMax = 55
+  var flyingDeathCount = 5
+  var flyingDurationMin = 25
+  var flyingDurationMax = 30
   var colourLightValue: LevelProps['colourLight'] = "palette_01_blue"
   var colourDarkValue: LevelProps['colourDark'] = "palette_02_blue"
-  var boopMultiplierValue = 1
+  var boopMultiplierValue = 1.5
   var lavaDamageValue = 100
+  var flyingDamageValue = 50
+  var trapScaleValue = 0
   var musicId = "a_mu_ancient_rite_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1579202601184-34a979c427bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
 
   return (
 
-    <HNode y={120}>
-      <PointSound y={30} x={0} id={musicId} radius={90} volume={3} />
+    <HNode y={160}>
+      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
         colourLight={colourLightValue}
         colourDark={colourDarkValue}
-        boopMultiplier={boopMultiplierValue}      
-        lavaDamage={lavaDamageValue} >
+        boopMultiplier={boopMultiplierValue}
+        lavaDamage={lavaDamageValue}
+        flyingDamage={flyingDamageValue}
+        trapScale={trapScaleValue}
+        spectatorImage={spectatorImageUrl}
+      >
 
         <RingArena />
         <SpectatorPlatform />
@@ -733,26 +780,33 @@ const LevelTwo: HDKComponent = props => {
 
 const LevelThree: HDKComponent = props => {
   var levelNumberValue = 3
-  var flyingDeathCount = 10
-  var flyingDurationMin = 10
-  var flyingDurationMax = 15
+  var flyingDeathCount = 8
+  var flyingDurationMin = 15
+  var flyingDurationMax = 20
   var colourLightValue: LevelProps['colourLight'] = "palette_01_red"
   var colourDarkValue: LevelProps['colourDark'] = "palette_02_red"
-  var boopMultiplierValue = 0.5
-  var lavaDamageValue = 150
-  var musicId = "a_mu_adventure_of_flying_jack_01"
+  var boopMultiplierValue = 1
+  var lavaDamageValue = 100
+  var flyingDamageValue = 50
+  var trapScaleValue = 1
+  var musicId = "a_mu_heroic_journey_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1674718744870-13c46484fc0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
 
   return (
 
-    <HNode y={240}>
-      <PointSound y={30} x={0} id={musicId} radius={90} volume={3} />
+    <HNode y={320}>
+      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
         colourLight={colourLightValue}
         colourDark={colourDarkValue}
-        boopMultiplier={boopMultiplierValue}      
-        lavaDamage={lavaDamageValue} >
+        boopMultiplier={boopMultiplierValue}
+        lavaDamage={lavaDamageValue}
+        flyingDamage={flyingDamageValue}
+        trapScale={trapScaleValue}
+        spectatorImage={spectatorImageUrl}
+      >
 
         <RingArena />
         <SpectatorPlatform />
@@ -772,25 +826,32 @@ const LevelThree: HDKComponent = props => {
 
 const LevelFour: HDKComponent = props => {
   var levelNumberValue = 4
-  var flyingDeathCount = 15
-  var flyingDurationMin = 2
-  var flyingDurationMax = 3
+  var flyingDeathCount = 10
+  var flyingDurationMin = 10
+  var flyingDurationMax = 13
   var colourLightValue: LevelProps['colourLight'] = "palette_01_black"
   var colourDarkValue: LevelProps['colourDark'] = "palette_01_black"
-  var boopMultiplierValue = 0.3
-  var lavaDamageValue = 300
-  var musicId = "a_mu_heroic_journey_01"
+  var boopMultiplierValue = 0.5
+  var lavaDamageValue = 100
+  var flyingDamageValue = 50
+  var trapScaleValue = 1.5
+  var musicId = "a_mu_adventure_of_flying_jack_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1517825738774-7de9363ef735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1410&q=80"
 
   return (
-    <HNode y={360}>
-      <PointSound y={30} x={0} id={musicId} radius={90} volume={3} />
+    <HNode y={480}>
+      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
         colourLight={colourLightValue}
         colourDark={colourDarkValue}
-        boopMultiplier={boopMultiplierValue}      
-        lavaDamage={lavaDamageValue} >
+        boopMultiplier={boopMultiplierValue}
+        lavaDamage={lavaDamageValue}
+        flyingDamage={flyingDamageValue}
+        trapScale={trapScaleValue}
+        spectatorImage={spectatorImageUrl}
+      >
 
         <RingArena />
         <SpectatorPlatform />
@@ -818,7 +879,8 @@ const World = () => (
 
     <Hole />
     <Goal />
-    <PortalPlatform />
+
+
     <Spawnpoint rotY={90} y={30} x={0} />
 
 
