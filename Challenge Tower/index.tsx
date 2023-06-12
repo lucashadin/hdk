@@ -1,6 +1,6 @@
 import { MaterialId } from '@hiber3d/hdk-core';
 import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel, useRandom } from '@hiber3d/hdk-react';
-import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound, Orbiting, Spinning, Portal, Checkpoint, PointSound } from '@hiber3d/hdk-react-components';
+import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound, Orbiting, Spinning, Portal, Checkpoint, PointSound, For } from '@hiber3d/hdk-react-components';
 import React from 'react';
 
 
@@ -34,7 +34,9 @@ const Sides: HDKComponent = props => {
   )
 }
 
-const TransportRing: HDKComponent<LevelProps> = ({ colourLight, colourDark, ...props }) => {
+const TransportRing: HDKComponent = ({ ...props }) => {
+
+  const { levelNumberValue, boopMultiplier, colourLight, colourDark, lavaDamageAmount } = useLevelConfig();
 
   return (
     <Animation animation={{
@@ -70,7 +72,7 @@ const TransportRing: HDKComponent<LevelProps> = ({ colourLight, colourDark, ...p
 
 const RingArena: HDKComponent = ({ ...props }) => {
   const random = useRandom();
-  const { boopMultiplier, colourLight, colourDark } = useLevelConfig();
+  const { levelNumber, boopMultiplier, colourLight, colourDark, lavaDamage } = useLevelConfig();
 
 
   return (
@@ -82,12 +84,31 @@ const RingArena: HDKComponent = ({ ...props }) => {
 
       renderItem={step => {
 
+        // if (step.index % 4 === 0) {
+        //   return null
+        //  }
+
         return (
+
+
           <HNode >
 
+            {step.index % 8 == 1 && levelNumber > 1 ? (
+              <>
+                {/* lava floor */}
+                <Damaging amount={lavaDamage} knockbackStrength={150} >
+                  <Floor id="cube_01" material={'t_lava_01'} x={5} rotX={0} rotY={90} rotZ={0} scaleX={3.3} scaleY={1} scaleZ={11.5} />
+                  <Floor id="pyramid" material={'t_lava_01'} x={16} z={5} y={1} rotX={-4} rotY={0} rotZ={87.7} scaleX={1} scaleY={12} scaleZ={2} />
+                </Damaging>
+              </>
+            ) : (
+              /* else block */
+              <>
+                <Floor id="cube_01" material={colourDark} x={5} rotX={0} rotY={90} rotZ={0} scaleX={3.3} scaleY={1} scaleZ={11.5} />
+                <Floor id="pyramid" material={colourLight} x={16} z={5} y={1} rotX={-4} rotY={0} rotZ={87.7} scaleX={1} scaleY={12} scaleZ={2} />
+              </>
+            )}
 
-            <Floor id="cube_01" material={colourDark} x={5} rotX={0} rotY={90} rotZ={0} scaleX={3.3} scaleY={1} scaleZ={11.5} />
-            <Floor id="pyramid" material={colourLight} x={16} z={5} y={1} rotX={-4} rotY={0} rotZ={87.7} scaleX={1} scaleY={12} scaleZ={2} />
             <Floor id="cube_01" material={colourDark} x={5} y={-80} rotX={180} rotY={90} rotZ={0} scaleX={3.3} scaleY={1} scaleZ={11.5} />
             <Floor id="pyramid" material={colourLight} x={16} y={-80} z={5} rotX={-4} rotY={0} rotZ={95} scaleX={1} scaleY={12} scaleZ={2} />
 
@@ -108,20 +129,8 @@ const RingArena: HDKComponent = ({ ...props }) => {
               </>
             )}
 
-            {/* {step.index % 2 === 0 && (
-              <>
-                <Prefab
-                  id={random.fromArray(['jungle_tree_small', 'apple_tree_01_t2', 'birch_01_t1'])}
-                  // id={random.fromArray(['billboard_01_t3', 'en_p_jungle_flower_03', 'neon_sign_03'])}
-                  // material={colourDark}
-                  x={15}
-                  y={2.5}
-                  rotY={0}
-                  rotX={0}
-                  scale={2}
-                />
-              </>
-            )} */}
+
+
 
 
             {step.index % 4 === 0 && (
@@ -220,31 +229,28 @@ const RingArena: HDKComponent = ({ ...props }) => {
 
 
 type LevelProps = {
+  levelNumber: number;
   colourLight: MaterialId;
   colourDark: MaterialId;
   boopMultiplier: number;
-  decorationAssets: string;
+  lavaDamage: number
 };
 
 const LevelConfigContext = React.createContext<LevelProps>({
+  levelNumber: 1,
   colourLight: 'palette_01_green',
   colourDark: 'palette_02_green',
   boopMultiplier: 1,
-  decorationAssets: ['bush_01', 'bush_02', 'en_p_tumbleweed_01', 'en_p_jungle_grass_01'],
+  lavaDamage: 50
 });
 
-const Level: HDKComponent<LevelProps> = ({ colourLight, colourDark, boopMultiplier, ...props }) => {
+const LevelProvider: HDKComponent<LevelProps> = ({ colourLight, colourDark, boopMultiplier, levelNumber, lavaDamage, children, ...props }) => {
 
   return (
 
-    <LevelConfigContext.Provider value={{ colourLight, colourDark, boopMultiplier }}>
+    <LevelConfigContext.Provider value={{ colourLight, colourDark, boopMultiplier, levelNumber, lavaDamage }}>
+      {children}
 
-      <HNode
-        {...props}>
-        <RingArena colourLight={colourLight} colourDark={colourDark} />
-        <SpectatorPlatform colourLight={colourLight} colourDark={colourDark} />
-        <TransportRing colourLight={colourLight} colourDark={colourDark} />
-      </HNode>
     </LevelConfigContext.Provider>
   )
 }
@@ -276,19 +282,19 @@ const BoopingWalls: HDKComponent = ({ ...props }) => {
       easing: 'EASE_IN_CUBIC',
     }}>
       <HNode>
-      <Prefab
-        id='plastic_wall_01'
-        material='t_neon_red_01'
-        y={1}
-        // rotY={90} 
-        x={-10}
-        scaleX={2}
-        scaleZ={3}
-        scaleY={3}
-        rotY={90}
-        
-      />
-      {/* <Prefab
+        <Prefab
+          id='plastic_wall_01'
+          material='t_neon_red_01'
+          y={1}
+          // rotY={90} 
+          x={-10}
+          scaleX={2}
+          scaleZ={3}
+          scaleY={3}
+          rotY={90}
+
+        />
+        {/* <Prefab
         id={random.fromArray(['jungle_tree_small', 'apple_tree_01_t2', 'birch_01_t1'])}
         // material='t_neon_grid_01'
         y={1}
@@ -328,7 +334,7 @@ const Goal: HDKComponent = props => {
         easing: 'EASE_IN_OUT_CUBIC',
       }}>
         <HNode x={0.0} y={500} z={0.0}>
-        <PointSound y={30} x={0} id="a_mu_district_h_01" radius={100} volume={5}/>
+          <PointSound y={30} x={0} id="a_mu_district_h_01" radius={100} volume={5} />
           <Prefab
             id="goal_01"
             material="t_neon_red_01"
@@ -479,7 +485,9 @@ const Hole: HDKComponent = props => (
 
 
 
-const SpectatorPlatform: HDKComponent<LevelProps> = ({ colourLight, colourDark, ...props }) => {
+const SpectatorPlatform: HDKComponent = ({ ...props }) => {
+
+  const { levelNumberValue, boopMultiplier, colourLight, colourDark, lavaDamageAmount } = useLevelConfig();
 
   return (
     <>
@@ -615,14 +623,14 @@ const SpectatorPlatform: HDKComponent<LevelProps> = ({ colourLight, colourDark, 
 
 
 
-const FlyingDeath: HDKComponent = ({ durationMin, durationMax, direction, ...props }) => {
+const FlyingDeath: HDKComponent<{ durationMin: number; durationMax: number, direction: 1 | -1 }> = ({ durationMin, durationMax, direction, ...props }) => {
 
   const random = useRandom();
   const duration = random.range(durationMin, durationMin);
   const startAt = random.range(0, 20);
   var zRange = random.range(50, 70);
 
-  const { boopMultiplier, colourLight, colourDark } = useLevelConfig();
+  const { boopMultiplier, colourLight, colourDark, } = useLevelConfig();
 
   return (
     <HNode {...props}>
@@ -644,23 +652,39 @@ const FlyingDeath: HDKComponent = ({ durationMin, durationMax, direction, ...pro
 
 
 const LevelOne: HDKComponent = props => {
+  var levelNumberValue = 1
+  var flyingDeathCount = 0
   var flyingDurationMin = 30
   var flyingDurationMax = 35
+  var colourLightValue: MaterialId = "palette_01_green"
+  var colourDarkValue: MaterialId = "palette_02_green"
+  var boopMultiplierValue = 2
+  var lavaDamageValue = 0
+  var musicId = "a_mu_breath_of_the_wind_01"
 
   return (
+
     <HNode y={0}>
-      <PointSound y={30} x={0} id="a_mu_breath_of_the_wind_01" radius={90} volume={3}/>
-      
-      <Level
-        colourLight="palette_01_green"
-        colourDark="palette_02_green"        
-        boopMultiplier={2}
-      />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-    
-      </HNode>
+      <PointSound y={30} x={0} id={musicId} radius={90} volume={3} />
+
+      <LevelProvider
+        levelNumber={levelNumberValue}
+        colourLight={colourLightValue}
+        colourDark={colourDarkValue}
+        boopMultiplier={boopMultiplierValue}      
+        lavaDamage={lavaDamageValue} >
+
+        <RingArena />
+        <SpectatorPlatform />
+        <TransportRing />
+        <For
+          numberOfItems={flyingDeathCount}
+          renderItem={<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />}
+        />
+
+      </LevelProvider>
+
+    </HNode>
 
 
   )
@@ -668,46 +692,77 @@ const LevelOne: HDKComponent = props => {
 }
 
 const LevelTwo: HDKComponent = props => {
+  var levelNumberValue = 2
+  var flyingDeathCount = 6
   var flyingDurationMin = 20
-  var flyingDurationMax = 25
-  return (
-    <HNode y={120}>
-       <PointSound y={30} x={0} id="a_mu_ancient_rite_01" radius={90} volume={3}/>
-      <Level
-        colourLight="palette_01_blue"
-        colourDark="palette_02_blue"
-        boopMultiplier={1} />
+  var flyingDurationMax = 55
+  var colourLightValue: LevelProps['colourLight'] = "palette_01_blue"
+  var colourDarkValue: LevelProps['colourDark'] = "palette_02_blue"
+  var boopMultiplierValue = 1
+  var lavaDamageValue = 100
+  var musicId = "a_mu_ancient_rite_01"
 
-<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
+  return (
+
+    <HNode y={120}>
+      <PointSound y={30} x={0} id={musicId} radius={90} volume={3} />
+
+      <LevelProvider
+        levelNumber={levelNumberValue}
+        colourLight={colourLightValue}
+        colourDark={colourDarkValue}
+        boopMultiplier={boopMultiplierValue}      
+        lavaDamage={lavaDamageValue} >
+
+        <RingArena />
+        <SpectatorPlatform />
+        <TransportRing />
+        <For
+          numberOfItems={flyingDeathCount}
+          renderItem={<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />}
+        />
+
+      </LevelProvider>
 
     </HNode>
+
+
   )
 
 }
 
 const LevelThree: HDKComponent = props => {
+  var levelNumberValue = 3
+  var flyingDeathCount = 10
   var flyingDurationMin = 10
   var flyingDurationMax = 15
+  var colourLightValue: LevelProps['colourLight'] = "palette_01_red"
+  var colourDarkValue: LevelProps['colourDark'] = "palette_02_red"
+  var boopMultiplierValue = 0.5
+  var lavaDamageValue = 150
+  var musicId = "a_mu_adventure_of_flying_jack_01"
+
   return (
 
     <HNode y={240}>
-       <PointSound y={30} x={0} id="a_mu_adventure_of_flying_jack_01" radius={90} volume={3}/>
-      <Level
-        colourLight="palette_01_red"
-        colourDark="palette_02_red"
-        boopMultiplier={0.5} />
+      <PointSound y={30} x={0} id={musicId} radius={90} volume={3} />
 
-<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={-1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={-1} />
+      <LevelProvider
+        levelNumber={levelNumberValue}
+        colourLight={colourLightValue}
+        colourDark={colourDarkValue}
+        boopMultiplier={boopMultiplierValue}      
+        lavaDamage={lavaDamageValue} >
 
+        <RingArena />
+        <SpectatorPlatform />
+        <TransportRing />
+        <For
+          numberOfItems={flyingDeathCount}
+          renderItem={<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />}
+        />
 
+      </LevelProvider>
 
     </HNode>
 
@@ -716,26 +771,36 @@ const LevelThree: HDKComponent = props => {
 }
 
 const LevelFour: HDKComponent = props => {
+  var levelNumberValue = 4
+  var flyingDeathCount = 15
   var flyingDurationMin = 2
   var flyingDurationMax = 3
+  var colourLightValue: LevelProps['colourLight'] = "palette_01_black"
+  var colourDarkValue: LevelProps['colourDark'] = "palette_01_black"
+  var boopMultiplierValue = 0.3
+  var lavaDamageValue = 300
+  var musicId = "a_mu_heroic_journey_01"
+
   return (
     <HNode y={360}>
-      <PointSound y={30} x={0} id="a_mu_heroic_journey_01" radius={90} volume={3}/>
-      <Level
-      
-        colourLight="palette_01_black"
-        colourDark="palette_01_black"
-        
-        boopMultiplier={0.3} />
+      <PointSound y={30} x={0} id={musicId} radius={90} volume={3} />
 
-<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />
-<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={-1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={-1} />
-<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={-1} />
-      <FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={-1} />
+      <LevelProvider
+        levelNumber={levelNumberValue}
+        colourLight={colourLightValue}
+        colourDark={colourDarkValue}
+        boopMultiplier={boopMultiplierValue}      
+        lavaDamage={lavaDamageValue} >
+
+        <RingArena />
+        <SpectatorPlatform />
+        <TransportRing />
+        <For
+          numberOfItems={flyingDeathCount}
+          renderItem={<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />}
+        />
+
+      </LevelProvider>
 
     </HNode>
   )
@@ -756,7 +821,7 @@ const World = () => (
     <PortalPlatform />
     <Spawnpoint rotY={90} y={30} x={0} />
 
-    
+
 
 
 
@@ -774,5 +839,5 @@ const World = () => (
 render(<World />, { environment: 'above_clouds_01' });
 
 // Questions
-// Should the levels above/below be blocked off? Or is it cool to see down? 
+// Should the levels above/below be blocked off? Or is it cool to see down?
 // What gameplay can we add to each level?
