@@ -480,7 +480,7 @@ const Hole: HDKComponent = props => (
 
 
 const ThumbnailAll: HDKComponent = props => (
-<HNode x={-10} z={-6} y={-2}>
+<HNode x={-20} z={-6} y={-2}>
 <ImagePanel src="https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
 ratio={1400 / 750} z={0} y={6} x={0} rotY={90} scale={3} />
 <ImagePanel src="https://images.unsplash.com/photo-1579202601184-34a979c427bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
