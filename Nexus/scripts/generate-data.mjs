@@ -13,7 +13,8 @@ const connection = mysql.createConnection({
 connection.connect();
 
 // Define your SQL query
-const query = `select
+const query = `
+select
 e.name,
 raw_json::coord_xyz as pos_xyz,
 raw_json::rot_xyz as rot_xyz,
@@ -21,11 +22,13 @@ count(*)
 from hiber_landing.events as e
 where 1=1
 and e.date_utc between '2023-06-16' and CURDATE()
-and e.name in('gameStats','gameEmote','gameInteract' )
+and e.name in('gameStats','gameEmote','gameInteract','gameContentShown','gameSignalSent','gameWorldLeft','gameRestarted','gameFinished')
 and environment in ('dev', 'development')
 and player_id = '3547'
 and mode_header = 'play'
-group by 1,2,3;`
+group by 1,2,3;
+
+`
 
 
 // Execute the SQL query
@@ -41,3 +44,5 @@ connection.query(query, (error, results) => {
   // Close the MySQL connection
   connection.end();
 });
+
+// to run this file type in terminal: npm run generate-data
