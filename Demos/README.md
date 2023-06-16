@@ -1,13 +1,22 @@
-# Project Nexus
+# Demos
 
-**Nexus**
-*noun*
+This is a Hiber3D HDK project created using [create-hdk](https://www.npmjs.com/package/create-hdk)
 
-1. a connection or series of connections linking two or more things.
-*the nexus between industry and political power*
+Please see [HDK Docs](https://developer.hiber3d.com/docs/) for full documentation.
 
-2. a central or focal point.
-*the nexus of any government in this country is No. 10*
+Install with this command:
 
-This name implies that the tool serves as a central point of connection, where various events converge and intertwine. It suggests that it helps players understand the interconnectedness of different events within the game world. 
+```bash
+npm install
+```
 
+Then run with:
+
+```bash
+npm run dev
+```
+
+and enjoy the hiber experience at
+(http://localhost:5173/)
+
+Happy coding!
