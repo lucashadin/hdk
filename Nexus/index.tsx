@@ -1,5 +1,5 @@
-import { CoreHNode, generateId, MaterialId } from '@hiber3d/hdk-core';
-import { ButtonSensor, HDKComponent, HNode, InfoPanel, OrGate, Prefab, render, SpawnPrefabOnSignal, useRandom, VisibleOnSignal } from '@hiber3d/hdk-react';
+import { CoreHNode, generateId, MaterialId, PrefabId } from '@hiber3d/hdk-core';
+import { AndGate, ButtonSensor, HDKComponent, HNode, InfoPanel, OrGate, Prefab, render, SpawnPrefabOnSignal, useRandom, VisibleOnSignal } from '@hiber3d/hdk-react';
 import {
   For,
   Ground,
@@ -164,7 +164,7 @@ gameStatsData.forEach(stats => {
 // console.log(gameStatsData);
 
 
-const EventOverlay: HDKComponent<{ name: string; prefab_id: id; prefab_scale: number; beam_colour: MaterialId }> = ({ name, prefab_id, prefab_scale, beam_colour, ...props }) => {
+const EventOverlay: HDKComponent<{ name: string; prefab_id: PrefabId; prefab_scale: number; beam_colour: MaterialId }> = ({ name, prefab_id, prefab_scale, beam_colour, ...props }) => {
   // why doesn't id autopopulate from the definition?
   // why can't I send props into it? 
   return (
@@ -181,6 +181,7 @@ const EventOverlay: HDKComponent<{ name: string; prefab_id: id; prefab_scale: nu
             body={name}
             maxShowDistance={30}>
             <Prefab
+              // The main event icon
               key={index}
               id={prefab_id}
               x={stats.pos_xyz[0]}
@@ -192,14 +193,15 @@ const EventOverlay: HDKComponent<{ name: string; prefab_id: id; prefab_scale: nu
               scale={prefab_scale}
             />
             <Prefab
+              // Beam to easily find the event
               key={index}
               id='rounded_cylinder_01'
               material={beam_colour}
               scaleY={50}
-              scaleZ={0.5}
-              scaleX={0.5}
+              scaleZ={0.2}
+              scaleX={0.2}
               x={stats.pos_xyz[0]}
-              y={stats.pos_xyz[1] + 5}
+              y={stats.pos_xyz[1] + 1}
               z={stats.pos_xyz[2]}
               rotX={stats.rot_xyz[0]}
               rotY={stats.rot_xyz[1]}
@@ -217,19 +219,26 @@ const World = () => (
   <HNode>
     <WorldFromJson />
 
-    <Spawnpoint x={-72.1} y={0} z={-135.5} />
+    <Spawnpoint x={-72.1} y={5} z={-135.5} />
+
+    {/* Global button */}
+    <InfoPanel body='Global Button' header='This will turn off all the event overlays' >
+      <ButtonSensor output="globalButton" x={-71.7} y={-1.0} z={-143.7} scale={5} y={3} />
 
 
+      {/* gameStats button */}
+  
+        <InfoPanel body='gameStats Events' header='This will toggle on/off the gameStats event' >
+          <ButtonSensor output="gameStatsButton" x={-73.7} y={-1.0} z={-143.7} scale={3} y={3} />
+          <AndGate inputs={["gameStatsButton", "globalButton"]} output="gameStatsOn" />
+        </InfoPanel>
 
-    {/* <ButtonSensor output="globalButton" x={-71.7} y={-1.0} z={-143.7} scale={3} />
-    <ButtonSensor output="gameStatsButton" x={-73.7} y={-1.0} z={-143.7} scale={3} />
-    <OrGate inputs={["gameStatsButton", "globalButton"]} output="gameStatsOn" /> */}
-{/* 
-    <VisibleOnSignal input="gameStatsOn"> */}
-    <EventOverlay name='gameStats' prefab_id='en_p_torch_standing_01' prefab_scale={2} beam_colour='palette_01_green' y={0} />
-    {/* </VisibleOnSignal> */}
+        <VisibleOnSignal input="gameStatsOn">
+          <EventOverlay name='gameStats' prefab_id='ancient_urn_01' prefab_scale={1} beam_colour='palette_01_green' y={0} />
+        </VisibleOnSignal>
+     
 
-    {/* <EventOverlay name='gameEmote' prefab_id='hologram_01_hibert' prefab_scale={2} beam_colour='palette_01_red' y={0} />
+      {/* <EventOverlay name='gameEmote' prefab_id='hologram_01_hibert' prefab_scale={2} beam_colour='palette_01_red' y={0} />
     <EventOverlay name='gameInteract' prefab_id='sign_wooden_01_exclamtion' prefab_scale={2} beam_colour='palette_01_blue' y={0} />
     <EventOverlay name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_scale={2} beam_colour='palette_01_yellow' y={0} />
     <EventOverlay name='gameSignalSent' prefab_id='animated_light_01' prefab_scale={4} beam_colour='palette_02_green' y={0} />

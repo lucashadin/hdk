@@ -29,6 +29,7 @@ and environment in ('dev', 'development')
 -- and player_id = '3547'
 and id = '1358077321109633'
 and mode_header = 'play'
+and raw_json::coord_xyz is not null
 group by 1,2,3;
 
 `
