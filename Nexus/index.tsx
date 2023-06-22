@@ -13,9 +13,22 @@ import worldData from './data/world_data.json';
 
 
 // Since pos_xyz and rot_xyz are strings in your JSON, we need to parse them into arrays
+// function parseDiveData(diveData: any[], aggregation: boolean) {
+//   diveData.forEach(stats => {
+//     stats.pos_xyz = JSON.parse(stats.pos_xyz);
+//     stats.rot_xyz = JSON.parse(stats.rot_xyz);
+    
+//     if (aggregation) {
+//       stats.pos_xyz = stats.pos_xyz.map((value: number) => Math.round(value));
+//     }
+//   });
+// }
+
+// parseDiveData(diveData, true);
+
 diveData.forEach(stats => {
   stats.pos_xyz = JSON.parse(stats.pos_xyz);
-  stats.rot_xyz = JSON.parse(stats.rot_xyz);
+  // stats.rot_xyz = JSON.parse(stats.rot_xyz);
 });
 
 const PlaceEvents: HDKComponent<{ name: string; prefab_id: PrefabId; prefab_scale: number; beam_colour: MaterialId, beam_height:number }> = ({ name, prefab_id, prefab_scale, beam_colour,beam_height, ...props }) => {
@@ -32,7 +45,7 @@ const PlaceEvents: HDKComponent<{ name: string; prefab_id: PrefabId; prefab_scal
           <InfoPanel
             isOpenInOverlayEnabled
             header={name}
-            body={name}
+            body={stats.count.toString()}
             maxShowDistance={30}>
             <Prefab
               // The main event icon
@@ -41,9 +54,9 @@ const PlaceEvents: HDKComponent<{ name: string; prefab_id: PrefabId; prefab_scal
               x={stats.pos_xyz[0]}
               y={stats.pos_xyz[1]}
               z={stats.pos_xyz[2]}
-              rotX={stats.rot_xyz[0]}
-              rotY={stats.rot_xyz[1]}
-              rotZ={stats.rot_xyz[2]}
+              // rotX={stats.rot_xyz[0]}
+              // rotY={stats.rot_xyz[1]}
+              // rotZ={stats.rot_xyz[2]}
               scale={prefab_scale}
             />
             <Prefab
@@ -57,9 +70,9 @@ const PlaceEvents: HDKComponent<{ name: string; prefab_id: PrefabId; prefab_scal
               x={stats.pos_xyz[0]}
               y={stats.pos_xyz[1] + 1}
               z={stats.pos_xyz[2]}
-              rotX={stats.rot_xyz[0]}
-              rotY={stats.rot_xyz[1]}
-              rotZ={stats.rot_xyz[2]}
+              // rotX={stats.rot_xyz[0]}
+              // rotY={stats.rot_xyz[1]}
+              // rotZ={stats.rot_xyz[2]}
             />
           </InfoPanel>
         ))}
