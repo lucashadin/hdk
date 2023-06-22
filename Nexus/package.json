@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "hdk dev --open",
     "upload": "hdk upload",
-    "generate-data": "ts-node ./scripts/generate-data.mjs"
+    "download-input-data": "ts-node ./scripts/download-input-data.mjs"
   },
   "dependencies": {
     "@hiber3d/hdk-cli": "^0.5.3",
@@ -14,6 +14,7 @@
     "@hiber3d/hdk-react": "^0.7.2",
     "@hiber3d/hdk-react-components": "^0.7.2",
     "@hiber3d/hdk-utils": "^0.4.9",
+    "isomorphic-fetch": "^3.0.0",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
