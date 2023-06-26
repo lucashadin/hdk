@@ -1,5 +1,6 @@
 import { CoreHNode, generateId } from "@hiber3d/hdk-core";
 import { HDKComponent, HNode } from "@hiber3d/hdk-react";
+import React from 'react';
 
 export const prefabToCoreHNode = (prefabDefinition: CoreHNode) => {
     const prefab = JSON.parse(JSON.stringify(prefabDefinition)) as CoreHNode;

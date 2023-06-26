@@ -31,7 +31,18 @@ diveData.forEach(stats => {
   // stats.rot_xyz = JSON.parse(stats.rot_xyz);
 });
 
-const PlaceEvents: HDKComponent<{ name: string; prefab_id: PrefabId; prefab_scale: number; beam_colour: MaterialId, beam_height:number }> = ({ name, prefab_id, prefab_scale, beam_colour,beam_height, ...props }) => {
+
+
+const HeatmapColours: DataObject[] = [
+  { count: 10, color: '' },
+  { count: 25, color: '' },
+  { count: 50, color: '' },
+  // ... other data objects
+];
+
+
+
+const PlaceEvents: HDKComponent<{ name: string; prefab_id: PrefabId; prefab_material: MaterialId; prefab_scale: number; beam_colour: MaterialId, beam_height:number }> = ({ name, prefab_id, prefab_material, prefab_scale, beam_colour,beam_height, ...props }) => {
   // why doesn't id autopopulate from the definition?
   // why can't I send props into it? 
   return (
@@ -51,6 +62,7 @@ const PlaceEvents: HDKComponent<{ name: string; prefab_id: PrefabId; prefab_scal
               // The main event icon
               key={index}
               id={prefab_id}
+              material={prefab_material}
               x={stats.pos_xyz[0]}
               y={stats.pos_xyz[1]}
               z={stats.pos_xyz[2]}
@@ -130,31 +142,31 @@ const World = () => (
     <EventControlPanel />
 
     <VisibleOnSignal input="gameStatsOn">
-      <PlaceEvents name='gameStats' prefab_id='ancient_urn_01' prefab_scale={1} beam_colour='palette_01_green' beam_height={10} y={0} />
+      <PlaceEvents name='gameStats' prefab_id='cube_01' prefab_material='palette_01_green' prefab_scale={1} beam_colour='palette_01_green' beam_height={0} y={0} />
     </VisibleOnSignal>
 
     <VisibleOnSignal input="gameEmoteOn">
-      <PlaceEvents name='gameEmote' prefab_id='hologram_01_hibert' prefab_scale={2} beam_colour='palette_01_red' beam_height={50} y={0} />
+      <PlaceEvents name='gameEmote' prefab_id='hologram_01_hibert' prefab_material = 'palette_01_red' prefab_scale={2} beam_colour='palette_01_red' beam_height={50} y={0} />
     </VisibleOnSignal>
 
     <VisibleOnSignal input="gameInteractOn">
-      <PlaceEvents name='gameInteract' prefab_id='sign_wooden_01_exclamtion' prefab_scale={2} beam_colour='palette_01_blue' beam_height={50} y={0} />
+      <PlaceEvents name='gameInteract' prefab_id='sign_wooden_01_exclamtion' prefab_material = 'palette_01_blue' prefab_scale={2} beam_colour='palette_01_blue' beam_height={50} y={0} />
     </VisibleOnSignal>
 
     <VisibleOnSignal input="gameContentShownOn">
-      <PlaceEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={50} y={0} />
+      <PlaceEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_material = 'palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={50} y={0} />
     </VisibleOnSignal>
 
 
 
-    {/* <PlaceEvents name='gameEmote' prefab_id='hologram_01_hibert' prefab_scale={2} beam_colour='palette_01_red' y={0} />
-    <PlaceEvents name='gameInteract' prefab_id='sign_wooden_01_exclamtion' prefab_scale={2} beam_colour='palette_01_blue' y={0} />
-    <PlaceEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_scale={2} beam_colour='palette_01_yellow' y={0} />
-    <PlaceEvents name='gameSignalSent' prefab_id='animated_light_01' prefab_scale={4} beam_colour='palette_02_green' y={0} />
-    <PlaceEvents name='gameWorldLeft' prefab_id='sign_wooden_01_skull' prefab_scale={2} beam_colour='palette_01_black' y={0} />
-    <PlaceEvents name='gameRestarted' prefab_id='sign_wooden_01_arrow_left' prefab_scale={2} beam_colour='palette_01_pink' y={0} />
-    <PlaceEvents name='gameFinished' prefab_id='sign_wooden_01_goal' prefab_scale={2} beam_colour='t_rainbow_02' y={0} />
-    <PlaceEvents name='gameSignalSent' prefab_id='animated_light_01' prefab_scale={4} beam_colour='palette_02_green' y={0} /> */}
+    {/* <PlaceEvents name='gameEmote' prefab_id='hologram_01_hibert' prefab_material = 'palette_01_red' prefab_scale={2} beam_colour='palette_01_red' y={0} />
+    <PlaceEvents name='gameInteract' prefab_id='sign_wooden_01_exclamtion' prefab_material = 'palette_01_blue' prefab_scale={2} beam_colour='palette_01_blue' y={0} />
+    <PlaceEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_material = 'palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' y={0} />
+    <PlaceEvents name='gameSignalSent' prefab_id='animated_light_01' prefab_material = 'palette_02_green' prefab_scale={4} beam_colour='palette_02_green' y={0} />
+    <PlaceEvents name='gameWorldLeft' prefab_id='sign_wooden_01_skull' prefab_material = 'palette_01_black' prefab_scale={2} beam_colour='palette_01_black' y={0} />
+    <PlaceEvents name='gameRestarted' prefab_id='sign_wooden_01_arrow_left' prefab_material = 'palette_01_pink' prefab_scale={2} beam_colour='palette_01_pink' y={0} />
+    <PlaceEvents name='gameFinished' prefab_id='sign_wooden_01_goal' prefab_material = 't_rainbow_02' prefab_scale={2} beam_colour='t_rainbow_02' y={0} />
+    <PlaceEvents name='gameSignalSent' prefab_id='animated_light_01' prefab_material = 'palette_02_green' prefab_scale={4} beam_colour='palette_02_green' y={0} /> */}
 
 
   </HNode >

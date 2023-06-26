@@ -442,7 +442,7 @@ const WelcomeSign: HDKComponent = props => (
   <InfoPanel
 
     header="Welcome Cyber Battle Royale!"
-    body="Survive for 50 seconds and the platform in the middle will take you to the goal!"
+    body="Survive for 50 seconds to progress to the next level!"
     // url="https://developer.hiber3d.com/docs"
     openUrlInNewTab={true}>
     <Prefab
