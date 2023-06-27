@@ -27,13 +27,6 @@ diveDataAggregated.forEach(agg_data => {
 
 
 
-const HeatmapColours: DataObject[] = [
-  { count: 10, color: '' },
-  { count: 25, color: '' },
-  { count: 50, color: '' },
-  // ... other data objects
-];
-
 
 
 const PlaceRawEvents: HDKComponent<{ name: string; prefab_id: PrefabId; prefab_material: MaterialId; prefab_scale: number; beam_colour: MaterialId, beam_height: number }> = ({ name, prefab_id, prefab_material, prefab_scale, beam_colour, beam_height, ...props }) => {
@@ -95,43 +88,33 @@ const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId;  
   return (
     <HNode {...props}>
       {diveDataAggregated
-        .filter(raw_data => raw_data.name === name)
-        .map((raw_data, index) => {
+        .filter(agg_data => agg_data.name === name)
+        .map((agg_data, index) => {
           const prefab_material =
-            raw_data.count === 1
+            agg_data.count === 1
               ? 'palette_01_green'
-              : raw_data.count === 2
+              : agg_data.count === 2
               ? 'palette_01_yellow'
               : 'palette_01_red';
 
-          const bodyText = `Count: ${raw_data.count.toString()}, Pos: ${raw_data.pos_xyz.toString()}`;
+          const bodyText = `Count: ${agg_data.count.toString()}, Pos: ${agg_data.pos_xyz.toString()}`;
 
           return (
             <InfoPanel key={index} isOpenInOverlayEnabled header={name} body={bodyText} maxShowDistance={30}>
               <Prefab
                 id={prefab_id}
                 material={prefab_material}
-                x={raw_data.pos_xyz[0]}
-                y={raw_data.pos_xyz[1]}
-                z={raw_data.pos_xyz[2]}
-                rotX={raw_data.rot_xyz[0]}
-                rotY={raw_data.rot_xyz[1]}
-                rotZ={raw_data.rot_xyz[2]}
+                x={agg_data.pos_xyz[0]}
+                y={agg_data.pos_xyz[1]}
+                z={agg_data.pos_xyz[2]}
+                rotX={agg_data.rot_xyz[0]}
+                rotY={agg_data.rot_xyz[1]}
+                rotZ={agg_data.rot_xyz[2]}
+                scaleX={1}
+                scaleY={0.05}
+                scaleZ={1}
                 
-              />
-              <Prefab
-                id="rounded_cylinder_01"
-                material={beam_colour}
-                scaleY={beam_height}
-                scaleZ={0.2}
-                scaleX={0.2}
-                x={raw_data.pos_xyz[0]}
-                y={raw_data.pos_xyz[1] + 1}
-                z={raw_data.pos_xyz[2]}
-                rotX={raw_data.rot_xyz[0]}
-                rotY={raw_data.rot_xyz[1]}
-                rotZ={raw_data.rot_xyz[2]}
-              />
+              />  
             </InfoPanel>
           );
         })}
@@ -222,7 +205,7 @@ const OverlayAggregatedEvents = () => (
   <HNode>
 
     <VisibleOnSignal input="gameStatsOn">
-      <PlaceAggregatedEvents name='gameStats' prefab_id='cube_01' scaleX={5} scaleY={0.3} scaleZ={5} beam_colour='palette_01_green' beam_height={0} y={0} />
+      <PlaceAggregatedEvents name='gameStats' prefab_id='cube_01' scaleX={1} scaleY={1} scaleZ={1} beam_colour='palette_01_green' beam_height={0} y={0} />
     </VisibleOnSignal>
 
     {/* <VisibleOnSignal input="gameEmoteOn">

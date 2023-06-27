@@ -3,9 +3,9 @@ import * as mysql from 'mysql';
 
 
 // to run this file type in terminal: npm run download-input-data
-const game_id = '1392524094087397'
+const game_id = '1396328036999394'
 const start_date = '2023-06-26'
-const xyz_rounding = 5
+const xyz_rounding = 1
 
 
 // Create a MySQL connection
