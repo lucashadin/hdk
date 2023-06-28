@@ -111,7 +111,7 @@ const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId;  
                 rotY={agg_data.rot_xyz[1]}
                 rotZ={agg_data.rot_xyz[2]}
                 scaleX={1}
-                scaleY={0.05}
+                scaleY={0.1}
                 scaleZ={1}
                 
               />  
@@ -256,8 +256,8 @@ const World = () => (
 
     <EventControlPanel />
 
-    {/* <OverlayAggregatedEvents /> */}
-    <OverlayRawEvents />
+    <OverlayAggregatedEvents />
+    {/* <OverlayRawEvents /> */}
 
 
   </HNode >
