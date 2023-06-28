@@ -126,7 +126,7 @@ const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId;  
 
 
 const EventControlPanel: HDKComponent = props => (
-  <HNode x={19.8} y={25.6} z={22.4}>
+  <HNode x={19.8} y={100} z={22.4}>
 
     <Prefab id='cube_01' material='palette_01_black' y={0} z={3.5} scaleY={0.1} scaleZ={3} scaleX={4} />
 
@@ -143,10 +143,10 @@ const EventControlPanel: HDKComponent = props => (
         <AndGate inputs={["gameStatsButton", "globalButton"]} output="gameStatsOn" />
       </InfoPanel>
 
-      {/* gameEmote button */}
-      <InfoPanel body='gameEmote Events' header='This will toggle on/off the gameEmote event' >
-        <ButtonSensor output="gameEmoteButton" x={-1} y={1} z={0} scale={1} materialOn='palette_01_red' materialOff='palette_01_grey' />
-        <AndGate inputs={["gameEmoteButton", "globalButton"]} output="gameEmoteOn" />
+      {/* gameWorldLeft button */}
+      <InfoPanel body='gameWorldLeft Events' header='This will toggle on/off the gameWorldLeft event' >
+        <ButtonSensor output="gameWorldLeftButton" x={-1} y={1} z={0} scale={1} materialOn='palette_01_red' materialOff='palette_01_grey' />
+        <AndGate inputs={["gameWorldLeftButton", "globalButton"]} output="gameWorldLeftOn" />
       </InfoPanel>
 
       {/* gameInteract button */}
@@ -160,6 +160,12 @@ const EventControlPanel: HDKComponent = props => (
         <ButtonSensor output="gameContentShownButton" x={1} y={1} z={0} scale={1} materialOn='palette_01_yellow' materialOff='palette_01_grey' />
         <AndGate inputs={["gameContentShownButton", "globalButton"]} output="gameContentShownOn" />
       </InfoPanel>
+
+      {/* gameRestarted button */}
+      <InfoPanel body='gameRestarted Events' header='This will toggle on/off the gameRestarted event' >
+        <ButtonSensor output="gameRestartedButton" x={1} y={1} z={0} scale={1} materialOn='palette_01_yellow' materialOff='palette_01_grey' />
+        <AndGate inputs={["gameRestartedButton", "globalButton"]} output="gameRestartedOn" />
+      </InfoPanel>
     </HNode>
 
 
@@ -170,20 +176,24 @@ const EventControlPanel: HDKComponent = props => (
 const OverlayRawEvents = () => (
   <HNode>
 
-    <VisibleOnSignal input="gameStatsOn">
+    {/* <VisibleOnSignal input="gameStatsOn">
       <PlaceRawEvents name='gameStats' prefab_id='cube_01' prefab_material='palette_01_green' prefab_scale={1} beam_colour='palette_01_green' beam_height={0} y={0} />
+    </VisibleOnSignal> */}
+
+    <VisibleOnSignal input="gameWorldLeftOn">
+      <PlaceRawEvents name='gameWorldLeft' prefab_id='hologram_01_hibert' prefab_material='palette_01_red' prefab_scale={2} beam_colour='palette_01_red' beam_height={1} y={0} />
     </VisibleOnSignal>
 
-    <VisibleOnSignal input="gameEmoteOn">
-      <PlaceRawEvents name='gameEmote' prefab_id='hologram_01_hibert' prefab_material='palette_01_red' prefab_scale={2} beam_colour='palette_01_red' beam_height={50} y={0} />
-    </VisibleOnSignal>
-
-    <VisibleOnSignal input="gameInteractOn">
+    {/* <VisibleOnSignal input="gameInteractOn">
       <PlaceRawEvents name='gameInteract' prefab_id='sign_wooden_01_exclamtion' prefab_material='palette_01_blue' prefab_scale={2} beam_colour='palette_01_blue' beam_height={50} y={0} />
-    </VisibleOnSignal>
+    </VisibleOnSignal> */}
 
-    <VisibleOnSignal input="gameContentShownOn">
+    {/* <VisibleOnSignal input="gameContentShownOn">
       <PlaceRawEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={50} y={0} />
+    </VisibleOnSignal> */}
+
+     <VisibleOnSignal input="gameRestartedOn">
+      <PlaceRawEvents name='gameRestarted' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={1} y={0} />
     </VisibleOnSignal>
 
 
@@ -204,21 +214,21 @@ const OverlayRawEvents = () => (
 const OverlayAggregatedEvents = () => (
   <HNode>
 
-    <VisibleOnSignal input="gameStatsOn">
+     <VisibleOnSignal input="gameStatsOn">
       <PlaceAggregatedEvents name='gameStats' prefab_id='cube_01' scaleX={1} scaleY={1} scaleZ={1} beam_colour='palette_01_green' beam_height={0} y={0} />
-    </VisibleOnSignal>
+    </VisibleOnSignal> 
 
     {/* <VisibleOnSignal input="gameEmoteOn">
-      <PlaceAggregatedEvents name='gameEmote' prefab_id='hologram_01_hibert' prefab_material='palette_01_red' prefab_scale={2} beam_colour='palette_01_red' beam_height={50} y={0} />
+      <PlaceAggregatedEvents name='gameEmote' prefab_id='hologram_01_hibert' scaleX={1} scaleY={1} scaleZ={1} prefab_scale={2} beam_colour='palette_01_red' beam_height={50} y={0} />
     </VisibleOnSignal>
 
     <VisibleOnSignal input="gameInteractOn">
-      <PlaceAggregatedEvents name='gameInteract' prefab_id='sign_wooden_01_exclamtion' prefab_material='palette_01_blue' prefab_scale={2} beam_colour='palette_01_blue' beam_height={50} y={0} />
+      <PlaceAggregatedEvents name='gameInteract' prefab_id='sign_wooden_01_exclamtion' scaleX={1} scaleY={1} scaleZ={1} prefab_scale={2} beam_colour='palette_01_blue' beam_height={50} y={0} />
     </VisibleOnSignal>
 
     <VisibleOnSignal input="gameContentShownOn">
-      <PlaceAggregatedEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={50} y={0} />
-    </VisibleOnSignal> */}
+      <PlaceAggregatedEvents name='gameContentShown' prefab_id='sign_wooden_01_question' scaleX={1} scaleY={1} scaleZ={1} prefab_scale={2} beam_colour='palette_01_yellow' beam_height={50} y={0} />
+    </VisibleOnSignal>  */}
 
 
 
@@ -242,12 +252,12 @@ const World = () => (
   <HNode>
     <WorldFromJson worldJson={worldData} />
 
-    <Spawnpoint x={19.5} y={25.8} z={25.3} />
+    <Spawnpoint x={19.5} y={100} z={25.3} />
 
     <EventControlPanel />
 
-    <OverlayAggregatedEvents />
-    {/* <OverlayRawEvents /> */}
+    {/* <OverlayAggregatedEvents /> */}
+    <OverlayRawEvents />
 
 
   </HNode >

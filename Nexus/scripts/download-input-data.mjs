@@ -5,7 +5,7 @@ import * as mysql from 'mysql';
 // to run this file type in terminal: npm run download-input-data
 const game_id = '1396328036999394'
 const start_date = '2023-06-26'
-const xyz_rounding = 1
+const xyz_rounding = 2
 
 
 // Create a MySQL connection
@@ -64,13 +64,15 @@ raw_query = `
     FROM hiber_landing.events AS e
     WHERE 1=1
     AND e.date_utc BETWEEN '${start_date}' AND CURDATE()
-      AND e.name IN ('gameStats','gameEmote','gameInteract','gameContentShown','gameSignalSent','gameWorldLeft','gameRestarted','gameFinished')
+      -- AND e.name IN ('gameStats','gameEmote','gameInteract','gameContentShown','gameSignalSent','gameWorldLeft','gameRestarted','gameFinished')
+      AND e.name IN ('gameWorldLeft','gameRestarted')
       AND environment IN ('prod', 'production')
       -- AND player_id = '3547'
       AND id = '${game_id}'
       AND mode_header = 'play'
       AND raw_json::coord_xyz IS NOT NULL
-    GROUP BY 1,2,3;
+    GROUP BY 1,2,3
+    limit 2000;
   `;
 
 
