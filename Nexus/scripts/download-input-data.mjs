@@ -3,9 +3,9 @@ import * as mysql from 'mysql';
 
 
 // to run this file type in terminal: npm run download-input-data
-const game_id = '1396328036999394'
+const game_id = '1401066903625944'
 const start_date = '2023-06-26'
-const xyz_rounding = 1
+const xyz_rounding = 5
 
 
 // Create a MySQL connection
@@ -65,7 +65,7 @@ raw_query = `
     WHERE 1=1
     AND e.date_utc BETWEEN '${start_date}' AND CURDATE()
       -- AND e.name IN ('gameStats','gameEmote','gameInteract','gameContentShown','gameSignalSent','gameWorldLeft','gameRestarted','gameFinished')
-      AND e.name IN ('gameWorldLeft','gameRestarted')
+      AND e.name IN ('gameWorldLeft','gameRestarted','gameLifeLost')
       AND environment IN ('prod', 'production')
       -- AND player_id = '3547'
       AND id = '${game_id}'
