@@ -110,9 +110,9 @@ const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId;  
                 rotX={agg_data.rot_xyz[0]}
                 rotY={agg_data.rot_xyz[1]}
                 rotZ={agg_data.rot_xyz[2]}
-                scaleX={2.5}
+                scaleX={0.5}
                 scaleY={0.1}
-                scaleZ={2.5}
+                scaleZ={0.5}
                 
               />  
             </InfoPanel>
