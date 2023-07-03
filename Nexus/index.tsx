@@ -79,7 +79,7 @@ const PlaceRawEvents: HDKComponent<{ name: string; prefab_id: PrefabId; prefab_m
   );
 };
 
-const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId;  beam_colour: MaterialId, beam_height: number, xyz_rounding: number }> = ({ name, prefab_id, beam_colour, beam_height, xyz_rounding,...props }) => {
+const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId; beam_colour: MaterialId, beam_height: number, xyz_rounding: number }> = ({ name, prefab_id, beam_colour, beam_height, xyz_rounding, ...props }) => {
   // why doesn't id autopopulate from the definition?
   // why can't I send props into it? 
 
@@ -94,8 +94,8 @@ const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId;  
             agg_data.count === 1
               ? 'palette_01_green'
               : agg_data.count === 2
-              ? 'palette_01_yellow'
-              : 'palette_01_red';
+                ? 'palette_01_yellow'
+                : 'palette_01_red';
 
           const bodyText = `Count: ${agg_data.count.toString()}, Pos: ${agg_data.pos_xyz.toString()}`;
 
@@ -110,13 +110,13 @@ const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId;  
                 rotX={agg_data.rot_xyz[0]}
                 rotY={agg_data.rot_xyz[1]}
                 rotZ={agg_data.rot_xyz[2]}
-                scaleX={2.5}
-                // scaleX={0.5*{xyz_rounding}}
+                // scaleX={2.5}
+                scaleX={0.5 * xyz_rounding}
                 scaleY={0.1}
-                scaleZ={2.5}
-                // scaleZ={0.5*{xyz_rounding}}
-                
-              />  
+                // scaleZ={2.5}
+                scaleZ={0.5 * xyz_rounding}
+
+              />
             </InfoPanel>
           );
         })}
@@ -128,7 +128,7 @@ const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId;  
 
 
 const EventControlPanel: HDKComponent = props => (
-  <HNode x={19.8} y={100} z={22.4}>
+  <HNode x={-0.3} y={10} z={-152.7}>
 
     <Prefab id='cube_01' material='palette_01_black' y={0} z={3.5} scaleY={0.1} scaleZ={3} scaleX={4} />
 
@@ -178,12 +178,12 @@ const EventControlPanel: HDKComponent = props => (
 const OverlayRawEvents = () => (
   <HNode>
 
-     {/* <VisibleOnSignal input="gameStatsOn">
+    {/* <VisibleOnSignal input="gameStatsOn">
       <PlaceRawEvents name='gameStats' prefab_id='cube_01' prefab_material='palette_01_green' prefab_scale={1} beam_colour='palette_01_green' beam_height={0} y={0} />
     </VisibleOnSignal>  */}
 
     <VisibleOnSignal input="gameWorldLeftOn">
-      <PlaceRawEvents name='gameWorldLeft' prefab_id='hologram_01_hibert' prefab_material='palette_01_red' prefab_scale={2} beam_colour='palette_01_red' beam_height={1} y={0} />
+      <PlaceRawEvents name='gameWorldLeft' prefab_id='hologram_01_hibert' prefab_material='palette_01_red' prefab_scale={2} beam_colour='palette_01_red' beam_height={20} y={0} />
     </VisibleOnSignal>
 
     {/* <VisibleOnSignal input="gameInteractOn">
@@ -194,8 +194,8 @@ const OverlayRawEvents = () => (
       <PlaceRawEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={50} y={0} />
     </VisibleOnSignal> */}
 
-     <VisibleOnSignal input="gameRestartedOn">
-      <PlaceRawEvents name='gameRestarted' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={1} y={0} />
+    <VisibleOnSignal input="gameRestartedButton">
+      <PlaceRawEvents name='gameRestarted' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={20} y={0} />
     </VisibleOnSignal>
 
 
@@ -214,15 +214,15 @@ const OverlayRawEvents = () => (
 );
 
 
-const OverlayAggregatedEvents = (xyz_rounding) => {
+const OverlayAggregatedEvents = ({ xyz_rounding }) => {
   return (
     <HNode>
 
-     <VisibleOnSignal input="gameStatsOn">
-      <PlaceAggregatedEvents name='gameStats' prefab_id='cube_01' scaleX={1} scaleY={1} scaleZ={1} beam_colour='palette_01_green' beam_height={0} y={0} xyz_rounding = {xyz_rounding}/>
-    </VisibleOnSignal> 
+      <VisibleOnSignal input="gameStatsOn">
+        <PlaceAggregatedEvents name='gameStats' prefab_id='cube_01' scaleX={1} scaleY={1} scaleZ={1} beam_colour='palette_01_green' beam_height={0} y={0} xyz_rounding={xyz_rounding} />
+      </VisibleOnSignal>
 
-    {/* <VisibleOnSignal input="gameEmoteOn">
+      {/* <VisibleOnSignal input="gameEmoteOn">
       <PlaceAggregatedEvents name='gameEmote' prefab_id='hologram_01_hibert' scaleX={1} scaleY={1} scaleZ={1} prefab_scale={2} beam_colour='palette_01_red' beam_height={50} y={0} />
     </VisibleOnSignal>
 
@@ -236,7 +236,7 @@ const OverlayAggregatedEvents = (xyz_rounding) => {
 
 
 
-    {/* <PlaceAggregatedEvents name='gameEmote' prefab_id='hologram_01_hibert' prefab_material = 'palette_01_red' prefab_scale={2} beam_colour='palette_01_red' y={0} />
+      {/* <PlaceAggregatedEvents name='gameEmote' prefab_id='hologram_01_hibert' prefab_material = 'palette_01_red' prefab_scale={2} beam_colour='palette_01_red' y={0} />
     <PlaceAggregatedEvents name='gameInteract' prefab_id='sign_wooden_01_exclamtion' prefab_material = 'palette_01_blue' prefab_scale={2} beam_colour='palette_01_blue' y={0} />
     <PlaceAggregatedEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_material = 'palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' y={0} />
     <PlaceAggregatedEvents name='gameSignalSent' prefab_id='animated_light_01' prefab_material = 'palette_02_green' prefab_scale={4} beam_colour='palette_02_green' y={0} />
@@ -246,7 +246,7 @@ const OverlayAggregatedEvents = (xyz_rounding) => {
     <PlaceAggregatedEvents name='gameSignalSent' prefab_id='animated_light_01' prefab_material = 'palette_02_green' prefab_scale={4} beam_colour='palette_02_green' y={0} /> */}
 
 
-</HNode>
+    </HNode>
   );
 };
 
@@ -256,12 +256,12 @@ const World = () => (
   <HNode>
     <WorldFromJson worldJson={worldData} />
 
-    <Spawnpoint x={19.5} y={100} z={25.3} />
+    <Spawnpoint x={-0.3} y={10} z={-152.7} />
 
     <EventControlPanel />
 
-    <OverlayAggregatedEvents xyz_rounding={5} />
-    {/* <OverlayRawEvents /> */}
+    <OverlayAggregatedEvents xyz_rounding={3} />
+    <OverlayRawEvents />
 
 
   </HNode >
