@@ -110,11 +110,16 @@ const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId; b
                 rotX={agg_data.rot_xyz[0]}
                 rotY={agg_data.rot_xyz[1]}
                 rotZ={agg_data.rot_xyz[2]}
-                scaleX={2.5}
-                // scaleX={0.5*{xyz_rounding}}
+                // scaleX={2.5}
+                scaleX={0.5 * xyz_rounding}
                 scaleY={0.1}
+<<<<<<< HEAD
                 scaleZ={2.5}
               // scaleZ={0.5*{xyz_rounding}}
+=======
+                // scaleZ={2.5}
+                scaleZ={0.5 * xyz_rounding}
+>>>>>>> 375e629f13de45da7f4e1a98f31098ea4db26a72
 
               />
             </InfoPanel>
@@ -128,7 +133,7 @@ const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId; b
 
 
 const EventControlPanel: HDKComponent = props => (
-  <HNode x={19.8} y={100} z={22.4}>
+  <HNode x={-0.3} y={10} z={-152.7}>
 
     <Prefab id='cube_01' material='palette_01_black' y={0} z={3.5} scaleY={0.1} scaleZ={3} scaleX={4} />
 
@@ -187,7 +192,7 @@ const OverlayRawEvents = () => (
     </VisibleOnSignal>  */}
 
     <VisibleOnSignal input="gameWorldLeftOn">
-      <PlaceRawEvents name='gameWorldLeft' prefab_id='hologram_01_hibert' prefab_material='palette_01_red' prefab_scale={2} beam_colour='palette_01_red' beam_height={1} y={0} />
+      <PlaceRawEvents name='gameWorldLeft' prefab_id='hologram_01_hibert' prefab_material='palette_01_red' prefab_scale={2} beam_colour='palette_01_red' beam_height={20} y={0} />
     </VisibleOnSignal>
 
     {/* <VisibleOnSignal input="gameInteractOn">
@@ -198,8 +203,13 @@ const OverlayRawEvents = () => (
       <PlaceRawEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={50} y={0} />
     </VisibleOnSignal> */}
 
+<<<<<<< HEAD
     <VisibleOnSignal input="gameRestartedOn">
       <PlaceRawEvents name='gameRestarted' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={1} y={0} />
+=======
+    <VisibleOnSignal input="gameRestartedButton">
+      <PlaceRawEvents name='gameRestarted' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={20} y={0} />
+>>>>>>> 375e629f13de45da7f4e1a98f31098ea4db26a72
     </VisibleOnSignal>
 
 
@@ -218,7 +228,7 @@ const OverlayRawEvents = () => (
 );
 
 
-const OverlayAggregatedEvents = (xyz_rounding) => {
+const OverlayAggregatedEvents = ({ xyz_rounding }) => {
   return (
     <HNode>
 
@@ -260,7 +270,7 @@ const World = () => (
   <HNode>
     <WorldFromJson worldJson={worldData} />
 
-    <Spawnpoint x={19.5} y={100} z={25.3} />
+    <Spawnpoint x={-0.3} y={10} z={-152.7} />
 
     <EventControlPanel />
 
