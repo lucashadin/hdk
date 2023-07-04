@@ -3,9 +3,9 @@ import * as mysql from 'mysql';
 
 
 // to run this file type in terminal: npm run download-input-data
-const game_id = '1401066903625944'
-const start_date = '2023-06-26'
-const xyz_rounding = 5
+const game_id = '1396328036999394'
+const start_date = '2023-06-28'
+const xyz_rounding = 1
 
 
 // Create a MySQL connection
@@ -51,7 +51,8 @@ aggregated_query = `
       AND id = '${game_id}'
       AND mode_header = 'play'
       AND raw_json::coord_xyz IS NOT NULL
-    GROUP BY 1,2;
+    GROUP BY 1,2
+    limit 2000;
   `;
 
 

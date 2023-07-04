@@ -134,8 +134,8 @@ export const prefabToCoreHNode = (prefabDefinition: CoreHNode) => {
   
     return (
       <HNode>
-        {prefabs.map(prefab => (
-          <HNode>
+        {prefabs.map((prefab, index) => (
+          <HNode key={`prefab-${index}`}>
             {prefabToCoreHNode(prefab).children.map((child, index) => (
               <HNode engineId={child.id} key={`prefab-${index}`} engineProps={child.props} />
             ))}
