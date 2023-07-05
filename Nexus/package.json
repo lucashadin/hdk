@@ -16,7 +16,8 @@
     "@hiber3d/hdk-react-components": "^0.7.13",
     "@hiber3d/hdk-utils": "^0.4.19",
     "isomorphic-fetch": "^3.0.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "mysql-await": "^2.2.3"
   },
   "devDependencies": {
     "@types/mysql": "^2.15.21",

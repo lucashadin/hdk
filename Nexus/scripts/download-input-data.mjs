@@ -1,11 +1,11 @@
 import * as fs from 'fs';
-import * as mysql from 'mysql';
+import  mysql from 'mysql-await';
 
 
 // to run this file type in terminal: npm run download-input-data
-const game_id = '1396328036999394'
-const start_date = '2023-06-28'
-const xyz_rounding = 1
+const game_id = '1324822085050602'
+const start_date = '2023-06-26'
+const xyz_rounding = 2
 
 
 // Create a MySQL connection
@@ -26,7 +26,11 @@ let aggregated_query = '';
 let raw_query = '';
 let heatmap_query = '';
 
-
+let combined_data = {
+  aggregated: [],
+  raw: [],
+  heatmap  : [],
+};
 
 
 aggregated_query = `
@@ -45,14 +49,16 @@ aggregated_query = `
     FROM hiber_landing.events AS e
     WHERE 1=1
       AND e.date_utc BETWEEN '${start_date}' AND CURDATE()
-      AND e.name IN ('gameStats','gameEmote','gameInteract','gameContentShown','gameSignalSent','gameWorldLeft','gameRestarted','gameFinished')
+      -- AND e.name IN ('gameStats','gameEmote','gameInteract','gameContentShown','gameSignalSent','gameWorldLeft','gameRestarted','gameFinished')
+      AND e.name IN ('gameStats')
       AND environment IN ('prod', 'production')
       -- AND player_id = '3547'
       AND id = '${game_id}'
       AND mode_header = 'play'
       AND raw_json::coord_xyz IS NOT NULL
     GROUP BY 1,2
-    limit 2000;
+    order by count desc
+    limit 3000;
   `;
 
 
@@ -66,13 +72,14 @@ raw_query = `
     WHERE 1=1
     AND e.date_utc BETWEEN '${start_date}' AND CURDATE()
       -- AND e.name IN ('gameStats','gameEmote','gameInteract','gameContentShown','gameSignalSent','gameWorldLeft','gameRestarted','gameFinished')
-      AND e.name IN ('gameWorldLeft','gameRestarted','gameLifeLost')
+      AND e.name IN ('gameWorldLeft','gameRestarted','gameLifeLost', 'gameEmote')
       AND environment IN ('prod', 'production')
       -- AND player_id = '3547'
       AND id = '${game_id}'
       AND mode_header = 'play'
       AND raw_json::coord_xyz IS NOT NULL
     GROUP BY 1,2,3
+    order by rand()
     limit 2000;
   `;
 
@@ -115,69 +122,47 @@ from
 
 
   // Execute the aggregated query
-  connection.query(aggregated_query, (error, results) => {
+  combined_data.aggregated = await connection.awaitQuery(aggregated_query).catch((error, results) => {
     if (error) {
       console.error('Error executing aggregated query:', error);
       return;
     }
 
-    // Save the results locally as a JSON file
-    fs.writeFile('./data/dive_data_aggregated.json', JSON.stringify(results), 'utf8', (err) => {
-      if (err) {
-        console.error('Error saving aggregated data:', err);
-        return;
-      }
-
-      console.log('Aggregated Dive Events Data saved locally as dive_data_aggregated.json');
-    });
+    combined_data.aggregated = results;
   });
 
   // Execute the raw query
-  connection.query(raw_query, (error, results) => {
+  combined_data.raw = await connection.awaitQuery(raw_query).catch((error, results) => {
     if (error) {
       console.error('Error executing raw query:', error);
       return;
     }
 
-    // Save the results locally as a JSON file
-    fs.writeFile('./data/dive_data_raw.json', JSON.stringify(results), 'utf8', (err) => {
-      if (err) {
-        console.error('Error saving raw data:', err);
-        return;
-      }
-
-      console.log('Raw Dive Events Data saved locally as dive_data_raw.json');
-    });
+    
   });
 
   // Execute the heatmap query
-  connection.query(heatmap_query, (error, results) => {
+  combined_data.heatmap = await connection.awaitQuery(heatmap_query).catch((error, results) => {
     if (error) {
       console.error('Error executing heatmap query:', error);
       return;
     }
 
-    // Save the results locally as a JSON file
-    fs.writeFile('./data/dive_data_heatmap.json', JSON.stringify(results), 'utf8', (err) => {
-      if (err) {
-        console.error('Error saving heatmap data:', err);
-        return;
-      }
+    combined_data.heatmap = results;
 
-      console.log('Heatmap Dive Events Data saved locally as dive_data_heatmap.json');
-      // Close the MySQL connection after all queries are executed
-      connection.end();
-    });
+  });
+  
+  
+  // Save the results locally as a JSON file
+  fs.writeFile('./data/combined.json', JSON.stringify(combined_data), 'utf8', (err) => {
+    if (err) {
+      console.error('Error saving data:', err);
+      return;
+    }
+
+    console.log('Combined Dive Events Data saved locally as dive_data_heatmap.json');
+    // Close the MySQL connection after all queries are executed
+    connection.end();
   });
 
 
-
-
-
-const worldJson = await (await fetch(`https://api.hiberworld.com/project/${game_id}.world`)).json();
-
-// Save the results locally as a JSON file
-fs.writeFile('./data/world_data.json', JSON.stringify(worldJson), 'utf8', (err) => {
-  if (err) throw err;
-  console.log('World Data saved locally as world_data.json');
-});
