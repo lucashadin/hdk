@@ -113,13 +113,8 @@ const PlaceAggregatedEvents: HDKComponent<{ name: string; prefab_id: PrefabId; b
                 // scaleX={2.5}
                 scaleX={0.5 * xyz_rounding}
                 scaleY={0.1}
-<<<<<<< HEAD
-                scaleZ={2.5}
-              // scaleZ={0.5*{xyz_rounding}}
-=======
                 // scaleZ={2.5}
                 scaleZ={0.5 * xyz_rounding}
->>>>>>> 375e629f13de45da7f4e1a98f31098ea4db26a72
 
               />
             </InfoPanel>
@@ -203,13 +198,8 @@ const OverlayRawEvents = () => (
       <PlaceRawEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={50} y={0} />
     </VisibleOnSignal> */}
 
-<<<<<<< HEAD
     <VisibleOnSignal input="gameRestartedOn">
       <PlaceRawEvents name='gameRestarted' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={1} y={0} />
-=======
-    <VisibleOnSignal input="gameRestartedButton">
-      <PlaceRawEvents name='gameRestarted' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={20} y={0} />
->>>>>>> 375e629f13de45da7f4e1a98f31098ea4db26a72
     </VisibleOnSignal>
 
 
@@ -274,8 +264,8 @@ const World = () => (
 
     <EventControlPanel />
 
-    {/* <OverlayAggregatedEvents xyz_rounding={1} /> */}
-    <OverlayRawEvents />
+    <OverlayAggregatedEvents xyz_rounding={1} />
+    {/* <OverlayRawEvents /> */}
 
 
   </HNode >
