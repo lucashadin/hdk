@@ -1,8 +1,10 @@
-import { CoreHNode, generateId, MaterialId, PrefabId } from '@hiber3d/hdk-core';
-import { AndGate, ButtonSensor, HDKComponent, HNode, InfoPanel, InvisibleOnSignal, OrGate, Prefab, render, SpawnPrefabOnSignal, useRandom, VisibleOnSignal } from '@hiber3d/hdk-react';
+import { AnimationId, CoreHNode, generateId, MaterialId, PrefabId } from '@hiber3d/hdk-core';
+import { AndGate, Apply, ButtonSensor, HDKComponent, HNode, InfoPanel, InvisibleOnSignal, OrGate, Prefab, render, SpawnPrefabOnSignal, useRandom, VisibleOnSignal } from '@hiber3d/hdk-react';
 import {
+    Avatar,
     For,
     Ground,
+    ImagePanel,
     Spawnpoint,
 } from '@hiber3d/hdk-react-components';
 import { EngineApi } from '@hiber3d/engine/distribute/hiber.js';
@@ -17,69 +19,69 @@ import combinedData from './data/combined.json';
 
 type DiveDataRaw = {
     name: string;
-    count: number;
     pos_xyz: number[];
     rot_xyz: number[];
+    count: number;
+    metadata1: string;
+    metadata2: string;
 }[];
 
 type PlaceRawEventsProps = {
     diveDataRaw: DiveDataRaw;
     name: string;
-    prefab_id: PrefabId;
-    prefab_material: MaterialId;
-    prefab_scale: number;
-    beam_colour: MaterialId;
-    beam_height: number;
+    material: MaterialId;
+    render_beam?: boolean;
+
 };
 
-const PlaceRawEvents: HDKComponent<PlaceRawEventsProps> = ({ diveDataRaw, name, prefab_id, prefab_material, prefab_scale, beam_colour, beam_height, ...props }) => {
+
+const PlaceRawEvents: HDKComponent<PlaceRawEventsProps> = ({ diveDataRaw, name, material = 'palette_01_pink', render_beam = false, ...props }) => {
     // why doesn't id autopopulate from the definition?
     // why can't I send props into it? 
+
     return (
-
-        <HNode
-            {...props}>
-
+        <HNode {...props}>
             {diveDataRaw
                 .filter(raw_data => raw_data.name === name)
-                .map((raw_data, index) => (
-                    <InfoPanel
-                        isOpenInOverlayEnabled
-                        header={name}
-                        body={raw_data.count.toString()}
-                        maxShowDistance={30}>
-                        <Prefab
-                            // The main event icon
-                            key={index}
-                            id={prefab_id}
-                            material={prefab_material}
+                .map((raw_data, index) => {
+
+                    const bodyText = `Count: ${raw_data.count.toString()}, Metadata1: ${raw_data.metadata1.toString()}, Metadata2: ${raw_data.metadata2.toString()}`;
+
+
+                    return (
+                        <HNode
                             x={raw_data.pos_xyz[0]}
                             y={raw_data.pos_xyz[1]}
                             z={raw_data.pos_xyz[2]}
                             rotX={raw_data.rot_xyz[0]}
                             rotY={raw_data.rot_xyz[1]}
                             rotZ={raw_data.rot_xyz[2]}
-                            scale={prefab_scale}
-                        />
-                        <Prefab
-                            // Beam to easily find the event
-                            key={index}
-                            id='rounded_cylinder_01'
-                            material={beam_colour}
-                            scaleY={beam_height}
-                            scaleZ={0.2}
-                            scaleX={0.2}
-                            x={raw_data.pos_xyz[0]}
-                            y={raw_data.pos_xyz[1] + 1}
-                            z={raw_data.pos_xyz[2]}
-                            rotX={raw_data.rot_xyz[0]}
-                            rotY={raw_data.rot_xyz[1]}
-                            rotZ={raw_data.rot_xyz[2]}
-                        />
-                    </InfoPanel>
-                ))}
+                        >
+                            <InfoPanel key={index} isOpenInOverlayEnabled header={name} body={bodyText} maxShowDistance={10}>
+                                <EventItem name={raw_data.name} metadata1={raw_data.metadata1} material={material} />
+                            </InfoPanel>
+
+                            {render_beam && (
+                                <Prefab
+                                    // Beam to easily find the event                                    
+                                    id='rounded_cylinder_01'
+                                    material={material}
+                                    scaleY={10}
+                                    scaleZ={0.1}
+                                    scaleX={0.1}
+                                    y={1}
+                                />
+                            )}
+                        </HNode>
+
+
+                    );
+                })}
         </HNode>
     );
+
+
+
 };
 
 type PlaceAggEventsProps = {
@@ -104,15 +106,15 @@ const PlaceAggregatedEvents: HDKComponent<PlaceAggEventsProps> = ({ diveDataAggr
                 .map((agg_data, index) => {
                     const prefab_material =
                         agg_data.count <= 10
-                            ? 'palette_01_green'
+                            ? 'palette_02_green'
                             : agg_data.count < 20
                                 ? 'palette_01_yellow'
-                                : 'palette_01_red';
+                                : 'palette_02_red';
 
                     const bodyText = `Count: ${agg_data.count.toString()}, Pos: ${agg_data.pos_xyz.toString()}`;
 
                     return (
-                        <InfoPanel key={index} isOpenInOverlayEnabled header={name} body={bodyText} maxShowDistance={30}>
+                        <InfoPanel key={index} isOpenInOverlayEnabled header={name} body={bodyText} maxShowDistance={10}>
                             <Prefab
                                 id={prefab_id}
                                 material={prefab_material}
@@ -137,17 +139,39 @@ const PlaceAggregatedEvents: HDKComponent<PlaceAggEventsProps> = ({ diveDataAggr
 };
 
 
-const EventControlPanel: HDKComponent = (props) => (
+const WorldStats: HDKComponent = ({worldData, props}) => (
+    <HNode {...props}>
+        <ImagePanel
+            src={`https://placehold.co/600x300/000000/FFF/PNG?text=World+Name:+${worldData.game_name_latest}%0ACompletion+rate:%20${worldData.creator_username}`}
+            ratio={600 / 300}
+            scale={1}
+            backside={true}
+            frame={'stone'}
+        />
+
+
+
+    </HNode>
+
+
+
+
+)
+
+
+const EventControlPanel: HDKComponent = ({worldData, props}) => (
     <HNode {...props}>
 
         <Prefab id='cube_01' material='palette_01_black' y={0} z={3.5} scaleY={0.1} scaleZ={3} scaleX={4} />
+        <Spawnpoint rotY={0} z={3} />
+        <WorldStats rotY={90} z={5} x={10} worldData={worldData}/>
 
 
         <HNode rotX={45}>
             <Prefab id='cube_01' material='palette_01_black' y={0.8} scaleY={0.1} scaleZ={1} scaleX={4} />
             {/* Global button */}
             <InfoPanel body='Global Button' header='This will turn off all the event overlays' >
-                <ButtonSensor output="globalButton" x={-3} y={1.5} z={0} scale={2} />
+                <ButtonSensor output="globalButton" x={-3} y={1} z={0} scale={2} />
             </InfoPanel>
 
             {/* gameStats button */}
@@ -168,7 +192,6 @@ const EventControlPanel: HDKComponent = (props) => (
                 <AndGate inputs={["gameLifeLostButton", "globalButton"]} output="gameLifeLostOn" />
             </InfoPanel>
 
-
             {/* gameRestarted button */}
             <InfoPanel body='gameRestarted Events' header='This will toggle on/off the gameRestarted event' >
                 <ButtonSensor output="gameRestartedButton" x={1} y={1} z={0} scale={1} materialOn='palette_01_yellow' materialOff='palette_01_grey' />
@@ -181,11 +204,7 @@ const EventControlPanel: HDKComponent = (props) => (
                 <AndGate inputs={["gameEmoteButton", "globalButton"]} output="gameEmoteOn" />
             </InfoPanel>
 
-            {/* gameContentShown button */}
-            {/* <InfoPanel body='gameContentShown Events' header='This will toggle on/off the gameContentShown event' >
-                <ButtonSensor output="gameContentShownButton" x={1} y={1} z={0} scale={1} materialOn='palette_01_purple' materialOff='palette_01_grey' />
-                <AndGate inputs={["gameContentShownButton", "globalButton"]} output="gameContentShownOn" />
-            </InfoPanel> */}
+
         </HNode>
 
 
@@ -193,6 +212,42 @@ const EventControlPanel: HDKComponent = (props) => (
 
 )
 
+
+
+type EventItemProps = {
+    name: string;
+    material: MaterialId;
+    metadata1?: string;
+    metadata2?: string;
+};
+
+const EventItem: HDKComponent<EventItemProps> = ({ name, metadata1, metadata2, material, ...props }) => {
+
+    if (name === 'gameEmote') {
+        return <>
+            <Avatar animation={metadata1 as AnimationId} />
+            <Apply props={{ engineProps: { collider: { collisionMask: 0 } } }}>
+                <Prefab id="cube_01" material={'invisible' as MaterialId} />
+            </Apply>
+        </>
+    }
+
+    if (name === 'gameWorldLeft') {
+        return <Prefab id='hologram_01_hibert' material={material} scale={0.5} />;
+    }
+
+    if (name === 'gameRestarted') {
+        return <Prefab id='sign_wooden_01_question' material={material} scale={1} />;
+    }
+
+    if (name === 'gameLifeLost') {
+        return <Prefab id='bull_skull_01' material={material} scale={3} />;
+    }
+
+    return <Prefab id='vase_cactus_01' material={material} scale={5} />;
+
+
+}
 
 
 
@@ -208,35 +263,21 @@ const OverlayRawEvents: HDKComponent<OverlayRawEventsProps> = ({ diveDataRaw }) 
     </InvisibleOnSignal>  */}
 
         <InvisibleOnSignal input="gameWorldLeftOn">
-            <PlaceRawEvents diveDataRaw={diveDataRaw} name='gameWorldLeft' prefab_id='hologram_01_hibert' prefab_material='palette_01_red' prefab_scale={2} beam_colour='palette_01_red' beam_height={20} y={0} />
+            <PlaceRawEvents diveDataRaw={diveDataRaw} name='gameWorldLeft' material='palette_01_red' render_beam={true} />
+        </InvisibleOnSignal>
+
+        <InvisibleOnSignal input="gameRestartedOn">
+            <PlaceRawEvents diveDataRaw={diveDataRaw} name='gameRestarted' material='palette_01_yellow' render_beam={true} />
         </InvisibleOnSignal>
 
         <InvisibleOnSignal input="gameEmoteOn">
-      <PlaceRawEvents diveDataRaw={diveDataRaw} name='gameEmote' prefab_id='sign_wooden_01_exclamtion' prefab_material='palette_01_blue' prefab_scale={2} beam_colour='palette_01_blue' beam_height={50} y={0} />
-    </InvisibleOnSignal>
-
-        {/* <InvisibleOnSignal input="gameContentShownOn">
-      <PlaceRawEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={50} y={0} />
-    </InvisibleOnSignal> */}
-
-        <InvisibleOnSignal input="gameRestartedOn">
-            <PlaceRawEvents diveDataRaw={diveDataRaw} name='gameRestarted' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={1} y={0} />
+            <PlaceRawEvents diveDataRaw={diveDataRaw} name='gameEmote' material='palette_01_purple' />
         </InvisibleOnSignal>
 
-        <InvisibleOnSignal input="gameRestartedOn">
-            <PlaceRawEvents diveDataRaw={diveDataRaw} name='gameRestarted' prefab_id='sign_wooden_01_question' prefab_material='palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' beam_height={1} y={0} />
+        <InvisibleOnSignal input="gameLifeLostOn">
+            <PlaceRawEvents diveDataRaw={diveDataRaw} name='gameLifeLost' material='palette_01_purple' render_beam={true} />
         </InvisibleOnSignal>
 
-
-
-        {/* <PlaceRawEvents name='gameEmote' prefab_id='hologram_01_hibert' prefab_material = 'palette_01_red' prefab_scale={2} beam_colour='palette_01_red' y={0} />
-    <PlaceRawEvents name='gameInteract' prefab_id='sign_wooden_01_exclamtion' prefab_material = 'palette_01_blue' prefab_scale={2} beam_colour='palette_01_blue' y={0} />
-    <PlaceRawEvents name='gameContentShown' prefab_id='sign_wooden_01_question' prefab_material = 'palette_01_yellow' prefab_scale={2} beam_colour='palette_01_yellow' y={0} />
-    <PlaceRawEvents name='gameSignalSent' prefab_id='animated_light_01' prefab_material = 'palette_02_green' prefab_scale={4} beam_colour='palette_02_green' y={0} />
-    <PlaceRawEvents name='gameWorldLeft' prefab_id='sign_wooden_01_skull' prefab_material = 'palette_01_black' prefab_scale={2} beam_colour='palette_01_black' y={0} />
-    <PlaceRawEvents name='gameRestarted' prefab_id='sign_wooden_01_arrow_left' prefab_material = 'palette_01_pink' prefab_scale={2} beam_colour='palette_01_pink' y={0} />
-    <PlaceRawEvents name='gameFinished' prefab_id='sign_wooden_01_goal' prefab_material = 't_rainbow_02' prefab_scale={2} beam_colour='t_rainbow_02' y={0} />
-    <PlaceRawEvents name='gameSignalSent' prefab_id='animated_light_01' prefab_material = 'palette_02_green' prefab_scale={4} beam_colour='palette_02_green' y={0} /> */}
 
 
     </HNode >
@@ -255,7 +296,7 @@ const OverlayAggregatedEvents: HDKComponent<{ xyz_rounding: number, diveDataAggr
       <PlaceAggregatedEvents name='gameEmote' prefab_id='hologram_01_hibert' scaleX={1} scaleY={1} scaleZ={1} prefab_scale={2} beam_colour='palette_01_red' beam_height={50} y={0} />
     </InvisibleOnSignal> */}
 
-    {/* <InvisibleOnSignal input="gameInteractOn">
+            {/* <InvisibleOnSignal input="gameInteractOn">
       <PlaceAggregatedEvents name='gameInteract' prefab_id='sign_wooden_01_exclamtion' scaleX={1} scaleY={1} scaleZ={1} prefab_scale={2} beam_colour='palette_01_blue' beam_height={50} y={0} />
     </InvisibleOnSignal>
 
@@ -281,6 +322,8 @@ const OverlayAggregatedEvents: HDKComponent<{ xyz_rounding: number, diveDataAggr
 
 
 
+
+
 const World = () => {
     const raw = (combinedData.raw as { pos_xyz: string, rot_xyz: string }[]).map(raw_data => ({
         ...raw_data,
@@ -295,15 +338,21 @@ const World = () => {
         rot_xyz: JSON.parse(agg_data.rot_xyz),
     })) as DiveDataRaw;
 
+    const gamePanel = combinedData.game_panel[0]; // Assuming there is only one object in the "game_panel" array
+
+    const concatenatedString = `${gamePanel.game_name_latest}, ${gamePanel.creator_username}, ${gamePanel.date_created}, ${gamePanel.unique_players}, ${gamePanel.count_gs_session_id}, ${gamePanel.median_completion_time}, ${gamePanel.avg_game_session_time}, ${gamePanel.completion_rate}, ${gamePanel.median_world_loading_time}, ${gamePanel.median_fps}, ${gamePanel.avg_game_quality_score}`;
+
+    console.log(concatenatedString);
+
 
     return (
         <HNode>
 
-            <Spawnpoint x={20.6} y={87.4} z={11.3} />
 
-            <EventControlPanel x={20.6} y={87.4} z={11.3} />
+            <EventControlPanel x={-3.4} y={16.6} z={-163.0} rotY={180} worldData = {gamePanel}/>
 
-            <OverlayAggregatedEvents diveDataAggregated={aggregated} xyz_rounding={2} />
+
+            <OverlayAggregatedEvents diveDataAggregated={aggregated} xyz_rounding={3} />
             <OverlayRawEvents diveDataRaw={raw} />
 
 
@@ -315,14 +364,14 @@ const baseUrl =
     "https://dao-pr.dev.hiberdev.net/engine/wilhelm-gameapi-from-iframe/latest/production";
 
 render(<World />, {
-    environment: 'sunrise_01',
+    environment: 'midday_01',
     prefabId: 'asd',
     engineUrl:
         'https://cdn.hibervr.com/hiber2/web/wilhelm-gameapi-from-iframe/v1.39.0-wilhelm-gameapi-from-iframe.0%2B9689173e2/production/hiber.js',
     wasmUrl:
         'https://cdn.hibervr.com/hiber2/web/wilhelm-gameapi-from-iframe/v1.39.0-wilhelm-gameapi-from-iframe.0%2B9689173e2/production/Hiberworld.wasm.gz',
     extraArgs: {
-        'Launch.InitLevelID': '1324822085050602',
+        'Launch.InitLevelID': '1401066903625944',
     },
 });
 
@@ -330,3 +379,4 @@ render(<World />, {
 // Hot reload doesn't work
 // arcadia: 1396328036999394
 // lost in the woods: 1402549011448005
+// tommy: 1401066903625944
