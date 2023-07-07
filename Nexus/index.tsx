@@ -370,7 +370,7 @@ const World = () => {
         <HNode>
 
 
-            <EventControlPanel x={-3.4} y={16.6} z={-163.0} rotY={180} worldData={gamePanel} />
+            <EventControlPanel x={40} y={40} z={0} rotY={180} worldData={gamePanel} />
 
 
             <OverlayAggregatedEvents diveDataAggregated={aggregated} xyz_rounding={3} />
@@ -392,7 +392,7 @@ render(<World />, {
     wasmUrl:
         'https://cdn.hibervr.com/hiber2/web/wilhelm-gameapi-from-iframe/v1.39.0-wilhelm-gameapi-from-iframe.0%2B9689173e2/production/Hiberworld.wasm.gz',
     extraArgs: {
-        'Launch.InitLevelID': '1401066903625944',
+        'Launch.InitLevelID': '1351498428661942',
     },
 });
 

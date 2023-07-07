@@ -3,16 +3,9 @@ import  mysql from 'mysql-await';
 
 
 // to run this file type in terminal: npm run download-input-data
-const game_id = '1401066903625944'
-const start_date = '2023-07-06'
+const game_id = '1351498428661942'
+const start_date = '2023-07-01'
 const xyz_rounding = 3
-
-
-
-
-
-
-
 
 
 
@@ -48,11 +41,11 @@ aggregated_query = `
     SELECT
       e.name,
       CONCAT('[', 
-      ROUND(json_extract_string(raw_json::coord_xyz, 0) / ${xyz_rounding}) * ${xyz_rounding},
+      ROUND(json_extract_string(coord_xyz, 0) / ${xyz_rounding}) * ${xyz_rounding},
         ',',
-        ROUND(json_extract_string(raw_json::coord_xyz, 1) / ${xyz_rounding}) * ${xyz_rounding},
+        ROUND(json_extract_string(coord_xyz, 1) / ${xyz_rounding}) * ${xyz_rounding},
         ',',
-        ROUND(json_extract_string(raw_json::coord_xyz, 2) / ${xyz_rounding}) * ${xyz_rounding},
+        ROUND(json_extract_string(coord_xyz, 2) / ${xyz_rounding}) * ${xyz_rounding},
         ']'
       ) AS pos_xyz,
       "[0,0,0]" as rot_xyz,
@@ -66,7 +59,7 @@ aggregated_query = `
       -- AND player_id = '3547'
       AND id = '${game_id}'
       AND mode_header = 'play'
-      AND raw_json::coord_xyz IS NOT NULL
+      AND coord_xyz IS NOT NULL
     GROUP BY 1,2
     order by count desc
     limit 4000;
@@ -91,8 +84,8 @@ group by 1
 
 SELECT
 e.name,
-raw_json::coord_xyz AS pos_xyz,
-raw_json::rot_xyz AS rot_xyz,
+coord_xyz AS pos_xyz,
+rot_xyz AS rot_xyz,
 COUNT(*) AS count,
 coalesce(af.avg_fps, 'Unknown') as metadata1,
 coalesce(up.username, 'Unknown') as metadata2
@@ -106,7 +99,7 @@ AND e.name IN ('gameWorldLeft')
 AND environment IN ('prod', 'production')
 AND id = '${game_id}'
 AND mode_header = 'play'
-AND raw_json::coord_xyz IS NOT NULL
+AND coord_xyz IS NOT NULL
 GROUP BY 1,2,3
 order by rand()
 limit 500
@@ -115,8 +108,8 @@ union all
 
 SELECT
 e.name,
-raw_json::coord_xyz AS pos_xyz,
-raw_json::rot_xyz AS rot_xyz,
+coord_xyz AS pos_xyz,
+rot_xyz AS rot_xyz,
 COUNT(*) AS count,
 reason as metadata1,
 coalesce(up.username, 'Unknown') as metadata2
@@ -129,7 +122,7 @@ AND e.name IN ('gameRestarted')
 AND environment IN ('prod', 'production')
 AND id = '${game_id}'
 AND mode_header = 'play'
-AND raw_json::coord_xyz IS NOT NULL
+AND coord_xyz IS NOT NULL
 GROUP BY 1,2,3
 order by rand()
 limit 500
@@ -138,8 +131,8 @@ union all
 
 SELECT
 e.name,
-raw_json::coord_xyz AS pos_xyz,
-raw_json::rot_xyz AS rot_xyz,
+coord_xyz AS pos_xyz,
+rot_xyz AS rot_xyz,
 COUNT(*) AS count,
 reason as metadata1,
 coalesce(up.username, 'Unknown') as metadata2
@@ -152,7 +145,7 @@ AND e.name IN ('gameLifeLost')
 AND environment IN ('prod', 'production')
 AND id = '${game_id}'
 AND mode_header = 'play'
-AND raw_json::coord_xyz IS NOT NULL
+AND coord_xyz IS NOT NULL
 GROUP BY 1,2,3
 order by rand()
 limit 500
@@ -161,8 +154,8 @@ union all
 
 SELECT
 e.name,
-raw_json::coord_xyz AS pos_xyz,
-raw_json::rot_xyz AS rot_xyz,
+coord_xyz AS pos_xyz,
+rot_xyz AS rot_xyz,
 COUNT(*) AS count,
 game_name as metadata1,
 coalesce(up.username, 'Unknown') as metadata2
@@ -175,7 +168,7 @@ AND e.name IN ('gameEmote')
 AND environment IN ('prod', 'production')
 AND game_id = '${game_id}'
 AND mode_header = 'play'
-AND raw_json::coord_xyz IS NOT NULL
+AND coord_xyz IS NOT NULL
 GROUP BY 1,2,3
 order by rand()
 limit 500   
@@ -195,11 +188,11 @@ from
     SELECT
       e.name,
       CONCAT('[', 
-      ROUND(json_extract_string(raw_json::coord_xyz, 0) / ${xyz_rounding}) * ${xyz_rounding},
+      ROUND(json_extract_string(coord_xyz, 0) / ${xyz_rounding}) * ${xyz_rounding},
         ',',
-        ROUND(json_extract_string(raw_json::coord_xyz, 1) / ${xyz_rounding}) * ${xyz_rounding},
+        ROUND(json_extract_string(coord_xyz, 1) / ${xyz_rounding}) * ${xyz_rounding},
         ',',
-        ROUND(json_extract_string(raw_json::coord_xyz, 2) / ${xyz_rounding}) * ${xyz_rounding},
+        ROUND(json_extract_string(coord_xyz, 2) / ${xyz_rounding}) * ${xyz_rounding},
         ']'
       ) AS pos_xyz,
       "[0,0,0]" as rot_xyz,
@@ -212,7 +205,7 @@ from
       -- AND player_id = '3547'
       AND id = '${game_id}'
       AND mode_header = 'play'
-      AND raw_json::coord_xyz IS NOT NULL
+      AND coord_xyz IS NOT NULL
     GROUP BY 1,2
     )
   `;
