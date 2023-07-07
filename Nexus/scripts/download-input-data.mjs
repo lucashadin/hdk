@@ -8,6 +8,15 @@ const start_date = '2023-07-06'
 const xyz_rounding = 3
 
 
+
+
+
+
+
+
+
+
+
 // Create a MySQL connection
 const connection = mysql.createConnection({
   host: 'd.hiber.dive.games',

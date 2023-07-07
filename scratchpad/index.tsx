@@ -1,5 +1,5 @@
 import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel } from '@hiber3d/hdk-react';
-import { InCircle } from '@hiber3d/hdk-react-components';
+import { For, ImagePanel, InCircle } from '@hiber3d/hdk-react-components';
 
 /**
  * Create a ground to stand on
@@ -77,6 +77,29 @@ const Wall = () => {
  */
 const SpawnPoint: HDKComponent = props => <Prefab id="gpl_spawn_point_01" material="t_pearl_01" {...props} />;
 
+
+const WorldStats: HDKComponent = ({ ...props }) => (
+  <HNode {...props}>
+
+    <For
+      numberOfItems={11}
+      renderItem={({ index, progress }) =>
+
+        <ImagePanel
+          src={`https://placehold.co/1000x50/000000/FFF/PNG?text=${progress}:${index}`}
+          ratio={1000 / 50}
+          scale={0.3}
+          backside={true}
+          y={(-index * 0.5)+3}
+       
+        />}
+    />
+
+  </HNode>
+
+)
+
+
 /**
  * Create a world
  */
@@ -85,6 +108,7 @@ const World = () => (
     <Ground />
     <Water y={-1} />
     <Island x={20} y={10} />
+    <WorldStats x={-10.0} y={3} z={4.0} />
     <Sign
       header="Welcome to Hiber3D HDK!"
       body="This is The Getting Started world. Press O to learn how to build something!"

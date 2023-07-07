@@ -139,32 +139,53 @@ const PlaceAggregatedEvents: HDKComponent<PlaceAggEventsProps> = ({ diveDataAggr
 };
 
 
-const WorldStats: HDKComponent = ({worldData, props}) => (
-    <HNode {...props}>
-        <ImagePanel
-            src={`https://placehold.co/600x300/000000/FFF/PNG?text=World+Name:+${worldData.game_name_latest}%0ACompletion+rate:%20${worldData.creator_username}`}
-            ratio={600 / 300}
-            scale={1}
-            backside={true}
-            frame={'stone'}
+function toProperCase(str) {
+    return str
+      .replace(/_/g, ' ') // Replace underscores with spaces
+      .toLowerCase() // Convert to lower case
+      .split(' ') // Split the string into words
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+      .join(' '); // Join the words back into a string
+  }
+
+  const WorldStats: HDKComponent<EventControlPanelProps> = ({ worldData = {}, ...props }) => {
+    const keys = Object.keys(worldData);
+  
+    return (
+      <HNode {...props}>
+        <For
+          numberOfItems={Math.min(11, keys.length)}
+          renderItem={({ index }) => {
+            const key = keys[index];
+            const value = worldData[key];
+            const formattedKey = toProperCase(key);
+  
+            return (
+              <ImagePanel
+                key={`${key}-${index}`}
+                src={`https://placehold.co/800x50/000000/FFF/PNG?text=${formattedKey}: ${value}`}
+                ratio={800 / 50}
+                scale={0.3}
+                backside={true}
+                y={(-index * 0.5) + 6}
+              />
+            );
+          }}
         />
+      </HNode>
+    );
+  };
 
+type EventControlPanelProps = {
+    worldData: any;
+};
 
-
-    </HNode>
-
-
-
-
-)
-
-
-const EventControlPanel: HDKComponent = ({worldData, props}) => (
+const EventControlPanel: HDKComponent<EventControlPanelProps> = ({ worldData, ...props }) => (
     <HNode {...props}>
 
         <Prefab id='cube_01' material='palette_01_black' y={0} z={3.5} scaleY={0.1} scaleZ={3} scaleX={4} />
         <Spawnpoint rotY={0} z={3} />
-        <WorldStats rotY={90} z={5} x={10} worldData={worldData}/>
+        <WorldStats rotY={90} z={5} x={5} worldData={worldData} />
 
 
         <HNode rotX={45}>
@@ -349,7 +370,7 @@ const World = () => {
         <HNode>
 
 
-            <EventControlPanel x={-3.4} y={16.6} z={-163.0} rotY={180} worldData = {gamePanel}/>
+            <EventControlPanel x={-3.4} y={16.6} z={-163.0} rotY={180} worldData={gamePanel} />
 
 
             <OverlayAggregatedEvents diveDataAggregated={aggregated} xyz_rounding={3} />
