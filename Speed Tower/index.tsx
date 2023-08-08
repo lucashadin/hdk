@@ -46,7 +46,7 @@ const TransportRing: HDKComponent = ({ ...props }) => {
       scaleX: [100, 100, 75, 35, 15, 0, 0, 0],
       scaleY: [0, 0, 3, 3, 1, 0, 0, 0],
       scaleZ: [100, 100, 75, 35, 15, 0, 0, 0],
-      steps: [1, 5, 6, 8, 10, 13, 15, 60],
+      steps: [1, 5, 6, 8, 10, 13, 15, 30],
       // duration: 3,
       loop: 'RESTART',
       easing: 'EASE_IN_QUAD',
@@ -516,7 +516,7 @@ const SpectatorPlatform: HDKComponent = ({ ...props }) => {
         y: [0, 0, 0, 0, 0],
         rotY: [0, 0, 0, 0, 0],
         scale: [1, 1, 1, 1, 1],
-        steps: [0, 10, 28, 33, 60],
+        steps: [0, 10, 14, 17, 30],
         // duration: 3,
         loop: 'RESTART',
         easing: 'EASE_IN_OUT_CUBIC',
@@ -541,7 +541,7 @@ const SpectatorPlatform: HDKComponent = ({ ...props }) => {
             x: [100, 0, 0, 100, 100],
             y: [100, 0, 0, 100, 100],
             scale: [1, 1, 1, 1, 1],
-            steps: [0, 13, 15, 16, 60],
+            steps: [0, 13, 15, 16, 30],
             // duration: 3,
             loop: 'RESTART',
             easing: 'EASE_IN_OUT_CUBIC',
@@ -574,7 +574,7 @@ const SpectatorPlatform: HDKComponent = ({ ...props }) => {
               x: [0, 0, 0, 0, 0],
               y: [0, 0, -10, 0, 0],
               scale: [1, 1, 1, 1, 1],
-              steps: [0, 10, 15, 17, 60],
+              steps: [0, 10, 15, 17, 30],
               // duration: 3,
               loop: 'RESTART',
               easing: 'EASE_IN_OUT_CUBIC',
@@ -594,7 +594,7 @@ const SpectatorPlatform: HDKComponent = ({ ...props }) => {
               x: [0, 0, 0, 0, 0],
               y: [0, 0, 1.5, 0, 0],
               scale: [1, 1, 1, 1, 1],
-              steps: [0, 12, 15, 20, 60],
+              steps: [0, 12, 15, 20, 30],
               // duration: 3,
               loop: 'RESTART',
               easing: 'EASE_IN_OUT_CUBIC',
@@ -689,8 +689,8 @@ const LevelOne: HDKComponent = props => {
   var flyingDeathCount = 0
   var flyingDurationMin = 30
   var flyingDurationMax = 35
-  var colourLightValue: MaterialId = "palette_01_green"
-  var colourDarkValue: MaterialId = "palette_02_green"
+  var colourLightValue: MaterialId = "t_rocky_sand_01"
+  var colourDarkValue: MaterialId = "t_rusted_metal_01"
   var boopMultiplierValue = 2
   var lavaDamageValue = 0
   var flyingDamageValue = 0
@@ -730,20 +730,19 @@ const LevelOne: HDKComponent = props => {
   )
 
 }
-
 const LevelTwo: HDKComponent = props => {
-  var levelNumberValue = 2
-  var flyingDeathCount = 5
-  var flyingDurationMin = 25
-  var flyingDurationMax = 30
-  var colourLightValue: LevelProps['colourLight'] = "palette_01_blue"
-  var colourDarkValue: LevelProps['colourDark'] = "palette_02_blue"
-  var boopMultiplierValue = 1.5
-  var lavaDamageValue = 100
-  var flyingDamageValue = 50
+  var levelNumberValue = 1
+  var flyingDeathCount = 0
+  var flyingDurationMin = 30
+  var flyingDurationMax = 35
+  var colourLightValue: MaterialId = "t_sci_fi_tile_06"
+  var colourDarkValue: MaterialId = "t_sci_fi_tile_07"
+  var boopMultiplierValue = 2
+  var lavaDamageValue = 0
+  var flyingDamageValue = 0
   var trapScaleValue = 0
-  var musicId = "a_mu_ancient_rite_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1579202601184-34a979c427bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+  var musicId = "a_mu_breath_of_the_wind_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
 
   return (
 
@@ -777,20 +776,19 @@ const LevelTwo: HDKComponent = props => {
   )
 
 }
-
 const LevelThree: HDKComponent = props => {
-  var levelNumberValue = 3
-  var flyingDeathCount = 8
-  var flyingDurationMin = 15
-  var flyingDurationMax = 20
-  var colourLightValue: LevelProps['colourLight'] = "palette_01_red"
-  var colourDarkValue: LevelProps['colourDark'] = "palette_02_red"
-  var boopMultiplierValue = 1
-  var lavaDamageValue = 100
-  var flyingDamageValue = 50
-  var trapScaleValue = 1
-  var musicId = "a_mu_heroic_journey_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1674718744870-13c46484fc0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+  var levelNumberValue = 1
+  var flyingDeathCount = 0
+  var flyingDurationMin = 30
+  var flyingDurationMax = 35
+  var colourLightValue: MaterialId = "t_pearl_01"
+  var colourDarkValue: MaterialId = "t_coins_01"
+  var boopMultiplierValue = 2
+  var lavaDamageValue = 0
+  var flyingDamageValue = 0
+  var trapScaleValue = 0
+  var musicId = "a_mu_breath_of_the_wind_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
 
   return (
 
@@ -820,17 +818,295 @@ const LevelThree: HDKComponent = props => {
 
     </HNode>
 
+
+  )
+
+}
+const LevelFour: HDKComponent = props => {
+  var levelNumberValue = 1
+  var flyingDeathCount = 0
+  var flyingDurationMin = 30
+  var flyingDurationMax = 35
+  var colourLightValue: MaterialId = "t_striped_candy_01"
+  var colourDarkValue: MaterialId = "t_chocolate_tiles_01"
+  var boopMultiplierValue = 2
+  var lavaDamageValue = 0
+  var flyingDamageValue = 0
+  var trapScaleValue = 0
+  var musicId = "a_mu_breath_of_the_wind_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+
+  return (
+
+    <HNode y={480}>
+      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+
+      <LevelProvider
+        levelNumber={levelNumberValue}
+        colourLight={colourLightValue}
+        colourDark={colourDarkValue}
+        boopMultiplier={boopMultiplierValue}
+        lavaDamage={lavaDamageValue}
+        flyingDamage={flyingDamageValue}
+        trapScale={trapScaleValue}
+        spectatorImage={spectatorImageUrl}
+      >
+
+        <RingArena />
+        <SpectatorPlatform />
+        <TransportRing />
+        <For
+          numberOfItems={flyingDeathCount}
+          renderItem={<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />}
+        />
+
+      </LevelProvider>
+
+    </HNode>
+
+
+  )
+
+}
+const LevelFive: HDKComponent = props => {
+  var levelNumberValue = 1
+  var flyingDeathCount = 0
+  var flyingDurationMin = 30
+  var flyingDurationMax = 35
+  var colourLightValue: MaterialId = "t_grid_01"
+  var colourDarkValue: MaterialId = "t_hexagon_pattern_01"
+  var boopMultiplierValue = 2
+  var lavaDamageValue = 0
+  var flyingDamageValue = 0
+  var trapScaleValue = 0
+  var musicId = "a_mu_breath_of_the_wind_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+
+  return (
+
+    <HNode y={640}>
+      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+
+      <LevelProvider
+        levelNumber={levelNumberValue}
+        colourLight={colourLightValue}
+        colourDark={colourDarkValue}
+        boopMultiplier={boopMultiplierValue}
+        lavaDamage={lavaDamageValue}
+        flyingDamage={flyingDamageValue}
+        trapScale={trapScaleValue}
+        spectatorImage={spectatorImageUrl}
+      >
+
+        <RingArena />
+        <SpectatorPlatform />
+        <TransportRing />
+        <For
+          numberOfItems={flyingDeathCount}
+          renderItem={<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />}
+        />
+
+      </LevelProvider>
+
+    </HNode>
+
+
+  )
+
+}
+const LevelSix: HDKComponent = props => {
+  var levelNumberValue = 1
+  var flyingDeathCount = 0
+  var flyingDurationMin = 30
+  var flyingDurationMax = 35
+  var colourLightValue: MaterialId = "t_petalpattern_01"
+  var colourDarkValue: MaterialId = "t_stripes_02"
+  var boopMultiplierValue = 2
+  var lavaDamageValue = 0
+  var flyingDamageValue = 0
+  var trapScaleValue = 0
+  var musicId = "a_mu_breath_of_the_wind_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+
+  return (
+
+    <HNode y={800}>
+      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+
+      <LevelProvider
+        levelNumber={levelNumberValue}
+        colourLight={colourLightValue}
+        colourDark={colourDarkValue}
+        boopMultiplier={boopMultiplierValue}
+        lavaDamage={lavaDamageValue}
+        flyingDamage={flyingDamageValue}
+        trapScale={trapScaleValue}
+        spectatorImage={spectatorImageUrl}
+      >
+
+        <RingArena />
+        <SpectatorPlatform />
+        <TransportRing />
+        <For
+          numberOfItems={flyingDeathCount}
+          renderItem={<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />}
+        />
+
+      </LevelProvider>
+
+    </HNode>
+
+
+  )
+
+}
+const LevelSeven: HDKComponent = props => {
+  var levelNumberValue = 1
+  var flyingDeathCount = 0
+  var flyingDurationMin = 30
+  var flyingDurationMax = 35
+  var colourLightValue: MaterialId = "t_bark_03"
+  var colourDarkValue: MaterialId = "t_gravel_01"
+  var boopMultiplierValue = 2
+  var lavaDamageValue = 0
+  var flyingDamageValue = 0
+  var trapScaleValue = 0
+  var musicId = "a_mu_breath_of_the_wind_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+
+  return (
+
+    <HNode y={960}>
+      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+
+      <LevelProvider
+        levelNumber={levelNumberValue}
+        colourLight={colourLightValue}
+        colourDark={colourDarkValue}
+        boopMultiplier={boopMultiplierValue}
+        lavaDamage={lavaDamageValue}
+        flyingDamage={flyingDamageValue}
+        trapScale={trapScaleValue}
+        spectatorImage={spectatorImageUrl}
+      >
+
+        <RingArena />
+        <SpectatorPlatform />
+        <TransportRing />
+        <For
+          numberOfItems={flyingDeathCount}
+          renderItem={<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />}
+        />
+
+      </LevelProvider>
+
+    </HNode>
+
+
   )
 
 }
 
-const LevelFour: HDKComponent = props => {
+const LevelEight: HDKComponent = props => {
+  var levelNumberValue = 2
+  var flyingDeathCount = 5
+  var flyingDurationMin = 25
+  var flyingDurationMax = 30
+  var colourLightValue: LevelProps['colourLight'] = "t_lava_01"
+  var colourDarkValue: LevelProps['colourDark'] = "t_metal_01"
+  var boopMultiplierValue = 1.5
+  var lavaDamageValue = 100
+  var flyingDamageValue = 50
+  var trapScaleValue = 0
+  var musicId = "a_mu_ancient_rite_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1579202601184-34a979c427bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+
+  return (
+
+    <HNode y={1120}>
+      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+
+      <LevelProvider
+        levelNumber={levelNumberValue}
+        colourLight={colourLightValue}
+        colourDark={colourDarkValue}
+        boopMultiplier={boopMultiplierValue}
+        lavaDamage={lavaDamageValue}
+        flyingDamage={flyingDamageValue}
+        trapScale={trapScaleValue}
+        spectatorImage={spectatorImageUrl}
+      >
+
+        <RingArena />
+        <SpectatorPlatform />
+        <TransportRing />
+        <For
+          numberOfItems={flyingDeathCount}
+          renderItem={<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />}
+        />
+
+      </LevelProvider>
+
+    </HNode>
+
+
+  )
+
+}
+
+const LevelNine: HDKComponent = props => {
+  var levelNumberValue = 3
+  var flyingDeathCount = 8
+  var flyingDurationMin = 15
+  var flyingDurationMax = 20
+  var colourLightValue: LevelProps['colourLight'] = "t_rainbow_02"
+  var colourDarkValue: LevelProps['colourDark'] = "palette_01_black"
+  var boopMultiplierValue = 1
+  var lavaDamageValue = 100
+  var flyingDamageValue = 50
+  var trapScaleValue = 1
+  var musicId = "a_mu_heroic_journey_01"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1674718744870-13c46484fc0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+
+  return (
+
+    <HNode y={1280}>
+      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+
+      <LevelProvider
+        levelNumber={levelNumberValue}
+        colourLight={colourLightValue}
+        colourDark={colourDarkValue}
+        boopMultiplier={boopMultiplierValue}
+        lavaDamage={lavaDamageValue}
+        flyingDamage={flyingDamageValue}
+        trapScale={trapScaleValue}
+        spectatorImage={spectatorImageUrl}
+      >
+
+        <RingArena />
+        <SpectatorPlatform />
+        <TransportRing />
+        <For
+          numberOfItems={flyingDeathCount}
+          renderItem={<FlyingDeath durationMin={flyingDurationMin} durationMax={flyingDurationMax} direction={1} />}
+        />
+
+      </LevelProvider>
+
+    </HNode>
+
+  )
+
+}
+
+const LevelTen: HDKComponent = props => {
   var levelNumberValue = 4
   var flyingDeathCount = 10
   var flyingDurationMin = 10
   var flyingDurationMax = 13
-  var colourLightValue: LevelProps['colourLight'] = "palette_01_black"
-  var colourDarkValue: LevelProps['colourDark'] = "palette_01_black"
+  var colourLightValue: LevelProps['colourLight'] = "t_neon_grid_01"
+  var colourDarkValue: LevelProps['colourDark'] = "t_hex_disco_01"
   var boopMultiplierValue = 0.5
   var lavaDamageValue = 100
   var flyingDamageValue = 50
@@ -839,7 +1115,7 @@ const LevelFour: HDKComponent = props => {
   var spectatorImageUrl = "https://images.unsplash.com/photo-1517825738774-7de9363ef735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1410&q=80"
 
   return (
-    <HNode y={480}>
+    <HNode y={1440}>
       <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
 
       <LevelProvider
@@ -875,6 +1151,12 @@ const World = () => (
     <LevelTwo />
     <LevelThree />
     <LevelFour />
+    <LevelFive />
+    <LevelSix />
+    <LevelSeven />
+    <LevelEight />
+    <LevelNine />
+    <LevelTen />
 
 
     <Hole />
