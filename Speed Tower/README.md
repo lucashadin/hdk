@@ -1,4 +1,4 @@
-# Challenge Tower
+# Speed Tower
 
 This is a Hiber3D Development Kit (HDK) project created using [create-hdk](https://www.npmjs.com/package/create-hdk)
 

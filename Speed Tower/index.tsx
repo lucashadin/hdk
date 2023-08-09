@@ -101,7 +101,7 @@ const Trap: HDKComponent = ({ ...props }) => {
         engineProps={{
           rendering: {
             castShadow: true,
-            materialID: 'palette_01_black',
+            materialID: colourDark,
             meshID: "h_cage_trap_01",
           },
           collider: {
@@ -288,7 +288,7 @@ const BoopingWalls: HDKComponent = ({ ...props }) => {
       <HNode>
         <Prefab
           id='plastic_wall_01'
-          material='t_neon_red_01'
+          material={colourLight}
           y={1}
           // rotY={90} 
           x={-10}
@@ -326,7 +326,7 @@ const Goal: HDKComponent = props => {
         loop: 'RESTART',
         easing: 'EASE_IN_OUT_CUBIC',
       }}>
-        <HNode x={0.0} y={680} z={0.0}>
+        <HNode x={0.0} y={1640} z={0.0}>
           <PointSound y={30} x={0} id="a_mu_district_h_01" radius={100} volume={1} />
           <Prefab
             id="goal_01"
@@ -441,8 +441,8 @@ const PortalPlatform: HDKComponent = props => (
 const WelcomeSign: HDKComponent = props => (
   <InfoPanel
 
-    header="Welcome Cyber Battle Royale!"
-    body="Survive for 50 seconds to progress to the next level!"
+    header="Welcome to Speed Tower!"
+    body="Survive for 30 seconds to progress to the next level!"
     // url="https://developer.hiber3d.com/docs"
     openUrlInNewTab={true}>
     <Prefab
@@ -672,7 +672,7 @@ const FlyingDeath: HDKComponent<{ durationMin: number; durationMax: number, dire
           easing: 'EASE_IN_OUT_CUBIC',
         }}>
           <Damaging amount={flyingDamage} knockbackStrength={400} >
-            <Prefab y={3} z={zRange} id="cupola" material='t_neon_red_01' scale={3} rotY={90} rotX={90} />
+            <Prefab y={3} z={zRange} id="cupola" material={colourLight} scale={3} rotY={90} rotX={90} />
           </Damaging>
         </Animation>
 
@@ -695,8 +695,8 @@ const LevelOne: HDKComponent = props => {
   var lavaDamageValue = 0
   var flyingDamageValue = 0
   var trapScaleValue = 0
-  var musicId = "a_mu_breath_of_the_wind_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+  var musicId = "a_mu_moments_01"
+  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52225415595_375deb9379_z_640_360_nofilter.jpg"
 
   return (
 
@@ -731,18 +731,18 @@ const LevelOne: HDKComponent = props => {
 
 }
 const LevelTwo: HDKComponent = props => {
-  var levelNumberValue = 1
-  var flyingDeathCount = 0
-  var flyingDurationMin = 30
-  var flyingDurationMax = 35
+  var levelNumberValue = 2
+  var flyingDeathCount = 10 * (levelNumberValue /10)
+  var flyingDurationMin = 30 - (levelNumberValue * 2)
+  var flyingDurationMax = 35 - (levelNumberValue * 2)
+  var boopMultiplierValue = 2 - (levelNumberValue * 0.166) // starts at 2 and decreases to 0.5
+  var lavaDamageValue = 100 * (levelNumberValue /10)
+  var flyingDamageValue = 50 * (levelNumberValue /10)
+  var trapScaleValue = 1.5 * (levelNumberValue /10)
   var colourLightValue: MaterialId = "t_sci_fi_tile_06"
   var colourDarkValue: MaterialId = "t_sci_fi_tile_07"
-  var boopMultiplierValue = 2
-  var lavaDamageValue = 0
-  var flyingDamageValue = 0
-  var trapScaleValue = 0
-  var musicId = "a_mu_breath_of_the_wind_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+  var musicId = "a_mu_dark_signs_per_01"
+  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52688291677_2d1961dfaa_b_640_360_nofilter.jpg"
 
   return (
 
@@ -777,18 +777,18 @@ const LevelTwo: HDKComponent = props => {
 
 }
 const LevelThree: HDKComponent = props => {
-  var levelNumberValue = 1
-  var flyingDeathCount = 0
-  var flyingDurationMin = 30
-  var flyingDurationMax = 35
+  var levelNumberValue = 3
+  var flyingDeathCount = 10 * (levelNumberValue /10)
+  var flyingDurationMin = 30 - (levelNumberValue * 2)
+  var flyingDurationMax = 35 - (levelNumberValue * 2)
+  var boopMultiplierValue = 2 - (levelNumberValue * 0.166) // starts at 2 and decreases to 0.5
+  var lavaDamageValue = 100 * (levelNumberValue /10)
+  var flyingDamageValue = 50 * (levelNumberValue /10)
+  var trapScaleValue = 1.5 * (levelNumberValue /10)
   var colourLightValue: MaterialId = "t_pearl_01"
   var colourDarkValue: MaterialId = "t_coins_01"
-  var boopMultiplierValue = 2
-  var lavaDamageValue = 0
-  var flyingDamageValue = 0
-  var trapScaleValue = 0
-  var musicId = "a_mu_breath_of_the_wind_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+  var musicId = "a_mu_asking_questions_01"
+  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_53052783191_41d04914e2_z_640_360_nofilter.jpg"
 
   return (
 
@@ -823,18 +823,18 @@ const LevelThree: HDKComponent = props => {
 
 }
 const LevelFour: HDKComponent = props => {
-  var levelNumberValue = 1
-  var flyingDeathCount = 0
-  var flyingDurationMin = 30
-  var flyingDurationMax = 35
+  var levelNumberValue = 4
+  var flyingDeathCount = 10 * (levelNumberValue /10)
+  var flyingDurationMin = 30 - (levelNumberValue * 2)
+  var flyingDurationMax = 35 - (levelNumberValue * 2)
+  var boopMultiplierValue = 2 - (levelNumberValue * 0.166) // starts at 2 and decreases to 0.5
+  var lavaDamageValue = 100 * (levelNumberValue /10)
+  var flyingDamageValue = 50 * (levelNumberValue /10)
+  var trapScaleValue = 1.5 * (levelNumberValue /10)
   var colourLightValue: MaterialId = "t_striped_candy_01"
   var colourDarkValue: MaterialId = "t_chocolate_tiles_01"
-  var boopMultiplierValue = 2
-  var lavaDamageValue = 0
-  var flyingDamageValue = 0
-  var trapScaleValue = 0
-  var musicId = "a_mu_breath_of_the_wind_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+  var musicId = "a_mu_ancient_rite_01"
+  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52560053416_f5a71c033c_z_640_360_nofilter.jpg"
 
   return (
 
@@ -869,18 +869,18 @@ const LevelFour: HDKComponent = props => {
 
 }
 const LevelFive: HDKComponent = props => {
-  var levelNumberValue = 1
-  var flyingDeathCount = 0
-  var flyingDurationMin = 30
-  var flyingDurationMax = 35
-  var colourLightValue: MaterialId = "t_grid_01"
-  var colourDarkValue: MaterialId = "t_hexagon_pattern_01"
-  var boopMultiplierValue = 2
-  var lavaDamageValue = 0
-  var flyingDamageValue = 0
-  var trapScaleValue = 0
-  var musicId = "a_mu_breath_of_the_wind_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+  var levelNumberValue = 5
+  var flyingDeathCount = 10 * (levelNumberValue /10)
+  var flyingDurationMin = 30 - (levelNumberValue * 2)
+  var flyingDurationMax = 35 - (levelNumberValue * 2)
+  var boopMultiplierValue = 2 - (levelNumberValue * 0.166) // starts at 2 and decreases to 0.5
+  var lavaDamageValue = 100 * (levelNumberValue /10)
+  var flyingDamageValue = 50 * (levelNumberValue /10)
+  var trapScaleValue = 1.5 * (levelNumberValue /10)
+  var colourLightValue: MaterialId = "t_hexagon_pattern_01"
+  var colourDarkValue: MaterialId = "t_grid_01"
+  var musicId = "a_mu_heroic_journey_01"
+  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52485773254_572ae23e7a_z_640_360_nofilter.jpg"
 
   return (
 
@@ -915,18 +915,18 @@ const LevelFive: HDKComponent = props => {
 
 }
 const LevelSix: HDKComponent = props => {
-  var levelNumberValue = 1
-  var flyingDeathCount = 0
-  var flyingDurationMin = 30
-  var flyingDurationMax = 35
-  var colourLightValue: MaterialId = "t_petalpattern_01"
+  var levelNumberValue = 6
+  var flyingDeathCount = 10 * (levelNumberValue /10)
+  var flyingDurationMin = 30 - (levelNumberValue * 2)
+  var flyingDurationMax = 35 - (levelNumberValue * 2)
+  var boopMultiplierValue = 2 - (levelNumberValue * 0.166) // starts at 2 and decreases to 0.5
+  var lavaDamageValue = 100 * (levelNumberValue /10)
+  var flyingDamageValue = 50 * (levelNumberValue /10)
+  var trapScaleValue = 1.5 * (levelNumberValue /10)
+  var colourLightValue: MaterialId = "t_cobble_stone_01"
   var colourDarkValue: MaterialId = "t_stripes_02"
-  var boopMultiplierValue = 2
-  var lavaDamageValue = 0
-  var flyingDamageValue = 0
-  var trapScaleValue = 0
-  var musicId = "a_mu_breath_of_the_wind_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+  var musicId = "a_mu_adventure_of_flying_jack_01"
+  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52462898608_924dc41d06_z_640_360_nofilter.jpg"
 
   return (
 
@@ -961,18 +961,18 @@ const LevelSix: HDKComponent = props => {
 
 }
 const LevelSeven: HDKComponent = props => {
-  var levelNumberValue = 1
-  var flyingDeathCount = 0
-  var flyingDurationMin = 30
-  var flyingDurationMax = 35
-  var colourLightValue: MaterialId = "t_bark_03"
-  var colourDarkValue: MaterialId = "t_gravel_01"
-  var boopMultiplierValue = 2
-  var lavaDamageValue = 0
-  var flyingDamageValue = 0
-  var trapScaleValue = 0
-  var musicId = "a_mu_breath_of_the_wind_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+  var levelNumberValue = 7
+  var flyingDeathCount = 10 * (levelNumberValue /10)
+  var flyingDurationMin = 30 - (levelNumberValue * 2)
+  var flyingDurationMax = 35 - (levelNumberValue * 2)
+  var boopMultiplierValue = 2 - (levelNumberValue * 0.166) // starts at 2 and decreases to 0.5
+  var lavaDamageValue = 100 * (levelNumberValue /10)
+  var flyingDamageValue = 50 * (levelNumberValue /10)
+  var trapScaleValue = 1.5 * (levelNumberValue /10)
+  var colourLightValue: MaterialId = "t_gravel_01"
+  var colourDarkValue: MaterialId = "t_pinball_floor_01_t8"
+  var musicId = "a_mu_arpent_01"
+  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52764188094_a51549f3e7_z_640_360_nofilter.jpg"
 
   return (
 
@@ -1008,18 +1008,18 @@ const LevelSeven: HDKComponent = props => {
 }
 
 const LevelEight: HDKComponent = props => {
-  var levelNumberValue = 2
-  var flyingDeathCount = 5
-  var flyingDurationMin = 25
-  var flyingDurationMax = 30
-  var colourLightValue: LevelProps['colourLight'] = "t_lava_01"
-  var colourDarkValue: LevelProps['colourDark'] = "t_metal_01"
-  var boopMultiplierValue = 1.5
-  var lavaDamageValue = 100
-  var flyingDamageValue = 50
-  var trapScaleValue = 0
-  var musicId = "a_mu_ancient_rite_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1579202601184-34a979c427bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+  var levelNumberValue = 8
+  var flyingDeathCount = 10 * (levelNumberValue /10)
+  var flyingDurationMin = 30 - (levelNumberValue * 2)
+  var flyingDurationMax = 35 - (levelNumberValue * 2)
+  var boopMultiplierValue = 2 - (levelNumberValue * 0.166) // starts at 2 and decreases to 0.5
+  var lavaDamageValue = 100 * (levelNumberValue /10)
+  var flyingDamageValue = 50 * (levelNumberValue /10)
+  var trapScaleValue = 1.5 * (levelNumberValue /10)
+  var colourLightValue: LevelProps['colourLight'] = "t_metal_01"
+  var colourDarkValue: LevelProps['colourDark'] = "t_pride_01"
+  var musicId = "a_mu_wahlstedt_madness_01"
+  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52230352689_bcee6be965_z_640_360_nofilter.jpg"
 
   return (
 
@@ -1055,18 +1055,18 @@ const LevelEight: HDKComponent = props => {
 }
 
 const LevelNine: HDKComponent = props => {
-  var levelNumberValue = 3
-  var flyingDeathCount = 8
-  var flyingDurationMin = 15
-  var flyingDurationMax = 20
-  var colourLightValue: LevelProps['colourLight'] = "t_rainbow_02"
-  var colourDarkValue: LevelProps['colourDark'] = "palette_01_black"
-  var boopMultiplierValue = 1
-  var lavaDamageValue = 100
-  var flyingDamageValue = 50
-  var trapScaleValue = 1
-  var musicId = "a_mu_heroic_journey_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1674718744870-13c46484fc0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+  var levelNumberValue = 9
+  var flyingDeathCount = 10 * (levelNumberValue /10)
+  var flyingDurationMin = 30 - (levelNumberValue * 2)
+  var flyingDurationMax = 35 - (levelNumberValue * 2)
+  var boopMultiplierValue = 2 - (levelNumberValue * 0.166) // starts at 2 and decreases to 0.5
+  var lavaDamageValue = 100 * (levelNumberValue /10)
+  var flyingDamageValue = 50 * (levelNumberValue /10)
+  var trapScaleValue = 1.5 * (levelNumberValue /10)
+  var colourLightValue: LevelProps['colourLight'] = "t_diagonal_stripes_01"
+  var colourDarkValue: LevelProps['colourDark'] = "gpl_rotating_twist_01"
+  var musicId = "a_mu_border_of_neo_tokyo_01"
+  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52226317881_a072bb1153_z_640_360_nofilter.jpg"
 
   return (
 
@@ -1101,18 +1101,18 @@ const LevelNine: HDKComponent = props => {
 }
 
 const LevelTen: HDKComponent = props => {
-  var levelNumberValue = 4
-  var flyingDeathCount = 10
-  var flyingDurationMin = 10
-  var flyingDurationMax = 13
+  var levelNumberValue = 10
+  var flyingDeathCount = 10 * (levelNumberValue /10)
+  var flyingDurationMin = 30 - (levelNumberValue * 2)
+  var flyingDurationMax = 35 - (levelNumberValue * 2)
+  var boopMultiplierValue = 2 - (levelNumberValue * 0.166) // starts at 2 and decreases to 0.5
+  var lavaDamageValue = 100 * (levelNumberValue /10)
+  var flyingDamageValue = 50 * (levelNumberValue /10)
+  var trapScaleValue = 1.5 * (levelNumberValue /10)
   var colourLightValue: LevelProps['colourLight'] = "t_neon_grid_01"
   var colourDarkValue: LevelProps['colourDark'] = "t_hex_disco_01"
-  var boopMultiplierValue = 0.5
-  var lavaDamageValue = 100
-  var flyingDamageValue = 50
-  var trapScaleValue = 1.5
-  var musicId = "a_mu_adventure_of_flying_jack_01"
-  var spectatorImageUrl = "https://images.unsplash.com/photo-1517825738774-7de9363ef735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1410&q=80"
+  var musicId = "a_mu_digital_gravity_01"
+  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52886923341_9db4d78a42_z_640_360_nofilter.jpg"
 
   return (
     <HNode y={1440}>
@@ -1179,8 +1179,8 @@ const World = () => (
 
   </HNode >
 );
-
-render(<World />, { environment: 'above_clouds_01' });
+ 
+render(<World />, { environment: 'midday_clear_01' }); // cold_mountain_01
 
 // Questions
 // Should the levels above/below be blocked off? Or is it cool to see down?
