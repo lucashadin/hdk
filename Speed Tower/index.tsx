@@ -411,7 +411,7 @@ const Goal: HDKComponent = props => {
             scaleY={2}
           />
           <PortalPlatform />
-          <ThumbnailAll/>
+          
           
         </HNode>
       </Animation>
@@ -696,7 +696,7 @@ const LevelOne: HDKComponent = props => {
   var flyingDamageValue = 0
   var trapScaleValue = 0
   var musicId = "a_mu_moments_01"
-  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52225415595_375deb9379_z_640_360_nofilter.jpg"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
 
   return (
 
@@ -742,7 +742,7 @@ const LevelTwo: HDKComponent = props => {
   var colourLightValue: MaterialId = "t_sci_fi_tile_06"
   var colourDarkValue: MaterialId = "t_sci_fi_tile_07"
   var musicId = "a_mu_dark_signs_per_01"
-  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52688291677_2d1961dfaa_b_640_360_nofilter.jpg"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
 
   return (
 
@@ -788,7 +788,7 @@ const LevelThree: HDKComponent = props => {
   var colourLightValue: MaterialId = "t_pearl_01"
   var colourDarkValue: MaterialId = "t_coins_01"
   var musicId = "a_mu_asking_questions_01"
-  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_53052783191_41d04914e2_z_640_360_nofilter.jpg"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
 
   return (
 
@@ -834,7 +834,7 @@ const LevelFour: HDKComponent = props => {
   var colourLightValue: MaterialId = "t_striped_candy_01"
   var colourDarkValue: MaterialId = "t_chocolate_tiles_01"
   var musicId = "a_mu_ancient_rite_01"
-  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52560053416_f5a71c033c_z_640_360_nofilter.jpg"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80"
 
   return (
 
@@ -880,7 +880,7 @@ const LevelFive: HDKComponent = props => {
   var colourLightValue: MaterialId = "t_hexagon_pattern_01"
   var colourDarkValue: MaterialId = "t_grid_01"
   var musicId = "a_mu_heroic_journey_01"
-  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52485773254_572ae23e7a_z_640_360_nofilter.jpg"
+  var spectatorImageUrl = "https://plus.unsplash.com/premium_photo-1667673941713-ad4d4751c93b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
 
   return (
 
@@ -926,7 +926,7 @@ const LevelSix: HDKComponent = props => {
   var colourLightValue: MaterialId = "t_cobble_stone_01"
   var colourDarkValue: MaterialId = "t_stripes_02"
   var musicId = "a_mu_adventure_of_flying_jack_01"
-  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52462898608_924dc41d06_z_640_360_nofilter.jpg"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1597633544424-4da83804df40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
 
   return (
 
@@ -972,7 +972,7 @@ const LevelSeven: HDKComponent = props => {
   var colourLightValue: MaterialId = "t_gravel_01"
   var colourDarkValue: MaterialId = "t_pinball_floor_01_t8"
   var musicId = "a_mu_arpent_01"
-  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52764188094_a51549f3e7_z_640_360_nofilter.jpg"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1523480717984-24cba35ae1ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
 
   return (
 
@@ -1019,7 +1019,7 @@ const LevelEight: HDKComponent = props => {
   var colourLightValue: LevelProps['colourLight'] = "t_metal_01"
   var colourDarkValue: LevelProps['colourDark'] = "t_pride_01"
   var musicId = "a_mu_wahlstedt_madness_01"
-  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52230352689_bcee6be965_z_640_360_nofilter.jpg"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1608096299210-db7e38487075?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80"
 
   return (
 
@@ -1066,7 +1066,7 @@ const LevelNine: HDKComponent = props => {
   var colourLightValue: LevelProps['colourLight'] = "t_diagonal_stripes_01"
   var colourDarkValue: LevelProps['colourDark'] = "gpl_rotating_twist_01"
   var musicId = "a_mu_border_of_neo_tokyo_01"
-  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52226317881_a072bb1153_z_640_360_nofilter.jpg"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1514373941175-0a141072bbc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80"
 
   return (
 
@@ -1112,7 +1112,7 @@ const LevelTen: HDKComponent = props => {
   var colourLightValue: LevelProps['colourLight'] = "t_neon_grid_01"
   var colourDarkValue: LevelProps['colourDark'] = "t_hex_disco_01"
   var musicId = "a_mu_digital_gravity_01"
-  var spectatorImageUrl = "https://loremflickr.com/cache/resized/65535_52886923341_9db4d78a42_z_640_360_nofilter.jpg"
+  var spectatorImageUrl = "https://images.unsplash.com/photo-1583336663277-620dc1996580?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80"
 
   return (
     <HNode y={1440}>
