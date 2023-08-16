@@ -31,13 +31,14 @@ const Platform: HDKComponent = ({ ...props }) => {
 
   return (
     <HNode>
-    <Floor id="cube_01" material='t_sci_fi_tile_07' x={0} rotX={0} rotY={0} rotZ={0} scaleX={2} scaleY={1} scaleZ={3} />
+      <Checkpoint y={2}/>
+    <Prefab id="cube_01" material='t_sci_fi_tile_07' x={0} rotX={0} rotY={0} rotZ={0} scaleX={2} scaleY={1} scaleZ={3} />
     <Animation animation={{
       x: [0, 0],
       y: [1, 1],
       z: [1, 30],
       rotY: [0, 0],
-      rotX: [0, 0],
+      rotX: [0, 20],
       scaleX: [1, 1],
       scaleY: [1, 1],
       scaleZ: [1, 1],
@@ -47,10 +48,12 @@ const Platform: HDKComponent = ({ ...props }) => {
       easing: 'EASE_IN_CUBIC',
     }}>
     <HNode>
-      <PointSound y={30} x={0} src={{ id: "a_mu_district_h_01" }} radius={30} volume={1} />
+      {/* <PointSound y={30} x={0} src={{ id: "a_mu_district_h_01" }} radius={30} volume={1} /> */}
 
 
-      <Floor id="cube_01" material='t_sci_fi_tile_07' x={5} rotX={-20} rotY={0} rotZ={0} scaleX={2} scaleY={1} scaleZ={3} />
+      <Prefab id="cube_01" material='t_sci_fi_tile_07' x={5} rotX={-20} rotY={random.range(-30, 30)}  rotZ={0} scaleX={2} scaleY={1} scaleZ={3}></Prefab>
+         
+      
 
 
 
@@ -72,7 +75,7 @@ const DistributePlatforms: HDKComponent = props => (
 //  gapFrequency={0.9}
  itemAreaSizeMin={30}
  outerBoundRadius = {500}
- showGapArea = {true}
+ showGapArea = {false}
  renderItem={item => {
    const random = useRandom();
  
