@@ -28,7 +28,7 @@ const Floor: HDKComponent = props => {
 const Platform: HDKComponent = ({ ...props }) => {
   const random = useRandom();
   var addToSteps = (random.range(1, 10) / 10);
-  var stepsInput = [1, 2, 3]
+  var stepsInput = [1, 1.8, 3]
 
 
   return (
@@ -54,7 +54,7 @@ const Platform: HDKComponent = ({ ...props }) => {
           {/* <PointSound y={30} x={0} src={{ id: "a_mu_district_h_01" }} radius={30} volume={1} /> */}
 
 
-          <Prefab id="cube_01" material='t_grid_01' x={7} rotX={-20} rotY={random.range(-30, 30)} rotZ={0} scaleX={3} scaleY={1} scaleZ={3}></Prefab>
+          <Prefab id="cube_01" material='t_grid_01' x={7} rotX={-20} rotY={random.range(-20, 20)} rotZ={0} scaleX={3} scaleY={1} scaleZ={3}></Prefab>
 
 
 
