@@ -28,23 +28,23 @@ const Floor: HDKComponent = props => {
 const Platform: HDKComponent = ({ ...props }) => {
   const random = useRandom();
   var addToSteps = (random.range(1, 10) / 10);
-  var stepsInput = [1, 2]
+  var stepsInput = [1, 2, 3]
 
 
   return (
     <HNode>
       <Checkpoint x={-3} y={2} />
-      <Prefab id="cube_01" material='t_hexagon_pattern_01' x={-3} rotX={0} rotY={0} rotZ={0} scaleX={4} scaleY={1} scaleZ={4} />
-      <Prefab id="cube_01" material='t_glass_03' x={-3} y={1} z={3} rotX={0} rotY={0} rotZ={0} scaleX={4} scaleY={2} scaleZ={0.1} />
+      <Prefab id="cube_01" material='t_hexagon_pattern_01' x={-3} rotX={0} rotY={0} rotZ={0} scaleX={6} scaleY={1} scaleZ={6} />
+      <Prefab id="cube_01" material='t_glass_03' x={-3} y={1} z={3} rotX={0} rotY={0} rotZ={0} scaleX={6} scaleY={2} scaleZ={0.1} />
       <Animation animation={{
-        x: [0, 0],
-        y: [1, 5],
-        z: [1, 30],
-        rotY: [0, 0],
-        rotX: [0, -10],
-        scaleX: [1, 1],
-        scaleY: [1, 1],
-        scaleZ: [1, 1],
+        x: [0, 0, 0],
+        y: [1, 5, 5],
+        z: [1, 30, 30],
+        rotY: [0, 0, 0],
+        rotX: [0, -5, -5],
+        scaleX: [1, 1.5, 1.5],
+        scaleY: [1, 1.5, 1.5],
+        scaleZ: [1, 1.5, 1.5],
         steps: stepsInput.map(num => (num + addToSteps)),
         // duration: 3,
         loop: 'REVERSE',
@@ -54,7 +54,7 @@ const Platform: HDKComponent = ({ ...props }) => {
           {/* <PointSound y={30} x={0} src={{ id: "a_mu_district_h_01" }} radius={30} volume={1} /> */}
 
 
-          <Prefab id="cube_01" material='t_grid_01' x={5} rotX={-20} rotY={random.range(-30, 30)} rotZ={0} scaleX={3} scaleY={1} scaleZ={3}></Prefab>
+          <Prefab id="cube_01" material='t_grid_01' x={7} rotX={-20} rotY={random.range(-30, 30)} rotZ={0} scaleX={3} scaleY={1} scaleZ={3}></Prefab>
 
 
 
@@ -329,6 +329,15 @@ const PortalPlatform: HDKComponent = props => (
   </HNode>
 )
 
+
+const SpawnPlatform: HDKComponent = props => (
+  <HNode
+  {...props}>
+     <WelcomeSign x={-4} y={0} z={4} rotY={180} />
+     <Spawnpoint x={0} y={0} z={0} />
+  </HNode>
+)
+
 const World = () => (
   <HNode>
 
@@ -341,13 +350,16 @@ const World = () => (
     <Goal x={-69.8} y={6.5} z={453.6} />
     <Goal x={60} y={6.5} z={453.6} />
 
-    <WelcomeSign x={-34} y={2} z={-371} rotY={180} />
+   
     <GroundArea />
+    <SpawnPlatform x={-31.2} y={2.0} z={-377.3}/>
+    <SpawnPlatform x={77.5} y={2.0} z={-361.3}/>
+    <SpawnPlatform x={-88.4} y={2.0} z={-373.4}/>
 
 
 
 
-    <Spawnpoint x={-31.8} y={2.0} z={-374.4} />
+  
 
 
 
