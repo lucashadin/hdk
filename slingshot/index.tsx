@@ -369,7 +369,7 @@ const World = () => (
   </HNode >
 );
 
-render(<World />, { environment: 'fantasy_land_01' }); // cold_mountain_01
+render(<World />, { environment: 'cold_mountain_01' }); // cold_mountain_01
 
 // Questions
 // Should the levels above/below be blocked off? Or is it cool to see down?

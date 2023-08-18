@@ -25,79 +25,81 @@ const Floor: HDKComponent = props => {
 
 
 
-const Cannon: HDKComponent = ({ ...props }) => {
+const Cannon: HDKComponent = ({ speed = 'low', ...props }) => {
   const random = useRandom();
   var addToSteps = (random.range(1, 10) / 10);
-  var stepsInput = [1, 1.8, 2.2]
+  var stepsInput = [1, 1.8, 2.2];
 
+  // Determine steps based on speed
+  const stepsValue1 = speed === 'high' ? [0, 2] : [0, 5]; // up and down
+  const stepsValue2 = speed === 'high' ? [0, 5] : [0, 9]; // left and right
 
   return (
-    <HNode
-      {...props}>
-      <Checkpoint x={-3} y={2} />
+    <HNode {...props}>
+      
 
-      <HNode x={8} y={5} z={35}>
-      <Animation animation={{
-        x: [0, 0],
-        y: [0, 0],
-        z: [0, 0],
-        rotX: [0, 20],
-        rotY: [0, 0],
-        rotZ: [0, 0],
-        scaleX: [1, 1],
-        scaleY: [1, 1],
-        scaleZ: [1, 1],
-        steps: [0, 4],
-        // duration: 3,
-        loop: 'REVERSE',
-        easing: 'LINEAR',
-      }}>
-      <Animation animation={{
-        x: [0, 0],
-        y: [0, 0],
-        z: [0, 0],
-        rotX: [0, 0],
-        rotY: [0, 45],
-        rotZ: [0, 0],
-        scaleX: [1, 1],
-        scaleY: [1, 1],
-        scaleZ: [1, 1],
-        steps: [0, 10],
-        // duration: 3,
-        loop: 'REVERSE',
-        easing: 'LINEAR',
-      }}>
-        
-        <Prefab id="torus_thin_01" material='t_glass_01' x={0} y={0} z={0} rotX={60} rotY={0} rotZ={0} scaleX={2} scaleY={50} scaleZ={2} />
+      <HNode x={5} y={5} z={35}>
         <Animation animation={{
-        x: [0, 0, 0],
-        y: [0, 0, 0],
-        z: [0, 32.5, 32.5],
-        rotY: [0, 0, 0],
-        rotX: [0, 0, 0],
-        scaleX: [1, 1, 1],
-        scaleY: [1, 1, 1],
-        scaleZ: [1, 1, 1],
-        steps: [0, 3],
-        // duration: 3,
-        loop: 'RESTART',
-        easing: 'EASE_IN_CUBIC',
-      }}>
-        <HNode>
-          <Prefab id="cube_01" material='t_neon_grid_01' x={0} y={0} z={-20} rotX={60} rotY={0} rotZ={0} scaleX={3} scaleY={2} scaleZ={3}></Prefab>
-        </HNode>
-      </Animation>
+          x: [0, 0],
+          y: [0, 0],
+          z: [0, 0],
+          rotX: [0, 20],
+          rotY: [0, 0],
+          rotZ: [0, 0],
+          scaleX: [1, 1],
+          scaleY: [1, 1],
+          scaleZ: [1, 1],
+          steps: stepsValue1,  // Use stepsValue here
+          loop: 'REVERSE',
+          easing: 'LINEAR',
+        }}>
+          <Animation animation={{
+            x: [0, 0],
+            y: [0, 0],
+            z: [0, 0],
+            rotX: [0, 0],
+            rotY: [-20, 20],
+            rotZ: [0, 0],
+            scaleX: [1, 1],
+            scaleY: [1, 1],
+            scaleZ: [1, 1],
+            steps: stepsValue2,  // Use stepsValue here
+            // duration: 3,
+            loop: 'REVERSE',
+            easing: 'LINEAR',
+          }}>
 
-      </Animation>
-      </Animation>
+            <Prefab id="torus_thin_01" material='t_glass_01' x={0} y={0} z={0} rotX={60} rotY={0} rotZ={0} scaleX={2} scaleY={50} scaleZ={2} />
+            <Prefab id="disc_02" material='palette_01_red' x={0} y={-0.5} z={2} rotX={140} rotY={0} rotZ={0} scaleX={0.2} scaleY={0.2} scaleZ={0.2} />
+            <Animation animation={{
+              x: [0, 0, 0],
+              y: [0, 0, 0],
+              z: [0, 0, 32.5],
+              rotY: [0, 0, 0],
+              rotX: [0, 0, 0],
+              scaleX: [1, 1, 1],
+              scaleY: [1, 1, 1],
+              scaleZ: [1, 1, 1],
+              steps: [0, 5, 6],
+              // duration: 3,
+              loop: 'RESTART',
+              easing: 'EASE_IN_CUBIC',
+            }}>
+              <HNode>
+                <Prefab id="cube_01" material='t_neon_grid_01' x={0} y={0} z={-20} rotX={60} rotY={0} rotZ={0} scaleX={3} scaleY={2} scaleZ={3}></Prefab>
+              </HNode>
+            </Animation>
+
+          </Animation>
+        </Animation>
       </HNode>
 
 
 
       <Prefab id="cube_01" material='t_hexagon_pattern_01' x={4} y={0} z={30} rotX={-20} rotY={0} rotZ={0} scaleX={6} scaleY={1} scaleZ={6} />
       {/* <Prefab id="cube_01" material='t_neon_red_01' x={0} y={3} z={30} rotX={0} rotY={0} rotZ={0} scaleX={6} scaleY={1} scaleZ={6} /> */}
-      
-      
+
+
     </HNode>
   )
 
@@ -106,93 +108,8 @@ const Cannon: HDKComponent = ({ ...props }) => {
 
 }
 
-const DistributePlatforms: HDKComponent = props => (
-  <Distribute
-    gladeRadius={0}
-    //  gapSizeMin={10}
-    //  gapFrequency={0.9}
-    itemAreaSizeMin={50}
-    outerBoundRadius={400}
-    showGapArea={false}
-    renderItem={item => {
-      const random = useRandom();
-
-      return (
-        <Platform />
-      );
-    }}
-  />
-)
 
 
-const DistributeMusic: HDKComponent = props => {
-
-  // Music ID array
-  const musicIds = [
-    'a_mu_love_now_01',
-    'a_mu_moments_01',
-    'a_mu_purple_days_01',
-    'a_mu_strange_melody_01',
-    'a_mu_silly_boy_01',
-    'a_mu_spring_chicken_01',
-    'a_mu_bass_meant_jazz_kevin_macleod_01',
-    'a_mu_dark_signs_per_01',
-    'a_mu_mnk_osmond_benedict_01',
-    'a_mu_take_the_ride_01',
-    'a_mu_gotta_keep_on_movin_01',
-    'a_mu_happy_daisy_01',
-    'a_mu_arpent_01',
-    'a_mu_digital_gravity_01',
-    'a_mu_nesbert_per_01',
-    'a_mu_adventure_of_flying_jack_01',
-    'a_mu_ancient_rite_01',
-    'a_mu_heroic_journey_01',
-    'a_mu_inner_peace_01',
-    'a_m_iconic_bullet_01',
-    'a_mu_asking_questions_01',
-    'a_mu_cockroaches_01',
-    'a_mu_creepy_hallow_01',
-    'a_mu_hidden_truth_01',
-    'a_mu_mysterious_lights_01',
-    'a_mu_border_of_neo_tokyo_01',
-    'a_mu_district_h_01',
-    'a_mu_wahlstedt_madness_01'
-
-  ];
-
-
-
-  return (
-    <HNode y={0}>
-      <Distribute
-        gladeRadius={0}
-        // gapSizeMin={10}
-        // gapFrequency={0.9}
-        itemAreaSizeMin={200}
-        outerBoundRadius={400}
-        showGapArea={false}
-        renderItem={item => {
-          const random = useRandom();
-
-          // Get random music ID from the array
-          var randomIndex = Math.floor(Math.random() * musicIds.length);
-          var randomMusicId = musicIds[randomIndex];
-
-          // console.log(randomIndex);
-          // console.log(randomMusicId);
-
-          return (
-            <HNode>
-              {/* <Prefab id="balloons_01" x={0} y={0} z={0} rotX={0} rotY={0} rotZ={0} scaleX={3} scaleY={1} scaleZ={3} /> */}
-              {/* <PointSound y={30} x={0} src={{ id: randomMusicId }} radius={60} volume={1} /> */}
-
-            </HNode>
-          );
-        }}
-      />
-    </HNode>
-  )
-}
 
 
 const GroundArea: HDKComponent = props => (
@@ -208,8 +125,8 @@ const GroundArea: HDKComponent = props => (
 const WelcomeSign: HDKComponent = props => (
   <InfoPanel
     maxShowDistance={3}
-    header="Welcome Chrome Catapult!"
-    body="Press jump once the platform is moving to catapult yourself!"
+    header="Welcome Glass Cannon"
+    body="Stand on the red circle then try to fly through the rings."
     // url="https://developer.hiber3d.com/docs"
     openUrlInNewTab={true}>
     <Prefab
@@ -368,49 +285,136 @@ const PortalPlatform: HDKComponent = props => (
 const SpawnPlatform: HDKComponent = props => (
   <HNode
     {...props}>
-    <WelcomeSign x={-4} y={0} z={4} rotY={180} />
+    <WelcomeSign x={-5} y={1.5} z={3} rotY={180} />
     <Spawnpoint x={0} y={0} z={0} />
   </HNode>
 )
 
-const GoalBox: HDKComponent = props => (
+
+const GoalBox: HDKComponent = ({ ...props }) => {
+
+  return (
+
+    <>
+      <HNode x={0} y={30} z={0} rotX={-90}
+        {...props}
+      >
+
+
+
+        <Prefab
+          id="cube_01"
+          material="glass"
+          x={0} y={-2.5} z={0}
+          rotY={-180}
+          // rotX={20}
+          scaleX={5}
+          scaleZ={5}
+          scaleY={0.1}
+        />
+
+        <Prefab
+          id="goal_01"
+          material="t_neon_red_01"
+          scale={2}
+          x={0} y={0} z={-5}
+          rotX={90}
+        />
+
+
+
+
+
+        <HNode>
+
+          <Prefab
+            id="cube_01"
+            material="glass"
+            x={5} y={0} z={0}
+            rotZ={90}
+            // rotX={20}
+            scaleX={3}
+            scaleZ={5}
+            scaleY={0.2}
+          />
+
+          <Prefab
+            id="cube_01"
+            material="glass"
+            x={-5} y={0} z={0}
+            rotZ={90}
+            // rotX={20}
+            scaleX={3}
+            scaleZ={5}
+            scaleY={0.2}
+          />
+
+
+
+          <Prefab
+            id="cube_01"
+            material="glass"
+            x={0} y={0} z={5}
+            rotZ={90}
+            rotX={90}
+            scaleX={3}
+            scaleZ={5}
+            scaleY={0.2}
+          />
+          <Prefab
+            id="cube_01"
+            material="glass"
+            x={0} y={0} z={-5}
+            rotZ={90}
+            rotX={90}
+            // rotX={20}
+            scaleX={3}
+            scaleZ={5}
+            scaleY={0.2}
+          />
+
+        </HNode>
+      </HNode>
+
+
+    </>
+  )
+
+}
+
+
+const Rings: HDKComponent = props => (
   <HNode
     {...props}>
-      <Prefab id="en_m_primitive_wall_02"  x={0} y={30} z={0} rotX={0} rotY={0} rotZ={0} scaleX={0.5} scaleY={0.5} scaleZ={0.5} />
-      <Prefab id="en_m_primitive_wall_02"  x={30} y={30} z={0} rotX={0} rotY={0} rotZ={0} scaleX={3} scaleY={3} scaleZ={3} />
-      <Prefab id="en_m_primitive_wall_02"  x={-30} y={30} z={30} rotX={0} rotY={0} rotZ={0} scaleX={2} scaleY={2} scaleZ={2} />
+    <Prefab id="en_m_primitive_wall_02" material='t_black_marble_01' x={0} y={30} z={0} rotX={0} rotY={0} rotZ={0} scaleX={0.6} scaleY={0.6} scaleZ={0.6} />
+    <Prefab id="en_m_primitive_wall_02" material='t_black_marble_01' x={30} y={30} z={120} rotX={0} rotY={0} rotZ={0} scaleX={3} scaleY={3} scaleZ={3} />
+    <Prefab id="en_m_primitive_wall_02" material='t_black_marble_01' x={-30} y={30} z={60} rotX={0} rotY={0} rotZ={0} scaleX={2} scaleY={2} scaleZ={2} />
   </HNode>
 )
 
 
-const Wall: HDKComponent = props => (
-  <HNode
-    {...props}>
-      <Prefab id="en_m_primitive_wall_02"  x={0} y={30} z={0} rotX={0} rotY={0} rotZ={0} scaleX={0.5} scaleY={0.5} scaleZ={0.5} />
-      <Prefab id="en_m_primitive_wall_02"  x={30} y={30} z={30} rotX={0} rotY={0} rotZ={0} scaleX={3} scaleY={3} scaleZ={3} />
-      <Prefab id="en_m_primitive_wall_02"  x={-30} y={30} z={60} rotX={0} rotY={0} rotZ={0} scaleX={2} scaleY={2} scaleZ={2} />
-  </HNode>
-)
+
+
 
 const World = () => (
   <HNode>
 
 
 
-    {/* <DistributePlatforms /> */}
-    {/* <DistributeMusic /> */}
-
-    {/* <Goal x={112.6} y={88.0} z={188.5}/> */}
-    {/* <Goal x={31.1} y={44.5} z={196.9}/> */}
-    {/* <Goal x={-43.8} y={66.7} z={211.9}/> */}
 
 
-    <Wall x={28.7} y={0} z={240.2}/>
-    <Cannon />
+    <Rings x={28.7} y={0} z={240.2} />
+    <Cannon speed='high' />
+    <Cannon x={20} speed='low' />
     <GroundArea />
-    <SpawnPlatform x={7.4} y={3.2} z={32.8} />
-    {/* <SpawnPlatform x={77.5} y={2.0} z={-361.3}/> */}
-    {/* <SpawnPlatform x={-88.4} y={2.0} z={-373.4}/> */}
+    <SpawnPlatform x={4.1} y={2.0} z={29.5} />
+    <SpawnPlatform x={24.2} y={1.8} z={28.9} />
+    <GoalBox x={-0.9} y={34.4} z={300} scale={0.7} />
+    <GoalBox x={58.4} y={37.3} z={358.6} scale={1} />
+    <GoalBox x={28.7} y={31} z={240} scale={0.25} />
+
+
+
 
 
 
@@ -425,7 +429,7 @@ const World = () => (
   </HNode >
 );
 
-render(<World />, { environment: 'fantasy_land_01' }); // cold_mountain_01
+render(<World />, { environment: 'cloud_pillars_01' }); // cold_mountain_01
 
 // Questions
 // Should the levels above/below be blocked off? Or is it cool to see down?
