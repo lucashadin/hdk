@@ -140,125 +140,7 @@ const WelcomeSign: HDKComponent = props => (
 )
 
 
-const Goal: HDKComponent = props => {
-  return (
-    <>
 
-      <Animation animation={{
-        x: [0, 0, 0, 0],
-        y: [0, 0, 0, 0],
-        rotY: [0, 0, 0, 0],
-        // scale: [1, 1, 1, 1],
-        scaleX: [1, 1, 1, 1],
-        steps: [0, 15, 40, 60],
-        // duration: 3,
-        loop: 'RESTART',
-        easing: 'EASE_IN_OUT_CUBIC',
-      }}>
-        <HNode
-          {...props}>
-          <PointSound y={30} x={0} src={{ id: 'a_mu_district_h_01' }} radius={100} volume={1} />
-          <Prefab
-            id="goal_01"
-            material="t_neon_red_01"
-            scale={1}
-            x={0} y={-0.6} z={0}
-          />
-          <Animation animation={{
-            x: [0, 0, 0],
-            y: [0, 10, 0],
-            rotY: [0, 0, 0],
-            // scale: [1, 1, 1, 1],
-            scaleX: [1, 1, 1],
-            steps: [0, 5, 10],
-            // duration: 3,
-            loop: 'RESTART',
-            easing: 'EASE_IN_CUBIC',
-          }}>
-            <Prefab
-              id="cube_01"
-              material="t_neon_red_01"
-              x={-5} y={0} z={0}
-              scaleX={1}
-              scaleZ={1}
-              scaleY={0.2}
-            />
-          </Animation>
-          {/* <Prefab
-            id="fx_particlesystem_fireworks_01"
-            material="t_rainbow_02"
-            scale={1}
-            x={0} y={0} z={0}
-          /> */}
-          <Prefab
-            id="cube_01"
-            material="glass"
-            x={0} y={-2.5} z={0}
-            rotY={-180}
-            // rotX={20}
-            scaleX={5}
-            scaleZ={5}
-            scaleY={1}
-          />
-          <Prefab
-            id="cube_01"
-            material="m_emissive_green"
-            x={0} y={0} z={5}
-            rotY={0}
-            // rotX={20}
-            scaleX={5}
-            scaleZ={0.2}
-            scaleY={5}
-          />
-          <Prefab
-            id="sofa_01_t2"
-            // material="glass"
-            x={0} y={-0.4} z={-4}
-            // rotY={-180}
-            // rotX={20}
-            scaleX={1}
-            scaleZ={1}
-            scaleY={1}
-          />
-          <Prefab
-            id="sofa_01_t2"
-            // material="glass"
-            x={-2} y={-0.4} z={-2}
-            rotY={90}
-            // rotX={20}
-            scaleX={1}
-            scaleZ={1}
-            scaleY={1}
-          />
-          <Prefab
-            id="fridge_01"
-            material="t_neon_red_01"
-            x={4} y={-0.4} z={4}
-            rotY={210}
-            // rotX={20}
-            scaleX={1}
-            scaleZ={1}
-            scaleY={1}
-          />
-          <Prefab
-            id="vase_cactus_01"
-            // material="glass"
-            x={4} y={-0.4} z={-4}
-            rotY={210}
-            // rotX={20}
-            scaleX={2}
-            scaleZ={2}
-            scaleY={2}
-          />
-
-
-          <PortalPlatform />
-        </HNode>
-      </Animation>
-
-    </>
-  )
-}
 
 
 
@@ -515,6 +397,117 @@ const LevelSign: HDKComponent = ({ level, ...props }) => {
 };
 
 
+const Goal: HDKComponent = props => {
+  return (
+    <>
+
+      <Animation animation={{
+        x: [0, 0, 0, 0],
+        y: [0, 0, 0, 0],
+        rotY: [0, 0, 0, 0],
+        // scale: [1, 1, 1, 1],
+        scaleX: [1, 1, 1, 1],
+        steps: [0, 15, 40, 60],
+        // duration: 3,
+        loop: 'RESTART',
+        easing: 'EASE_IN_OUT_CUBIC',
+      }}>
+        <HNode
+          {...props}>
+          <PointSound y={30} x={0} src={{ id: 'a_mu_district_h_01' }} radius={5} volume={1} />
+          <Prefab
+            id="goal_01"
+            material="t_neon_red_01"
+            scale={1}
+            x={0} y={-0.6} z={0}
+          />
+          <Animation animation={{
+            x: [0, 0, 0],
+            y: [0, 10, 0],
+            rotY: [0, 0, 0],
+            // scale: [1, 1, 1, 1],
+            scaleX: [1, 1, 1],
+            steps: [0, 5, 10],
+            // duration: 3,
+            loop: 'RESTART',
+            easing: 'EASE_IN_CUBIC',
+          }}>
+            <Prefab
+              id="cube_01"
+              material="t_neon_red_01"
+              x={-5} y={0} z={0}
+              scaleX={1}
+              scaleZ={1}
+              scaleY={0.2}
+            />
+          </Animation>
+          {/* <Prefab
+            id="fx_particlesystem_fireworks_01"
+            material="t_rainbow_02"
+            scale={1}
+            x={0} y={0} z={0}
+          /> */}
+          <Prefab
+            id="cube_01"
+            material="glass"
+            x={0} y={-2.5} z={0}
+            rotY={-180}
+            // rotX={20}
+            scaleX={5}
+            scaleZ={5}
+            scaleY={1}
+          />
+    
+          <Prefab
+            id="sofa_01_t2"
+            // material="glass"
+            x={0} y={-0.4} z={-4}
+            // rotY={-180}
+            // rotX={20}
+            scaleX={1}
+            scaleZ={1}
+            scaleY={1}
+          />
+          <Prefab
+            id="sofa_01_t2"
+            // material="glass"
+            x={-2} y={-0.4} z={-2}
+            rotY={90}
+            // rotX={20}
+            scaleX={1}
+            scaleZ={1}
+            scaleY={1}
+          />
+          <Prefab
+            id="fridge_01"
+            material="t_neon_red_01"
+            x={4} y={-0.4} z={4}
+            rotY={210}
+            // rotX={20}
+            scaleX={1}
+            scaleZ={1}
+            scaleY={1}
+          />
+          <Prefab
+            id="vase_cactus_01"
+            // material="glass"
+            x={4} y={-0.4} z={-4}
+            rotY={210}
+            // rotX={20}
+            scaleX={2}
+            scaleZ={2}
+            scaleY={2}
+          />
+
+
+          <PortalPlatform />
+        </HNode>
+      </Animation>
+
+    </>
+  )
+}
+
 
 const InvisibleCheckpoint: HDKComponent = props => (
   <HNode
@@ -533,7 +526,7 @@ const InvisibleCheckpoint: HDKComponent = props => (
 
 
 
-const IndividualLevel: HDKComponent = ({ level, ...props }) => {
+const IndividualLevel: HDKComponent = ({ level, musicId, ...props }) => {
 
   // Convert the angle to radians
   const angleInRadians = (360 * ((level - 1) / 10) + 90) * (Math.PI / 180);
@@ -549,6 +542,7 @@ const IndividualLevel: HDKComponent = ({ level, ...props }) => {
       <TargetGoalCombined x={0} y={60} z={240.2} level={level} scale={2 - (1.3 * (level / 10))} />
       <Platform x={0} y={0} z={0} level={level} />
       <InvisibleCheckpoint x={-30} y={0} />
+      <PointSound y={0} x={0} src={{ id: musicId }} radius={15} volume={1} />
     </HNode>
   );
 };
@@ -574,18 +568,20 @@ const World = () => (
 
 
 
-    <IndividualLevel level='1' />
-    <IndividualLevel level='2' />
-    <IndividualLevel level='3' />
-    <IndividualLevel level='4' />
-    <IndividualLevel level='5' />
-    <IndividualLevel level='6' />
-    <IndividualLevel level='7' />
-    <IndividualLevel level='8' />
-    <IndividualLevel level='9' />
-    <IndividualLevel level='10' />
+    <IndividualLevel level='1' musicId='a_m_iconic_bullet_01'/>
+    <IndividualLevel level='2' musicId='a_mu_district_h_01'/>
+    <IndividualLevel level='3' musicId='a_mu_border_of_neo_tokyo_01'/>
+    <IndividualLevel level='4' musicId='a_mu_heroic_journey_01'/>
+    <IndividualLevel level='5' musicId='a_mu_gotta_keep_on_movin_01'/>
+    <IndividualLevel level='6' musicId='a_mu_take_the_ride_01'/>
+    <IndividualLevel level='7' musicId='a_mu_dark_signs_per_01'/>
+    <IndividualLevel level='8' musicId='a_mu_bass_meant_jazz_kevin_macleod_01'/>
+    <IndividualLevel level='9' musicId='a_mu_purple_days_01'/>
+    <IndividualLevel level='10' musicId='a_mu_moments_01'/>
     <GroundArea />
-    <Spawnpoint x={3.7} y={0.8} z={-3.9} />
+    <Goal x={0} y={2} z={-37.5}/>
+    {/* <PortalPlatform x={0} y={0} z={-37.5}/> */}
+    <Spawnpoint x={4.1} y={0.0} z={-7.8}/>
 
 
 
