@@ -27,8 +27,7 @@ const Floor: HDKComponent = props => {
 
 const Cannon: HDKComponent = ({ speed = 'low', ...props }) => {
   const random = useRandom();
-  var addToSteps = (random.range(1, 10) / 10);
-  var stepsInput = [1, 1.8, 2.2];
+
 
   // Determine steps based on speed
   const stepsValue1 = speed === 'high' ? [0, 2] : [0, 5]; // up and down
@@ -36,14 +35,15 @@ const Cannon: HDKComponent = ({ speed = 'low', ...props }) => {
 
   return (
     <HNode {...props}>
-      
+
 
       <HNode x={3.5} y={5} z={4}>
         <Animation animation={{
+          // up and down
           x: [0, 0],
           y: [0, 0],
           z: [0, 0],
-          rotX: [0, 20],
+          rotX: [0, 10],
           rotY: [0, 0],
           rotZ: [0, 0],
           scaleX: [1, 1],
@@ -54,11 +54,12 @@ const Cannon: HDKComponent = ({ speed = 'low', ...props }) => {
           easing: 'LINEAR',
         }}>
           <Animation animation={{
+            // left and right
             x: [0, 0],
             y: [0, 0],
             z: [0, 0],
             rotX: [0, 0],
-            rotY: [-20, 20],
+            rotY: [-10, 20],
             rotZ: [0, 0],
             scaleX: [1, 1],
             scaleY: [1, 1],
@@ -285,19 +286,19 @@ const PortalPlatform: HDKComponent = props => (
 const Platform: HDKComponent = ({ level, ...props }) => {
 
   return (
-  <HNode
-    {...props}>
-    <WelcomeSign x={0} y={4} z={3} rotY={180} />
-    <LevelSign x={9} y={3.8} z={5} scale={0.5} level={level}/>
-    <LevelSign x={4} y={0} z={5.7} scale={1.7} level={level} rotY={180}/>
-    <Checkpoint x={4} y={0.5} z={-4}/>
+    <HNode
+      {...props}>
+      <WelcomeSign x={0} y={4} z={3} rotY={180} />
+      <LevelSign x={9} y={3.8} z={5} scale={0.5} level={level} />
+      <LevelSign x={4} y={0} z={5.7} scale={1.7} level={level} rotY={180} />
+      <Checkpoint x={4} y={0.5} z={-4} />
 
-  </HNode>
+    </HNode>
   )
 }
 
 
-const GoalBox: HDKComponent = ({ ...props }) => {
+const GoalBox: HDKComponent = ({ level, ...props }) => {
 
   return (
 
@@ -323,7 +324,7 @@ const GoalBox: HDKComponent = ({ ...props }) => {
           id="collectible_mandatory_key_01"
           material="t_neon_red_01"
           scale={3}
-          x={0} y={0} z={-3}
+          x={0} y={1} z={-4-1*(level/10)}
           rotX={90}
         />
 
@@ -393,27 +394,27 @@ const Target: HDKComponent = props => (
   <HNode
     {...props}>
 
-<Prefab id="sphere_01" material='m_emissive_yellow' x={0} y={0} z={0} rotX={90} rotY={0} rotZ={0} scaleX={3} scaleY={0.05} scaleZ={3} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={0.1} rotX={90} rotY={0} rotZ={0} scaleX={3.1} scaleY={0.05} scaleZ={3.1} />
-<Prefab id="sphere_01" material='m_emissive_yellow' x={0} y={0} z={0.2} rotX={90} rotY={0} rotZ={0} scaleX={5} scaleY={0.05} scaleZ={5} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={0.3} rotX={90} rotY={0} rotZ={0} scaleX={5.1} scaleY={0.05} scaleZ={5.1} />
-<Prefab id="sphere_01" material='m_emissive_yellow' x={0} y={0} z={0.4} rotX={90} rotY={0} rotZ={0} scaleX={7} scaleY={0.05} scaleZ={7} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={0.5} rotX={90} rotY={0} rotZ={0} scaleX={7.1} scaleY={0.05} scaleZ={7.1} />
-<Prefab id="sphere_01" material='palette_01_red' x={0} y={0} z={0.6} rotX={90} rotY={0} rotZ={0} scaleX={9} scaleY={0.05} scaleZ={9} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={0.7} rotX={90} rotY={0} rotZ={0} scaleX={9.1} scaleY={0.05} scaleZ={9.1} />
-<Prefab id="sphere_01" material='palette_01_red' x={0} y={0} z={0.8} rotX={90} rotY={0} rotZ={0} scaleX={11} scaleY={0.05} scaleZ={11} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={0.9} rotX={90} rotY={0} rotZ={0} scaleX={11.1} scaleY={0.05} scaleZ={11.1} />
-<Prefab id="sphere_01" material='palette_01_blue' x={0} y={0} z={1.0} rotX={90} rotY={0} rotZ={0} scaleX={13} scaleY={0.05} scaleZ={13} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.1} rotX={90} rotY={0} rotZ={0} scaleX={13.1} scaleY={0.05} scaleZ={13.1} />
-<Prefab id="sphere_01" material='palette_01_blue' x={0} y={0} z={1.2} rotX={90} rotY={0} rotZ={0} scaleX={15} scaleY={0.05} scaleZ={15} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.3} rotX={90} rotY={0} rotZ={0} scaleX={15.1} scaleY={0.05} scaleZ={15.1} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.4} rotX={90} rotY={0} rotZ={0} scaleX={17} scaleY={0.05} scaleZ={17} />
-<Prefab id="sphere_01" material='palette_01_white' x={0} y={0} z={1.5} rotX={90} rotY={0} rotZ={0} scaleX={17.1} scaleY={0.05} scaleZ={17.1} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.6} rotX={90} rotY={0} rotZ={0} scaleX={19} scaleY={0.05} scaleZ={19} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.7} rotX={90} rotY={0} rotZ={0} scaleX={19.1} scaleY={0.05} scaleZ={19.1} />
-<Prefab id="sphere_01" material='palette_01_white' x={0} y={0} z={1.8} rotX={90} rotY={0} rotZ={0} scaleX={21} scaleY={0.05} scaleZ={21} />
-<Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.9} rotX={90} rotY={0} rotZ={0} scaleX={21.1} scaleY={0.05} scaleZ={21.1} />
-<Prefab id="sphere_01" material='palette_01_white' x={0} y={0} z={2.0} rotX={90} rotY={0} rotZ={0} scaleX={23} scaleY={0.05} scaleZ={23} />
+    <Prefab id="sphere_01" material='m_emissive_yellow' x={0} y={0} z={0} rotX={90} rotY={0} rotZ={0} scaleX={3} scaleY={0.05} scaleZ={3} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={0.1} rotX={90} rotY={0} rotZ={0} scaleX={3.1} scaleY={0.05} scaleZ={3.1} />
+    <Prefab id="sphere_01" material='m_emissive_yellow' x={0} y={0} z={0.2} rotX={90} rotY={0} rotZ={0} scaleX={5} scaleY={0.05} scaleZ={5} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={0.3} rotX={90} rotY={0} rotZ={0} scaleX={5.1} scaleY={0.05} scaleZ={5.1} />
+    <Prefab id="sphere_01" material='m_emissive_yellow' x={0} y={0} z={0.4} rotX={90} rotY={0} rotZ={0} scaleX={7} scaleY={0.05} scaleZ={7} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={0.5} rotX={90} rotY={0} rotZ={0} scaleX={7.1} scaleY={0.05} scaleZ={7.1} />
+    <Prefab id="sphere_01" material='palette_01_red' x={0} y={0} z={0.6} rotX={90} rotY={0} rotZ={0} scaleX={9} scaleY={0.05} scaleZ={9} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={0.7} rotX={90} rotY={0} rotZ={0} scaleX={9.1} scaleY={0.05} scaleZ={9.1} />
+    <Prefab id="sphere_01" material='palette_01_red' x={0} y={0} z={0.8} rotX={90} rotY={0} rotZ={0} scaleX={11} scaleY={0.05} scaleZ={11} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={0.9} rotX={90} rotY={0} rotZ={0} scaleX={11.1} scaleY={0.05} scaleZ={11.1} />
+    <Prefab id="sphere_01" material='palette_01_blue' x={0} y={0} z={1.0} rotX={90} rotY={0} rotZ={0} scaleX={13} scaleY={0.05} scaleZ={13} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.1} rotX={90} rotY={0} rotZ={0} scaleX={13.1} scaleY={0.05} scaleZ={13.1} />
+    <Prefab id="sphere_01" material='palette_01_blue' x={0} y={0} z={1.2} rotX={90} rotY={0} rotZ={0} scaleX={15} scaleY={0.05} scaleZ={15} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.3} rotX={90} rotY={0} rotZ={0} scaleX={15.1} scaleY={0.05} scaleZ={15.1} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.4} rotX={90} rotY={0} rotZ={0} scaleX={17} scaleY={0.05} scaleZ={17} />
+    <Prefab id="sphere_01" material='palette_01_white' x={0} y={0} z={1.5} rotX={90} rotY={0} rotZ={0} scaleX={17.1} scaleY={0.05} scaleZ={17.1} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.6} rotX={90} rotY={0} rotZ={0} scaleX={19} scaleY={0.05} scaleZ={19} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.7} rotX={90} rotY={0} rotZ={0} scaleX={19.1} scaleY={0.05} scaleZ={19.1} />
+    <Prefab id="sphere_01" material='palette_01_white' x={0} y={0} z={1.8} rotX={90} rotY={0} rotZ={0} scaleX={21} scaleY={0.05} scaleZ={21} />
+    <Prefab id="sphere_01" material='palette_01_black' x={0} y={0} z={1.9} rotX={90} rotY={0} rotZ={0} scaleX={21.1} scaleY={0.05} scaleZ={21.1} />
+    <Prefab id="sphere_01" material='palette_01_white' x={0} y={0} z={2.0} rotX={90} rotY={0} rotZ={0} scaleX={23} scaleY={0.05} scaleZ={23} />
 
 
 
@@ -421,23 +422,79 @@ const Target: HDKComponent = props => (
 )
 
 const TargetGoalCombined: HDKComponent = ({ level, ...props }) => {
+  const random = useRandom();
+
+
+  // Determine steps based on speed
+  const stepsValue1 = 6 - (4 * (level / 10)) // forward and back
+  const stepsValue2 = 7 - (4 * (level / 10)) // up and down
+  const stepsValue3 = 8 - (4 * (level / 10)) // left and right
 
   return (
-  <HNode
-    {...props}>
-<Target x={0} y={0} z={0.5} scale={0.7}/>
-<GoalBox x={0} y={0} z={0} scale={0.25} /> 
-<LevelSign x={0} y={-26.5} z={0} scale={5} level={level}/> 
+    <Animation animation={{
+      // forward and back
+      x: [0, 0],
+      y: [0, 0],
+      z: [-20, 20],
+      rotX: [0, 0],
+      rotY: [0, 0],
+      rotZ: [0, 0],
+      scaleX: [1, 1],
+      scaleY: [1, 1],
+      scaleZ: [1, 1],
+      steps: [0, stepsValue1],  // Use stepsValue here
+      loop: 'REVERSE',
+      easing: 'LINEAR',
+    }}>
+      <Animation animation={{
+        // up and down
+        x: [0, 0],
+        y: [-15, 20],
+        z: [0, 0],
+        rotX: [0, 0],
+        rotY: [0, 0],
+        rotZ: [0, 0],
+        scaleX: [1, 1],
+        scaleY: [1, 1],
+        scaleZ: [1, 1],
+        steps: [0, stepsValue2],  // Use stepsValue here
+        loop: 'REVERSE',
+        easing: 'LINEAR',
+      }}>
+        <Animation animation={{
+          // left and right
+          x: [-20, 20],
+          y: [0, 0],
+          z: [0, 0],
+          rotX: [0, 0],
+          rotY: [0, 0],
+          rotZ: [0, 0],
+          scaleX: [1, 1],
+          scaleY: [1, 1],
+          scaleZ: [1, 1],
+          steps: [0, stepsValue3],  // Use stepsValue here
+          // duration: 3,
+          loop: 'REVERSE',
+          easing: 'LINEAR',
+        }}>
+          <HNode
+            {...props}>
+            <Target x={0} y={0} z={0.5} scale={0.7} />
+            <GoalBox x={0} y={0} z={0} scale={0.5} level={level}/>
+            <LevelSign x={0} y={-21.5} z={0} scale={5} level={level} />
 
 
-  </HNode>
+          </HNode>
+        </Animation>
+      </Animation>
+    </Animation>
   )
-  }
+}
 
 const BackToCannon: HDKComponent = props => (
   <HNode
     {...props}>
-<Prefab id="gpl_booster_plate_02" material='m_emissive_green' x={0} y={0} z={0} rotX={0} rotY={8} rotZ={0} scaleX={10} scaleY={1} scaleZ={230} />
+    <Prefab id="gpl_booster_plate_02" material='m_emissive_green' x={0} y={0} z={0} rotX={0} rotY={8} rotZ={0} scaleX={10} scaleY={1} scaleZ={230} />
 
   </HNode>
 )
@@ -447,11 +504,11 @@ const LevelSign: HDKComponent = ({ level, ...props }) => {
   return (
     <HNode {...props}>
       <ImagePanel
-        src={`https://placehold.co/100x50/000000/FFF/PNG?text=Level+${level}`}
-        ratio={100 / 50}
-        scale={1}
+        src={`https://placehold.co/100x25/000000/FFF/PNG?text=Level+${level}`}
+        ratio={100 / 25}
+        scale={0.5}
         backside={true}
-        // frame={'modern'}
+      // frame={'modern'}
       />
     </HNode>
   );
@@ -462,31 +519,49 @@ const LevelSign: HDKComponent = ({ level, ...props }) => {
 const InvisibleCheckpoint: HDKComponent = props => (
   <HNode
     {...props}>
-  <HNode
-  
-  engineProps={{
-    triggerBox: { size: [5, 5, 5], offset: [0, 0, 0] },
-    checkpoint: {},
-  }}
->
-  <Prefab  id='checkpoint_01' scale={1.5} x={0} y={0} z={0} />
-</HNode>
-</HNode>
+    <HNode
+
+      engineProps={{
+        triggerBox: { size: [5, 5, 5], offset: [0, 0, 0] },
+        checkpoint: {},
+      }}
+    >
+      <Prefab id='checkpoint_01' scale={1.5} x={0} y={0} z={0} />
+    </HNode>
+  </HNode>
 )
 
 
 
 const IndividualLevel: HDKComponent = ({ level, ...props }) => {
+
+  // Convert the angle to radians
+  const angleInRadians = (360 * ((level - 1) / 10) + 90) * (Math.PI / 180);
+
+  // Calculate coordinates based on level
+  const X = 40 * Math.cos(angleInRadians);
+  const Y = 40 * Math.sin(angleInRadians) - 40;
+
   return (
-    <HNode x={-30 * (level - 1)} z={0* (level - 1)}  rotY={-15 * (level - 1)} {...props}>
+    <HNode x={X} z={Y} rotY={-36 * (level - 1)} {...props}>
       <Cannon speed="low" />
       <BackToCannon x={4} y={0} z={240.2} />
-      <TargetGoalCombined x={0} y={60} z={240.2} level={level} scale={2}/>
-      <Platform x={0} y={0} z={0} level={level}/>
+      <TargetGoalCombined x={0} y={60} z={240.2} level={level} scale={2 - (1.3 * (level / 10))} />
+      <Platform x={0} y={0} z={0} level={level} />
       <InvisibleCheckpoint x={-30} y={0} />
     </HNode>
   );
 };
+
+
+
+
+
+
+
+
+
+;
 
 
 
@@ -497,21 +572,21 @@ const World = () => (
 
 
 
-    
 
-    <IndividualLevel level='1'/>
-    <IndividualLevel level='2'/>
-    <IndividualLevel level='3'/>
-    <IndividualLevel level='4'/>
-    <IndividualLevel level='5'/>
-    <IndividualLevel level='6'/>
-    <IndividualLevel level='7'/>
-    {/* <IndividualLevel level='8'/> */}
-    {/* <IndividualLevel level='9'/> */}
-    {/* <IndividualLevel level='10'/> */}
+
+    <IndividualLevel level='1' />
+    <IndividualLevel level='2' />
+    <IndividualLevel level='3' />
+    <IndividualLevel level='4' />
+    <IndividualLevel level='5' />
+    <IndividualLevel level='6' />
+    <IndividualLevel level='7' />
+    <IndividualLevel level='8' />
+    <IndividualLevel level='9' />
+    <IndividualLevel level='10' />
     <GroundArea />
-    <Spawnpoint  x={3.7} y={0.8} z={-3.9}/>
-  
+    <Spawnpoint x={3.7} y={0.8} z={-3.9} />
+
 
 
 
