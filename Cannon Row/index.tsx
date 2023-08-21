@@ -65,11 +65,11 @@ const Cannon: HDKComponent = ({ speed = 'low', level, ...props }) => {
         loop: 'REVERSE',
         easing: 'LINEAR',
       }}>
-    <HNode {...props}>
+        <HNode {...props}>
 
 
-      <HNode x={3.5} y={5} z={4}>
-       
+          <HNode x={3.5} y={5} z={4}>
+
             <Platform x={0} y={0} z={0} level={level} />
             <Prefab id="torus_thin_01" material='t_glass_01' x={0} y={0} z={0} rotX={68} rotY={0} rotZ={0} scaleX={2.0} scaleY={50} scaleZ={2.0} />
             <Prefab id="disc_02" material='palette_01_red' x={0} y={-0.1} z={4.0} rotX={150} rotY={0} rotZ={0} scaleX={0.2} scaleY={0.2} scaleZ={0.2} />
@@ -93,17 +93,17 @@ const Cannon: HDKComponent = ({ speed = 'low', level, ...props }) => {
             </Animation>
 
 
-      </HNode>
+          </HNode>
 
 
 
-      <Prefab id="cube_01" material='t_hexagon_pattern_01' x={4} y={0} z={0} rotX={-20} rotY={0} rotZ={0} scaleX={6} scaleY={1} scaleZ={6} />
-      {/* <Prefab id="cube_01" material='t_neon_red_01' x={0} y={3} z={30} rotX={0} rotY={0} rotZ={0} scaleX={6} scaleY={1} scaleZ={6} /> */}
+          <Prefab id="cube_01" material='t_hexagon_pattern_01' x={4} y={0} z={0} rotX={-20} rotY={0} rotZ={0} scaleX={6} scaleY={1} scaleZ={6} />
+          {/* <Prefab id="cube_01" material='t_neon_red_01' x={0} y={3} z={30} rotX={0} rotY={0} rotZ={0} scaleX={6} scaleY={1} scaleZ={6} /> */}
 
 
-    </HNode>
+        </HNode>
+      </Animation>
     </Animation>
-        </Animation>
   )
 
 
@@ -208,7 +208,7 @@ const GoalBox: HDKComponent = ({ level, ...props }) => {
           id="collectible_mandatory_key_01"
           material="t_neon_red_01"
           scale={3}
-          x={0} y={1} z={-4-1*(level/10)}
+          x={0} y={1} z={-4 - 1 * (level / 10)}
           rotX={90}
         />
 
@@ -364,7 +364,7 @@ const TargetGoalCombined: HDKComponent = ({ level, ...props }) => {
           <HNode
             {...props}>
             <Target x={0} y={0} z={0.5} scale={0.7} />
-            <GoalBox x={0} y={0} z={0} scale={0.5} level={level}/>
+            <GoalBox x={0} y={0} z={0} scale={0.5} level={level} />
             <LevelSign x={0} y={-21.5} z={0} scale={5} level={level} />
 
 
@@ -459,7 +459,7 @@ const Goal: HDKComponent = props => {
             scaleZ={5}
             scaleY={1}
           />
-    
+
           <Prefab
             id="sofa_01_t2"
             // material="glass"
@@ -539,10 +539,10 @@ const IndividualLevel: HDKComponent = ({ level, musicId, ...props }) => {
 
   return (
     <HNode x={X} z={Y} rotY={-36 * (level - 1)} {...props}>
-      <Cannon speed="low" level={level}/>
+      <Cannon speed="low" level={level} />
       <BackToCannon x={4} y={0} z={240.2} />
       <TargetGoalCombined x={0} y={65} z={200} level={level} scale={2 - (1.3 * (level / 10))} />
-      
+
       <InvisibleCheckpoint x={-30} y={0} />
       <PointSound y={0} x={0} src={{ id: musicId }} radius={15} volume={1} />
     </HNode>
@@ -570,20 +570,20 @@ const World = () => (
 
 
 
-    <IndividualLevel level='1' musicId='a_m_iconic_bullet_01'/>
-    <IndividualLevel level='2' musicId='a_mu_district_h_01'/>
-    <IndividualLevel level='3' musicId='a_mu_border_of_neo_tokyo_01'/>
-    <IndividualLevel level='4' musicId='a_mu_heroic_journey_01'/>
-    <IndividualLevel level='5' musicId='a_mu_gotta_keep_on_movin_01'/>
-    <IndividualLevel level='6' musicId='a_mu_take_the_ride_01'/>
-    <IndividualLevel level='7' musicId='a_mu_dark_signs_per_01'/>
-    <IndividualLevel level='8' musicId='a_mu_bass_meant_jazz_kevin_macleod_01'/>
-    <IndividualLevel level='9' musicId='a_mu_purple_days_01'/>
-    <IndividualLevel level='10' musicId='a_mu_moments_01'/>
+    <IndividualLevel level='1' musicId='a_m_iconic_bullet_01' />
+    <IndividualLevel level='2' musicId='a_mu_district_h_01' />
+    <IndividualLevel level='3' musicId='a_mu_border_of_neo_tokyo_01' />
+    <IndividualLevel level='4' musicId='a_mu_heroic_journey_01' />
+    <IndividualLevel level='5' musicId='a_mu_gotta_keep_on_movin_01' />
+    <IndividualLevel level='6' musicId='a_mu_take_the_ride_01' />
+    <IndividualLevel level='7' musicId='a_mu_dark_signs_per_01' />
+    <IndividualLevel level='8' musicId='a_mu_bass_meant_jazz_kevin_macleod_01' />
+    <IndividualLevel level='9' musicId='a_mu_purple_days_01' />
+    <IndividualLevel level='10' musicId='a_mu_moments_01' />
     <GroundArea />
-    <Goal x={0} y={2} z={-37.5}/>
+    <Goal x={0} y={2} z={-37.5} />
     {/* <PortalPlatform x={0} y={0} z={-37.5}/> */}
-    <Spawnpoint x={4.1} y={0.0} z={-7.8}/>
+    <Spawnpoint x={4.1} y={0.0} z={-7.8} />
 
 
 
