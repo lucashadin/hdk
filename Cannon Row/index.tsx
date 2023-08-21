@@ -25,53 +25,54 @@ const Floor: HDKComponent = props => {
 
 
 
-const Cannon: HDKComponent = ({ speed = 'low', ...props }) => {
+const Cannon: HDKComponent = ({ speed = 'low', level, ...props }) => {
   const random = useRandom();
 
 
   // Determine steps based on speed
-  const stepsValue1 = speed === 'high' ? [0, 2] : [0, 5]; // up and down
-  const stepsValue2 = speed === 'high' ? [0, 5] : [0, 9]; // left and right
+  const stepsValue1 = speed === 'high' ? [0, 4] : [0, 5]; // up and down
+  const stepsValue2 = speed === 'high' ? [0, 10] : [0, 9]; // left and right
 
   return (
+    <Animation animation={{
+      // up and down
+      x: [0, 0],
+      y: [0, 0],
+      z: [0, 0],
+      rotX: [-5, 5],
+      rotY: [0, 0],
+      rotZ: [0, 0],
+      scaleX: [1, 1],
+      scaleY: [1, 1],
+      scaleZ: [1, 1],
+      steps: stepsValue1,  // Use stepsValue here
+      loop: 'REVERSE',
+      easing: 'LINEAR',
+    }}>
+      <Animation animation={{
+        // left and right
+        x: [0, 0],
+        y: [0, 0],
+        z: [0, 0],
+        rotX: [0, 0],
+        rotY: [-5, 5],
+        rotZ: [0, 0],
+        scaleX: [1, 1],
+        scaleY: [1, 1],
+        scaleZ: [1, 1],
+        steps: stepsValue2,  // Use stepsValue here
+        // duration: 3,
+        loop: 'REVERSE',
+        easing: 'LINEAR',
+      }}>
     <HNode {...props}>
 
 
       <HNode x={3.5} y={5} z={4}>
-        <Animation animation={{
-          // up and down
-          x: [0, 0],
-          y: [0, 0],
-          z: [0, 0],
-          rotX: [0, 10],
-          rotY: [0, 0],
-          rotZ: [0, 0],
-          scaleX: [1, 1],
-          scaleY: [1, 1],
-          scaleZ: [1, 1],
-          steps: stepsValue1,  // Use stepsValue here
-          loop: 'REVERSE',
-          easing: 'LINEAR',
-        }}>
-          <Animation animation={{
-            // left and right
-            x: [0, 0],
-            y: [0, 0],
-            z: [0, 0],
-            rotX: [0, 0],
-            rotY: [-10, 20],
-            rotZ: [0, 0],
-            scaleX: [1, 1],
-            scaleY: [1, 1],
-            scaleZ: [1, 1],
-            steps: stepsValue2,  // Use stepsValue here
-            // duration: 3,
-            loop: 'REVERSE',
-            easing: 'LINEAR',
-          }}>
-
-            <Prefab id="torus_thin_01" material='t_glass_01' x={0} y={0} z={0} rotX={60} rotY={0} rotZ={0} scaleX={2} scaleY={50} scaleZ={2} />
-            <Prefab id="disc_02" material='palette_01_red' x={0} y={-0.5} z={2} rotX={140} rotY={0} rotZ={0} scaleX={0.2} scaleY={0.2} scaleZ={0.2} />
+       
+            <Platform x={0} y={0} z={0} level={level} />
+            <Prefab id="torus_thin_01" material='t_glass_01' x={0} y={0} z={0} rotX={68} rotY={0} rotZ={0} scaleX={2.0} scaleY={50} scaleZ={2.0} />
+            <Prefab id="disc_02" material='palette_01_red' x={0} y={-0.1} z={4.0} rotX={150} rotY={0} rotZ={0} scaleX={0.2} scaleY={0.2} scaleZ={0.2} />
             <Animation animation={{
               x: [0, 0, 0],
               y: [0, 0, 0],
@@ -87,12 +88,11 @@ const Cannon: HDKComponent = ({ speed = 'low', ...props }) => {
               easing: 'EASE_IN_CUBIC',
             }}>
               <HNode>
-                <Prefab id="cube_01" material='t_rainbow_02' x={0} y={0} z={-20} rotX={60} rotY={0} rotZ={0} scaleX={3} scaleY={2} scaleZ={3}></Prefab>
+                <Prefab id="cube_01" material='t_rainbow_02' x={0} y={0} z={-20} rotX={62} rotY={0} rotZ={0} scaleX={3} scaleY={2} scaleZ={3}></Prefab>
               </HNode>
             </Animation>
 
-          </Animation>
-        </Animation>
+
       </HNode>
 
 
@@ -102,6 +102,8 @@ const Cannon: HDKComponent = ({ speed = 'low', ...props }) => {
 
 
     </HNode>
+    </Animation>
+        </Animation>
   )
 
 
@@ -170,10 +172,10 @@ const Platform: HDKComponent = ({ level, ...props }) => {
   return (
     <HNode
       {...props}>
-      <WelcomeSign x={0} y={4} z={3} rotY={180} />
-      <LevelSign x={9} y={3.8} z={5} scale={0.5} level={level} />
-      <LevelSign x={4} y={0} z={5.7} scale={1.7} level={level} rotY={180} />
-      <Checkpoint x={4} y={0.5} z={-4} />
+      <WelcomeSign x={-4.5} y={-0.5} z={0.8} rotY={180} />
+      <LevelSign x={5.5} y={-1.23} z={0.5} scale={0.5} level={level} />
+      <LevelSign x={0} y={-3} z={2} scale={1.7} level={level} rotY={180} />
+      <Checkpoint x={0} y={-4.3} z={-8} />
 
     </HNode>
   )
@@ -308,9 +310,9 @@ const TargetGoalCombined: HDKComponent = ({ level, ...props }) => {
 
 
   // Determine steps based on speed
-  const stepsValue1 = 6 - (4 * (level / 10)) // forward and back
-  const stepsValue2 = 7 - (4 * (level / 10)) // up and down
-  const stepsValue3 = 8 - (4 * (level / 10)) // left and right
+  const stepsValue1 = 10 - (8 * (level / 10)) // forward and back
+  const stepsValue2 = 11 - (8 * (level / 10)) // up and down
+  const stepsValue3 = 12 - (8 * (level / 10)) // left and right
 
   return (
     <Animation animation={{
@@ -537,10 +539,10 @@ const IndividualLevel: HDKComponent = ({ level, musicId, ...props }) => {
 
   return (
     <HNode x={X} z={Y} rotY={-36 * (level - 1)} {...props}>
-      <Cannon speed="low" />
+      <Cannon speed="low" level={level}/>
       <BackToCannon x={4} y={0} z={240.2} />
-      <TargetGoalCombined x={0} y={60} z={240.2} level={level} scale={2 - (1.3 * (level / 10))} />
-      <Platform x={0} y={0} z={0} level={level} />
+      <TargetGoalCombined x={0} y={65} z={200} level={level} scale={2 - (1.3 * (level / 10))} />
+      
       <InvisibleCheckpoint x={-30} y={0} />
       <PointSound y={0} x={0} src={{ id: musicId }} radius={15} volume={1} />
     </HNode>
