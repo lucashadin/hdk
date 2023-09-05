@@ -31,7 +31,7 @@ const Floor: HDKComponent = props => (
 const Enemy = ({ colour, points }) => {
   const random = useRandom();
   const startAt = (random.range(0, 100))/100;
-  const duration = 30;
+  const duration = random.range(25, 40);
 
   return (
     <AnimateAlongPath
@@ -74,11 +74,34 @@ const Key: HDKComponent = props => (
     }
   }}
   >
-    <Prefab id="cube_01" material='m_emissive_green'  y={30}  rotY={0} scaleY={10} scaleX={10} scaleZ={10}/>
-    <Mesh id="collectible_mandatory_key_01" material='m_emissive_green'  y={0}  rotY={0} scaleY={10} scaleX={10} scaleZ={10}/>
+    <Prefab id="cube_01" material='m_emissive_green'  y={30}  rotY={0} scaleY={1} scaleX={1} scaleZ={1}/>
+    <Prefab id="collectible_mandatory_key_01" material='m_emissive_green'  y={0}  rotY={0} scaleY={3} scaleX={3} scaleZ={3}/>
+    {/* <Mesh id="collectible_mandatory_key_01" material='m_emissive_green'  y={0}  rotY={0} scaleY={1} scaleX={1} scaleZ={1}/> */}
   </HNode>
 )
 
+const CandyKey: HDKComponent = ({ ...props }) => (
+  <Spinning {...props}>
+    <HNode
+      engineProps={{
+        rendering: {
+          meshID: 'en_p_sugar_candy_01',
+          materialID: 't_striped_candy_01',
+        },
+        collectible: {
+          type: 'MANDATORY',
+          pointValue: 1,
+          collectFxId: 'fx_collect_collectible_gem_01',
+          resetFxId: 'fx_reset_collectible_gem_01',
+          grabbingOffset: [0, 0, 0],
+          grabbingRadius: 5,
+        },
+      }}
+    > 
+        <Prefab id="cube_01" material='m_emissive_green'  y={30}  rotY={0} scaleY={1} scaleX={1} scaleZ={1}/>
+    </HNode>
+  </Spinning>
+);
 
 
 
@@ -130,10 +153,12 @@ const renderMaze = (mazeLayout) => {
       } else if (cell === 0) {
         return   <>
         
-         <Prefab id="collectible_mandatory_key_01" x={x} y={1} z={z} rotY={0} scale={2} key={`${rowIndex}-${colIndex}`} />
+         {/* <Prefab id="collectible_mandatory_key_01" x={x} y={1} z={z} rotY={0} scale={2} key={`${rowIndex}-${colIndex}`} /> */}
         
-         <Prefab id="cube_01" material='m_emissive_green' x={x} y={30} z={z} rotY={0} scaleY={1} scaleX={1} scaleZ={1} key={`${rowIndex}-${colIndex}`} /> 
-        {/* <Key/> */}
+         {/* <Prefab id="cube_01" material='m_emissive_green' x={x} y={30} z={z} rotY={0} scaleY={1} scaleX={1} scaleZ={1} key={`${rowIndex}-${colIndex}`} />  */}
+        <Key x={x} y={y} z={z}/>
+        {/* <CandyKey x={x} y={y} z={z}/> */}
+        
         </>
       } else {
         return null;
@@ -164,7 +189,7 @@ const World = () => (
 
 
 
-<Enemy colour="m_emissive_yellow" points={[[45, 0, 45], [45, 0, 45],
+<Enemy colour="palette_01_green" points={[[45, 0, 45], [45, 0, 45],
   [63, 0, 45], [63, 0, 45],
   [65, 0, 59], [65, 0, 59],
   [45, 0, 60], [45, 0, 60],
@@ -190,7 +215,20 @@ const World = () => (
   [100, 0, 125], [100, 0, 125]
 ]} />
 
-<Enemy colour="" points={[[45, 0, 45], [45, 0, 45],
+<Enemy colour="t_lava_01" points={[[45, 0, 45], [45, 0, 45],
+  [63, 0, 45], [63, 0, 45],
+  [65, 0, 59], [65, 0, 59],
+  [45, 0, 60], [45, 0, 60],
+  [45, 0, 80], [45, 0, 80],
+  [100, 0, 81], [100, 0, 81],
+  [100, 0, 95], [100, 0, 95],
+  [79, 0, 95], [79, 0, 95],
+  [79, 0, 110], [79, 0, 110],
+  [100, 0, 109], [100, 0, 109],
+  [100, 0, 125], [100, 0, 125]
+]} />
+
+<Enemy colour="t_pinball_floor_01_t8" points={[[45, 0, 45], [45, 0, 45],
   [63, 0, 45], [63, 0, 45],
   [65, 0, 59], [65, 0, 59],
   [45, 0, 60], [45, 0, 60],
