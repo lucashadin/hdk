@@ -1,6 +1,6 @@
 import { MaterialId } from '@hiber3d/hdk-core';
 import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel, useRandom } from '@hiber3d/hdk-react';
-import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound, Orbiting, Spinning, Portal, Checkpoint, PointSound, For, ImagePanel, AnimateAlongPath } from '@hiber3d/hdk-react-components';
+import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound, Orbiting, Spinning, Portal, Checkpoint, PointSound, For, ImagePanel, AnimateAlongPath, Mesh } from '@hiber3d/hdk-react-components';
 import React from 'react';
 
 
@@ -28,75 +28,61 @@ const Floor: HDKComponent = props => (
 )
 
 
-const Enemy: HDKComponent = props => {
+const Enemy = ({ colour, points }) => {
   const random = useRandom();
-  const startAt = random.range(0, 5);
+  const startAt = (random.range(0, 100))/100;
+  const duration = 30;
 
   return (
-
-<AnimateAlongPath
-  close={false}
-  easing="LINEAR"
-  showKeyframes={true}
-  showPoints={true}
-  tension={1}
-  duration={20}
-  loop="REVERSE"
-  numberOfItems={30}
-  startAt={startAt}
-
-  points={[
-    [114, 0, 111],
-    [114, 0, 111],
-    [115, 0, 29],
-    [115, 0, 29],
-    [30, 0, 30],
-    [18, 0, 30],
-    [18, 0, 30],
-  ]
-  }>
-
-  <Prefab id="sphere_01" material='m_emissive_yellow' scale={2.5}/>
-</AnimateAlongPath>
-  )
-}
+    <AnimateAlongPath
+      close={false}
+      easing="LINEAR"
+      showKeyframes={true}
+      showPoints={true}
+      tension={1}
+      duration={duration}
+      loop="REVERSE"
+      numberOfItems={100}
+      startAt={startAt*duration}
+      points={points}
+    >
+      <Prefab id="sphere_01" material={colour} scale={2.5} />
+    </AnimateAlongPath>
+  );
+};
 
 
-const Keys: HDKComponent = props => (
-  <Path
-    points={[
-      [46, 0, 45],
-      [18, 0, 45],
-      [18, 0, 30],
-      [8, 0, 30],
-    ]}
-    numberOfItems={20}
-    tension={0}
-    renderItem={() => (
-      <>
-        {/* <Prefab id="cube_01" /> */}
-        <Prefab id="collectible_mandatory_key_01" y={0} rotY={-180} />
-      </>
-    )}
-  />
-)
 
 
-const BlockLine: HDKComponent = props => (
-  <Prefab id="rounded_cube_02" material='t_hex_disco_01' scaleX={3} scaleY={3}  {...props} />
-)
 
 const BlockRectangle: HDKComponent = props => (
-  <Prefab id="rounded_cube_02" material='t_hex_disco_01' scaleX={5} scaleY={6} scaleZ={5} {...props} />
+  <Prefab id="rounded_cube_02" material='t_neon_grid_01' scaleX={5} scaleY={6} scaleZ={5} {...props} />
 )
 
-const BlockRectangleLong: HDKComponent = props => (
-  <Prefab id="rounded_cube_02" material='t_hex_disco_01' scaleX={5} scaleY={3} scaleZ={2} {...props} />
+
+const Key: HDKComponent = props => (
+  <HNode
+  {...props}
+  engineProps={{
+    rendering: {
+      materialID: "rock_cube_01_t2",
+      meshID: "en_p_trampled_path_01",
+    },
+    collectible: {
+      type: "MANDATORY",
+      grabbingRadius: 5,
+    }
+  }}
+  >
+    <Prefab id="cube_01" material='m_emissive_green'  y={30}  rotY={0} scaleY={10} scaleX={10} scaleZ={10}/>
+    <Mesh id="collectible_mandatory_key_01" material='m_emissive_green'  y={0}  rotY={0} scaleY={10} scaleX={10} scaleZ={10}/>
+  </HNode>
 )
 
-const BlockLShape: HDKComponent = props => (
-  <Prefab id="rounded_cube_02" material='t_hex_disco_01' scaleX={5} scaleY={3} scaleZ={2} {...props} />
-)
+
+
+
+
 
 
 const MAZE_LAYOUT = [
@@ -142,7 +128,13 @@ const renderMaze = (mazeLayout) => {
       if (cell === 1) {
         return <BlockRectangle x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} />;
       } else if (cell === 0) {
-        return <Prefab id="collectible_mandatory_key_01" x={x} y={1} z={z} rotY={0} scale={2} key={`${rowIndex}-${colIndex}`} />;
+        return   <>
+        
+         <Prefab id="collectible_mandatory_key_01" x={x} y={1} z={z} rotY={0} scale={2} key={`${rowIndex}-${colIndex}`} />
+        
+         <Prefab id="cube_01" material='m_emissive_green' x={x} y={30} z={z} rotY={0} scaleY={1} scaleX={1} scaleZ={1} key={`${rowIndex}-${colIndex}`} /> 
+        {/* <Key/> */}
+        </>
       } else {
         return null;
       }
@@ -172,17 +164,54 @@ const World = () => (
 
 
 
-    <Enemy />
-    <Enemy />
-    <Enemy />
-    <Enemy />
+<Enemy colour="m_emissive_yellow" points={[[45, 0, 45], [45, 0, 45],
+  [63, 0, 45], [63, 0, 45],
+  [65, 0, 59], [65, 0, 59],
+  [45, 0, 60], [45, 0, 60],
+  [45, 0, 80], [45, 0, 80],
+  [100, 0, 81], [100, 0, 81],
+  [100, 0, 95], [100, 0, 95],
+  [79, 0, 95], [79, 0, 95],
+  [79, 0, 110], [79, 0, 110],
+  [100, 0, 109], [100, 0, 109],
+  [100, 0, 125], [100, 0, 125]
+]} />
 
+<Enemy colour="m_emissive_green" points={[[45, 0, 45], [45, 0, 45],
+  [63, 0, 45], [63, 0, 45],
+  [65, 0, 59], [65, 0, 59],
+  [45, 0, 60], [45, 0, 60],
+  [45, 0, 80], [45, 0, 80],
+  [100, 0, 81], [100, 0, 81],
+  [100, 0, 95], [100, 0, 95],
+  [79, 0, 95], [79, 0, 95],
+  [79, 0, 110], [79, 0, 110],
+  [100, 0, 109], [100, 0, 109],
+  [100, 0, 125], [100, 0, 125]
+]} />
+
+<Enemy colour="" points={[[45, 0, 45], [45, 0, 45],
+  [63, 0, 45], [63, 0, 45],
+  [65, 0, 59], [65, 0, 59],
+  [45, 0, 60], [45, 0, 60],
+  [45, 0, 80], [45, 0, 80],
+  [100, 0, 81], [100, 0, 81],
+  [100, 0, 95], [100, 0, 95],
+  [79, 0, 95], [79, 0, 95],
+  [79, 0, 110], [79, 0, 110],
+  [100, 0, 109], [100, 0, 109],
+  [100, 0, 125], [100, 0, 125]
+]} />
+
+
+ 
     <Environment />
 
 
 
 
-    <Spawnpoint rotY={90} x={0.4} y={5} z={0} />
+    <Spawnpoint x={5.0} y={16.0} z={5.1} rotY={230}/>
+    <Spawnpoint x={5.2} y={0.2} z={5.3} rotY={230}/>
 
 
 
@@ -199,7 +228,7 @@ const World = () => (
   </HNode >
 );
 
-render(<World />, { environment: 'midday_clear_01' }); // cold_mountain_01
+render(<World />, { environment: 'city_night_01' }); // cold_mountain_01
 
 // Questions
 // Should the levels above/below be blocked off? Or is it cool to see down?
