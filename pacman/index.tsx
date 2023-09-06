@@ -1,5 +1,5 @@
 import { MaterialId } from '@hiber3d/hdk-core';
-import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel, useRandom } from '@hiber3d/hdk-react';
+import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel, useRandom, GLB } from '@hiber3d/hdk-react';
 import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound, Orbiting, Spinning, Portal, Checkpoint, PointSound, For, ImagePanel, AnimateAlongPath, Mesh } from '@hiber3d/hdk-react-components';
 import React from 'react';
 
@@ -120,8 +120,25 @@ const CandyKey: HDKComponent = ({ ...props }) => (
   </Spinning>
 );
 
+const CollectibleGLB: HDKComponent = ({ ...props }) => (
+  <HNode rotX={180}
 
-
+  {...props}
+    engineProps={{
+      collectible: {
+        type: 'MANDATORY',
+        pointValue: 1,
+        collectFxId: 'fx_collect_collectible_gem_01',
+        resetFxId: 'fx_reset_collectible_gem_01',
+        grabbingOffset: [0, 0, 0],
+        grabbingRadius: 5,
+      },
+    }}>
+    <GLB
+            src="https://uploadthing.com/f/e4c613ff-87eb-4ae8-a5bb-a2378c0e0229_Pacman%20Collectible.glb"
+    />
+  </HNode>
+);
 
 
 
@@ -177,7 +194,7 @@ const renderMaze = (mazeLayout) => {
 
           {/* <Prefab id="cube_01" material='m_emissive_green' x={x} y={30} z={z} rotY={0} scaleY={1} scaleX={1} scaleZ={1} key={`${rowIndex}-${colIndex}`} />  */}
           {/* <Key x={x} y={y} z={z} /> */}
-          <CandyKey x={x} y={y} z={z} />
+          <CollectibleGLB x={x} y={17} z={z} />
 
         </>
       } else {
@@ -264,6 +281,7 @@ const World = () => (
 
 
     <Environment />
+    <CollectibleGLB/>
 
 
 
