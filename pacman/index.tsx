@@ -18,7 +18,7 @@ const Floor: HDKComponent = props => (
 
     <Prefab
       id="cube_01"
-      material="palette_01_black"
+      material="chrome" //t_black_marble_01
       x={0} y={0} z={0}
       scaleX={50}
       scaleZ={50}
@@ -27,6 +27,20 @@ const Floor: HDKComponent = props => (
   </HNode>
 )
 
+const Floor2: HDKComponent = props => (
+  <HNode x={0} y={0} z={0.0}
+    {...props}>
+
+    <Prefab
+      id="cube_01"
+      material="m_emissive_pink"
+      x={0} y={0} z={0}
+      scaleX={50}
+      scaleZ={50}
+      scaleY={0.2}
+    />
+  </HNode>
+)
 
 const Enemy = ({ colour, points }) => {
   const random = useRandom();
@@ -48,7 +62,8 @@ const Enemy = ({ colour, points }) => {
       startAt={startAt * duration}
       points={points}
     >
-      <Prefab id="sphere_01" material={colour} scale={2.5} />
+      {/* <Prefab id="sphere_01" material={colour} scale={2.5} /> */}
+      <MonsterGLB material={colour} y={3} rotY={0} scale={0.9} />
     </AnimateAlongPath>
   );
 };
@@ -58,7 +73,7 @@ const Enemy = ({ colour, points }) => {
 
 
 const BlockRectangle: HDKComponent = props => (
-  <Prefab id="rounded_cube_02" material='t_neon_grid_01' scaleX={5} scaleY={6} scaleZ={5} {...props} />
+  <Prefab id="rounded_cube_02" material='t_black_marble_01' scaleX={5} scaleY={6} scaleZ={5} {...props} />
 )
 
 const BlockRectangleTransparent: HDKComponent = props => (
@@ -78,7 +93,7 @@ const Key: HDKComponent = props => (
       },
       collectible: {
         type: "MANDATORY",
-        grabbingRadius: 5,
+        grabbingRadius: 2,
       }
     }}
   >
@@ -102,7 +117,7 @@ const CandyKey: HDKComponent = ({ ...props }) => (
           collectFxId: 'fx_collect_collectible_gem_01',
           resetFxId: 'fx_reset_collectible_gem_01',
           grabbingOffset: [0, 0, 0],
-          grabbingRadius: 5,
+          grabbingRadius: 0,
         },
       }}
     >
@@ -121,13 +136,12 @@ const CandyKey: HDKComponent = ({ ...props }) => (
 );
 
 const CollectibleGLB: HDKComponent = ({ ...props }) => (
- 
+  <Spinning {...props} axis='x' duration={10}>
+    <GLB material='m_emissive_green' z={-2}
 
-    <GLB
-      {...props}
       engineProps={{
         collider: undefined,
-        
+
 
         collectible: {
           type: 'MANDATORY',
@@ -135,48 +149,65 @@ const CollectibleGLB: HDKComponent = ({ ...props }) => (
           collectFxId: 'fx_collect_collectible_gem_01',
           resetFxId: 'fx_reset_collectible_gem_01',
           grabbingOffset: [0, -10, 0],
-          grabbingRadius: 5,
+          grabbingRadius: 4,
         },
       }}
-      src="https://uploadthing.com/f/e4c613ff-87eb-4ae8-a5bb-a2378c0e0229_Pacman%20Collectible.glb"
-      rotX={0}
-      y={0}
+      // src="https://uploadthing.com/f/e4c613ff-87eb-4ae8-a5bb-a2378c0e0229_Pacman%20Collectible.glb"
+      src="https://uploadthing.com/f/21c4331e-3928-4c05-91f8-f1a115d14325_collectible3.glb"
+
     />
- 
+  </Spinning>
+
+
+);
+const MonsterGLB: HDKComponent = ({ ...props }) => (
+
+  <GLB  {...props} // 
+    engineProps={{
+      collider: 'box',
+    }}
+
+
+    src="https://uploadthing.com/f/560f2e52-84e6-40cc-9cd6-37bcc484cefa_monster.glb"
+
+  />
+
+
+
 );
 
 
 
 const MAZE_LAYOUT = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 1],
   [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
   [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
   [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
   [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1],
   [1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1],
   [1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+  [1, 2, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 2, 1],
   [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 1],
   [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
   [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
-  [1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+  [1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1],
   [1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1],
   [1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1],
   [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
   [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
   [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
@@ -189,18 +220,33 @@ const renderMaze = (mazeLayout) => {
 
       if (cell === 1) {
         return <HNode>
-          <BlockRectangle x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} />
-          {/* <BlockRectangleTransparent x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} /> */}
+          <Animation animation={{
+            x: [0, 0, 0, 0],
+            y: [0, 0, 0, 0],
+            rotY: [0, 0, 0, 0],
+            // scale: [1, 1, 1, 1],
+            scaleX: [1, 1, 0.01, 0.01],
+            steps: [0, 25, 25.1, 30],
+            // duration: 3,
+            loop: 'RESTART',
+            easing: 'LINEAR',
+          }}>
+            <BlockRectangle x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} />
+          </Animation>
+          <BlockRectangleTransparent x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} />
         </HNode>
       } else if (cell === 0) {
         return <>
-
-          {/* <Prefab id="collectible_mandatory_key_01" x={x} y={1} z={z} rotY={0} scale={2} key={`${rowIndex}-${colIndex}`} /> */}
-
-          {/* <Prefab id="cube_01" material='m_emissive_green' x={x} y={30} z={z} rotY={0} scaleY={1} scaleX={1} scaleZ={1} key={`${rowIndex}-${colIndex}`} />  */}
-          {/* <Key x={x} y={y} z={z} /> */}
-          <CollectibleGLB x={x} y={17} z={z} />
-
+          <CollectibleGLB x={x} y={2} z={z} rotZ={90} />
+        </>
+      } else if (cell === 2) {
+        return <>
+          <Prefab id="gpl_powerup_spawner_speed_boost_01" x={x} y={2} z={z} rotY={0} scale={3} key={`${rowIndex}-${colIndex}`} />
+          <Prefab id="checkpoint_01" x={x} y={0} z={z} rotY={0} scale={3} key={`${rowIndex}-${colIndex}`} />
+        </>
+      } else if (cell === 3) {
+        return <>
+          <Prefab id="gpl_fan_01" material='m_emissive_yellow' x={x} y={1} z={z} rotY={0} scale={1} key={`${rowIndex}-${colIndex}`} />
         </>
       } else {
         return null;
@@ -214,7 +260,22 @@ const Environment: HDKComponent = props => (
   <HNode scale={0.5}>
 
     {renderMaze(MAZE_LAYOUT)}
+    {/* <Animation animation={{
+        x: [0, 0, 0, 0],
+        y: [0, 0, 0, 0],
+        rotY: [0, 0, 0, 0],
+        // scale: [1, 1, 1, 1],
+        scaleX: [1, 1, 0.01, 0.01],
+        steps: [0, 25, 25.1, 30],
+        // duration: 3,
+        loop: 'RESTART',
+        easing: 'LINEAR',
+      }}> */}
+
     <Floor x={135.1} y={0} z={125.8} scaleX={20} scaleZ={20} />
+    {/* </Animation>
+    <Floor2 x={135.1} y={-0.1} z={125.8} scaleX={20} scaleZ={20} /> */}
+
   </HNode>
 )
 
@@ -231,7 +292,7 @@ const World = () => (
 
 
 
-    <Enemy colour="palette_01_green" points={[[45, 0, 45], [45, 0, 45],
+    <Enemy colour="t_gore_01" points={[[45, 0, 45], [45, 0, 45],
     [63, 0, 45], [63, 0, 45],
     [65, 0, 59], [65, 0, 59],
     [45, 0, 60], [45, 0, 60],
@@ -244,33 +305,42 @@ const World = () => (
     [100, 0, 125], [100, 0, 125]
     ]} />
 
-    <Enemy colour="m_emissive_green" points={[[45, 0, 45], [45, 0, 45],
-    [63, 0, 45], [63, 0, 45],
-    [65, 0, 59], [65, 0, 59],
-    [45, 0, 60], [45, 0, 60],
-    [45, 0, 80], [45, 0, 80],
-    [100, 0, 81], [100, 0, 81],
-    [100, 0, 95], [100, 0, 95],
-    [79, 0, 95], [79, 0, 95],
-    [79, 0, 110], [79, 0, 110],
-    [100, 0, 109], [100, 0, 109],
-    [100, 0, 125], [100, 0, 125]
+    <Enemy colour="t_lava_01" points={[[5, 0, 5], [5, 0, 5],
+    [5, 0, 30], [5, 0, 30],
+    [29, 0, 30], [29, 0, 30],
+    [45, 0, 30], [45, 0, 30],
+    [45, 0, 45], [45, 0, 45],
+    [64, 0, 45], [64, 0, 45],
+    [63, 0, 60], [63, 0, 60],
+    [72, 0, 60], [72, 0, 60],
+    [72, 0, 70], [72, 0, 70],
+    [90, 0, 70], [90, 0, 70],
+    [55, 0, 70], [55, 0, 70],
+    [73, 0, 70], [73, 0, 70],
+    [73, 0, 60], [73, 0, 60],
+    [100, 0, 60], [100, 0, 60],
+    [100, 0, 80], [100, 0, 80],
+    [46, 0, 80], [46, 0, 80]
     ]} />
 
-    <Enemy colour="t_lava_01" points={[[45, 0, 45], [45, 0, 45],
-    [63, 0, 45], [63, 0, 45],
-    [65, 0, 59], [65, 0, 59],
-    [45, 0, 60], [45, 0, 60],
-    [45, 0, 80], [45, 0, 80],
-    [100, 0, 81], [100, 0, 81],
-    [100, 0, 95], [100, 0, 95],
-    [79, 0, 95], [79, 0, 95],
-    [79, 0, 110], [79, 0, 110],
-    [100, 0, 109], [100, 0, 109],
-    [100, 0, 125], [100, 0, 125]
+    <Enemy colour="chrome" points={[[140, 0, 5], [140, 0, 5],
+    [140, 0, 30], [140, 0, 30],
+    [115, 0, 30], [115, 0, 30],
+    [115, 0, 95], [115, 0, 95],
+    [115, 0, 125], [115, 0, 125],
+    [140, 0, 125], [140, 0, 125],
+    [140, 0, 140], [140, 0, 140],
+    [81, 0, 140], [81, 0, 140],
+    [80, 0, 126], [80, 0, 126],
+    [100, 0, 125], [100, 0, 125],
+    [45, 0, 110], [45, 0, 110],
+    [45, 0, 126], [45, 0, 126],
+    [65, 0, 126], [65, 0, 126],
+    [65, 0, 140], [65, 0, 140],
+    [6, 0, 140], [6, 0, 140]
     ]} />
 
-    <Enemy colour="t_pinball_floor_01_t8" points={[[45, 0, 45], [45, 0, 45],
+    <Enemy colour="t_rainbow_02" points={[[45, 0, 45], [45, 0, 45],
     [63, 0, 45], [63, 0, 45],
     [65, 0, 59], [65, 0, 59],
     [45, 0, 60], [45, 0, 60],
@@ -286,15 +356,17 @@ const World = () => (
 
 
     <Environment />
-    <CollectibleGLB rotX={180} />
+
+    <MonsterGLB x={5.0} y={30} z={5.1} />
 
 
 
 
-    <Spawnpoint x={5.0} y={16.0} z={5.1} rotY={230} />
-    <Spawnpoint x={5.2} y={0.2} z={5.3} rotY={230} />
+    <Spawnpoint x={5.0} y={0.2} z={5.1} />
 
 
+    {/* <Prefab id = "gpl_fan_01" x={4.4} y={0.2} z={44.4} rotY={0} scale={0.2}/>
+    <Prefab id = "gpl_powerup_spawner_speed_boost_01" x={5.2} y={0.2} z={5.3} rotY={0} scale={0.2}/> */}
 
 
 
@@ -309,11 +381,11 @@ const World = () => (
   </HNode >
 );
 
-render(<World />, { environment: 'city_night_01' }); // cold_mountain_01
+render(<World />, { environment: 'dark_night_01' }); // cold_mountain_01, dark_night_01, midday_clear_01
 
 // To do
 // Colour schemes
-// Monster animation
-// Ladders
-// Transparent wall flash
-// Enemy paths
+// Monster animation -- done 
+// Ladders -- done
+// Transparent wall flash -- done
+// Enemy paths -- done
