@@ -30,8 +30,10 @@ const Floor: HDKComponent = props => (
 
 const Enemy = ({ colour, points }) => {
   const random = useRandom();
-  const startAt = (random.range(0, 100))/100;
-  const duration = random.range(25, 40);
+  const startAt = (random.range(1, 100)) / 100;
+  const duration = random.range(35, 40);
+  console.log(startAt)
+  console.log(duration)
 
   return (
     <AnimateAlongPath
@@ -43,7 +45,7 @@ const Enemy = ({ colour, points }) => {
       duration={duration}
       loop="REVERSE"
       numberOfItems={100}
-      startAt={startAt*duration}
+      startAt={startAt * duration}
       points={points}
     >
       <Prefab id="sphere_01" material={colour} scale={2.5} />
@@ -59,30 +61,36 @@ const BlockRectangle: HDKComponent = props => (
   <Prefab id="rounded_cube_02" material='t_neon_grid_01' scaleX={5} scaleY={6} scaleZ={5} {...props} />
 )
 
+const BlockRectangleTransparent: HDKComponent = props => (
+  <Prefab id="rounded_cube_02" material='t_glass_01' scaleX={5} scaleY={6} scaleZ={5} {...props} />
+)
+
+
+
 
 const Key: HDKComponent = props => (
   <HNode
-  {...props}
-  engineProps={{
-    rendering: {
-      materialID: "rock_cube_01_t2",
-      meshID: "en_p_trampled_path_01",
-    },
-    collectible: {
-      type: "MANDATORY",
-      grabbingRadius: 5,
-    }
-  }}
+    {...props}
+    engineProps={{
+      rendering: {
+        materialID: "rock_cube_01_t2",
+        meshID: "en_p_trampled_path_01",
+      },
+      collectible: {
+        type: "MANDATORY",
+        grabbingRadius: 5,
+      }
+    }}
   >
-    <Prefab id="cube_01" material='m_emissive_green'  y={30}  rotY={0} scaleY={1} scaleX={1} scaleZ={1}/>
-    <Prefab id="collectible_mandatory_key_01" material='m_emissive_green'  y={0}  rotY={0} scaleY={3} scaleX={3} scaleZ={3}/>
+    <Prefab id="cube_01" material='m_emissive_green' y={30} rotY={0} scaleY={1} scaleX={1} scaleZ={1} />
+    <Prefab id="collectible_mandatory_key_01" material='m_emissive_green' y={0} rotY={0} scaleY={3} scaleX={3} scaleZ={3} />
     {/* <Mesh id="collectible_mandatory_key_01" material='m_emissive_green'  y={0}  rotY={0} scaleY={1} scaleX={1} scaleZ={1}/> */}
   </HNode>
 )
 
 const CandyKey: HDKComponent = ({ ...props }) => (
   <Spinning {...props}>
-    <HNode
+    <HNode scale={5}
       engineProps={{
         rendering: {
           meshID: 'en_p_sugar_candy_01',
@@ -97,8 +105,17 @@ const CandyKey: HDKComponent = ({ ...props }) => (
           grabbingRadius: 5,
         },
       }}
-    > 
-        <Prefab id="cube_01" material='m_emissive_green'  y={30}  rotY={0} scaleY={1} scaleX={1} scaleZ={1}/>
+    >
+      <HNode y={10}
+        engineProps={{
+          rendering: {
+            meshID: 'box',
+            materialID: 't_striped_candy_01',
+          },
+
+        }}
+      />
+      {/* <Prefab id="cube_01" material='m_emissive_green' y={30} rotY={0} scaleY={1} scaleX={1} scaleZ={1} /> */}
     </HNode>
   </Spinning>
 );
@@ -149,16 +166,19 @@ const renderMaze = (mazeLayout) => {
       const z = rowIndex * 10;
 
       if (cell === 1) {
-        return <BlockRectangle x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} />;
+        return <HNode>
+          {/* <BlockRectangle x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} /> */}
+          <BlockRectangleTransparent x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} />
+        </HNode>
       } else if (cell === 0) {
-        return   <>
-        
-         {/* <Prefab id="collectible_mandatory_key_01" x={x} y={1} z={z} rotY={0} scale={2} key={`${rowIndex}-${colIndex}`} /> */}
-        
-         {/* <Prefab id="cube_01" material='m_emissive_green' x={x} y={30} z={z} rotY={0} scaleY={1} scaleX={1} scaleZ={1} key={`${rowIndex}-${colIndex}`} />  */}
-        <Key x={x} y={y} z={z}/>
-        {/* <CandyKey x={x} y={y} z={z}/> */}
-        
+        return <>
+
+          {/* <Prefab id="collectible_mandatory_key_01" x={x} y={1} z={z} rotY={0} scale={2} key={`${rowIndex}-${colIndex}`} /> */}
+
+          {/* <Prefab id="cube_01" material='m_emissive_green' x={x} y={30} z={z} rotY={0} scaleY={1} scaleX={1} scaleZ={1} key={`${rowIndex}-${colIndex}`} />  */}
+          {/* <Key x={x} y={y} z={z} /> */}
+          <CandyKey x={x} y={y} z={z} />
+
         </>
       } else {
         return null;
@@ -189,67 +209,67 @@ const World = () => (
 
 
 
-<Enemy colour="palette_01_green" points={[[45, 0, 45], [45, 0, 45],
-  [63, 0, 45], [63, 0, 45],
-  [65, 0, 59], [65, 0, 59],
-  [45, 0, 60], [45, 0, 60],
-  [45, 0, 80], [45, 0, 80],
-  [100, 0, 81], [100, 0, 81],
-  [100, 0, 95], [100, 0, 95],
-  [79, 0, 95], [79, 0, 95],
-  [79, 0, 110], [79, 0, 110],
-  [100, 0, 109], [100, 0, 109],
-  [100, 0, 125], [100, 0, 125]
-]} />
+    <Enemy colour="palette_01_green" points={[[45, 0, 45], [45, 0, 45],
+    [63, 0, 45], [63, 0, 45],
+    [65, 0, 59], [65, 0, 59],
+    [45, 0, 60], [45, 0, 60],
+    [45, 0, 80], [45, 0, 80],
+    [100, 0, 81], [100, 0, 81],
+    [100, 0, 95], [100, 0, 95],
+    [79, 0, 95], [79, 0, 95],
+    [79, 0, 110], [79, 0, 110],
+    [100, 0, 109], [100, 0, 109],
+    [100, 0, 125], [100, 0, 125]
+    ]} />
 
-<Enemy colour="m_emissive_green" points={[[45, 0, 45], [45, 0, 45],
-  [63, 0, 45], [63, 0, 45],
-  [65, 0, 59], [65, 0, 59],
-  [45, 0, 60], [45, 0, 60],
-  [45, 0, 80], [45, 0, 80],
-  [100, 0, 81], [100, 0, 81],
-  [100, 0, 95], [100, 0, 95],
-  [79, 0, 95], [79, 0, 95],
-  [79, 0, 110], [79, 0, 110],
-  [100, 0, 109], [100, 0, 109],
-  [100, 0, 125], [100, 0, 125]
-]} />
+    <Enemy colour="m_emissive_green" points={[[45, 0, 45], [45, 0, 45],
+    [63, 0, 45], [63, 0, 45],
+    [65, 0, 59], [65, 0, 59],
+    [45, 0, 60], [45, 0, 60],
+    [45, 0, 80], [45, 0, 80],
+    [100, 0, 81], [100, 0, 81],
+    [100, 0, 95], [100, 0, 95],
+    [79, 0, 95], [79, 0, 95],
+    [79, 0, 110], [79, 0, 110],
+    [100, 0, 109], [100, 0, 109],
+    [100, 0, 125], [100, 0, 125]
+    ]} />
 
-<Enemy colour="t_lava_01" points={[[45, 0, 45], [45, 0, 45],
-  [63, 0, 45], [63, 0, 45],
-  [65, 0, 59], [65, 0, 59],
-  [45, 0, 60], [45, 0, 60],
-  [45, 0, 80], [45, 0, 80],
-  [100, 0, 81], [100, 0, 81],
-  [100, 0, 95], [100, 0, 95],
-  [79, 0, 95], [79, 0, 95],
-  [79, 0, 110], [79, 0, 110],
-  [100, 0, 109], [100, 0, 109],
-  [100, 0, 125], [100, 0, 125]
-]} />
+    <Enemy colour="t_lava_01" points={[[45, 0, 45], [45, 0, 45],
+    [63, 0, 45], [63, 0, 45],
+    [65, 0, 59], [65, 0, 59],
+    [45, 0, 60], [45, 0, 60],
+    [45, 0, 80], [45, 0, 80],
+    [100, 0, 81], [100, 0, 81],
+    [100, 0, 95], [100, 0, 95],
+    [79, 0, 95], [79, 0, 95],
+    [79, 0, 110], [79, 0, 110],
+    [100, 0, 109], [100, 0, 109],
+    [100, 0, 125], [100, 0, 125]
+    ]} />
 
-<Enemy colour="t_pinball_floor_01_t8" points={[[45, 0, 45], [45, 0, 45],
-  [63, 0, 45], [63, 0, 45],
-  [65, 0, 59], [65, 0, 59],
-  [45, 0, 60], [45, 0, 60],
-  [45, 0, 80], [45, 0, 80],
-  [100, 0, 81], [100, 0, 81],
-  [100, 0, 95], [100, 0, 95],
-  [79, 0, 95], [79, 0, 95],
-  [79, 0, 110], [79, 0, 110],
-  [100, 0, 109], [100, 0, 109],
-  [100, 0, 125], [100, 0, 125]
-]} />
+    <Enemy colour="t_pinball_floor_01_t8" points={[[45, 0, 45], [45, 0, 45],
+    [63, 0, 45], [63, 0, 45],
+    [65, 0, 59], [65, 0, 59],
+    [45, 0, 60], [45, 0, 60],
+    [45, 0, 80], [45, 0, 80],
+    [100, 0, 81], [100, 0, 81],
+    [100, 0, 95], [100, 0, 95],
+    [79, 0, 95], [79, 0, 95],
+    [79, 0, 110], [79, 0, 110],
+    [100, 0, 109], [100, 0, 109],
+    [100, 0, 125], [100, 0, 125]
+    ]} />
 
 
- 
+
     <Environment />
 
 
 
 
-    <Spawnpoint x={5.0} y={16.0} z={5.1} rotY={230}/>
-    <Spawnpoint x={5.2} y={0.2} z={5.3} rotY={230}/>
+    <Spawnpoint x={5.0} y={16.0} z={5.1} rotY={230} />
+    <Spawnpoint x={5.2} y={0.2} z={5.3} rotY={230} />
 
 
 
@@ -268,6 +288,9 @@ const World = () => (
 
 render(<World />, { environment: 'city_night_01' }); // cold_mountain_01
 
-// Questions
-// Should the levels above/below be blocked off? Or is it cool to see down?
-// What gameplay can we add to each level?
+// To do
+// Colour schemes
+// Monster animation
+// Ladders
+// Transparent wall flash
+// Enemy paths
