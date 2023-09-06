@@ -121,23 +121,28 @@ const CandyKey: HDKComponent = ({ ...props }) => (
 );
 
 const CollectibleGLB: HDKComponent = ({ ...props }) => (
-  <HNode rotX={180}
+ 
 
-  {...props}
-    engineProps={{
-      collectible: {
-        type: 'MANDATORY',
-        pointValue: 1,
-        collectFxId: 'fx_collect_collectible_gem_01',
-        resetFxId: 'fx_reset_collectible_gem_01',
-        grabbingOffset: [0, 0, 0],
-        grabbingRadius: 5,
-      },
-    }}>
     <GLB
-            src="https://uploadthing.com/f/e4c613ff-87eb-4ae8-a5bb-a2378c0e0229_Pacman%20Collectible.glb"
+      {...props}
+      engineProps={{
+        collider: undefined,
+        
+
+        collectible: {
+          type: 'MANDATORY',
+          pointValue: 1,
+          collectFxId: 'fx_collect_collectible_gem_01',
+          resetFxId: 'fx_reset_collectible_gem_01',
+          grabbingOffset: [0, -10, 0],
+          grabbingRadius: 5,
+        },
+      }}
+      src="https://uploadthing.com/f/e4c613ff-87eb-4ae8-a5bb-a2378c0e0229_Pacman%20Collectible.glb"
+      rotX={0}
+      y={0}
     />
-  </HNode>
+ 
 );
 
 
@@ -184,8 +189,8 @@ const renderMaze = (mazeLayout) => {
 
       if (cell === 1) {
         return <HNode>
-          {/* <BlockRectangle x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} /> */}
-          <BlockRectangleTransparent x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} />
+          <BlockRectangle x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} />
+          {/* <BlockRectangleTransparent x={x} y={y} z={z} rotY={0} key={`${rowIndex}-${colIndex}`} /> */}
         </HNode>
       } else if (cell === 0) {
         return <>
@@ -281,7 +286,7 @@ const World = () => (
 
 
     <Environment />
-    <CollectibleGLB/>
+    <CollectibleGLB rotX={180} />
 
 
 
