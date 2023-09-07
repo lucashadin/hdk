@@ -166,7 +166,7 @@ const MonsterGLB: HDKComponent = ({ ...props }) => (
     <SpotLight openingAngleDegs={30} radius={30} strength={100} color={[255, 0, 0]} y={2} rotX={-75} scaleY={0.5} x={0} z={2.5}>
       <Mesh id="en_p_light_cone_02" material={'t_light_cone_01' as Material} y={2.2} rotX={180} physical={false} />
     </SpotLight>
-    <Prefab id="fx_particlesystem_magic_01" y={0} rotY={0} scaleY={2} scaleX={2} scaleZ={2} />
+    <Prefab id="fx_particlesystem_magic_01" z={10} y={0} rotY={0} scaleY={2} scaleX={2} scaleZ={2} />
     <GLB  {...props}
       scale={20}
       src="https://uploadthing.com/f/a750d0d0-51af-4ca9-bc63-dff250611813_monster_no_texture.glb"
@@ -178,8 +178,8 @@ const MonsterGLB: HDKComponent = ({ ...props }) => (
       </HNode>
     </Damaging>
     {/* <PointSound y={0} x={0} src={{ id: 'a_am_bubbly_fire_01' }} radius={20} volume={2} /> */}
-    {/* <PointSound y={0} x={0} src={{ url: 'https://uploadthing.com/f/f2647bfd-a484-4bd3-8b1a-35f09f414b1c_angry-dragon-growl-309.mp3' }} radius={20} volume={2} /> */}
-    <PointSound y={0} x={0} src={{ url: 'https://cdn.hibervr.com/sound/music/cheesy_disco.mp3' }} radius={20} volume={2} />
+    <PointSound y={0} x={0} src={{ url: 'https://uploadthing.com/f/a88121b6-4ada-47d9-8180-f8419bee40ea_sounds.wav' }} radius={15} volume={2} />
+    {/* <PointSound y={0} x={0} src={{ url: 'https://cdn.hibervr.com/sound/music/cheesy_disco.mp3' }} radius={20} volume={2} /> */}
   </HNode>
 
 
@@ -235,7 +235,7 @@ const renderMaze = (mazeLayout) => {
             rotY: [0, 0, 0, 0],
             // scale: [1, 1, 1, 1],
             scaleX: [1, 1, 0.01, 0.01],
-            steps: [0, 25, 25.1, 30],
+            steps: [0, 15, 15.1, 20],
             // duration: 3,
             loop: 'RESTART',
             easing: 'LINEAR',
@@ -337,7 +337,7 @@ const World = () => (
       ]} />
 
     <Enemy colour="chrome"
-      duration={50}
+      duration={60}
       points={[[140, 0, 5], [140, 0, 5],
       [140, 0, 30], [140, 0, 30],
       [115, 0, 30], [115, 0, 30],
@@ -356,7 +356,7 @@ const World = () => (
       ]} />
 
     <Enemy colour="t_swamp_ground"
-      duration={40}
+      duration={50}
       points={[[45, 0, 45], [45, 0, 45],
       [63, 0, 45], [63, 0, 45],
       [65, 0, 59], [65, 0, 59],
@@ -374,11 +374,13 @@ const World = () => (
 
     <Environment />
 
-    {/* <MonsterGLB material="t_gore_01" x={5.0} y={20} z={5.1} /> */}
-    <SpotLight openingAngleDegs={30} radius={200} strength={50} color="#00aeff" rotX={200} y={20}>
-      <Mesh id="en_p_light_cone_02" material={'t_light_cone_01' as Material} y={2.2} rotX={180} physical={false} />
-    </SpotLight>
+    {/* <HNode x={5.2} y={0.2} z={30.0} rotY={35}>
+      <Enemy colour="chrome"
 
+        duration={40}
+        points={[[0, 0, 0], [1, 0, 1],
+        ]} />
+    </HNode> */}
 
 
     <Spawnpoint x={5.0} y={0.2} z={5.1} />
@@ -408,3 +410,7 @@ render(<World />, { environment: 'dark_night_01' }); // cold_mountain_01, dark_n
 // Ladders -- done
 // Transparent wall flash -- done
 // Enemy paths -- done
+// Enemy sounds -- done
+// wall animations -- done
+// more boosters -- not done
+// thumbnails
