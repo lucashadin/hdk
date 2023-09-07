@@ -163,7 +163,7 @@ const CollectibleGLB: HDKComponent = ({ ...props }) => (
 const MonsterGLB: HDKComponent = ({ ...props }) => (
 
   <HNode>
-    <SpotLight openingAngleDegs={30} radius={100} strength={100} color={[255, 0, 0]} y={2} rotX={-75} scaleY={0.5} x={0} z={2.5}>
+    <SpotLight openingAngleDegs={30} radius={30} strength={100} color={[255, 0, 0]} y={2} rotX={-75} scaleY={0.5} x={0} z={2.5}>
       <Mesh id="en_p_light_cone_02" material={'t_light_cone_01' as Material} y={2.2} rotX={180} physical={false} />
     </SpotLight>
     <Prefab id="fx_particlesystem_magic_01" y={0} rotY={0} scaleY={2} scaleX={2} scaleZ={2} />
@@ -177,7 +177,9 @@ const MonsterGLB: HDKComponent = ({ ...props }) => (
       }}>
       </HNode>
     </Damaging>
-    <PointSound y={0} x={0} src={{ id: 'a_am_bubbly_fire_01' }} radius={20} volume={2} />
+    {/* <PointSound y={0} x={0} src={{ id: 'a_am_bubbly_fire_01' }} radius={20} volume={2} /> */}
+    {/* <PointSound y={0} x={0} src={{ url: 'https://uploadthing.com/f/f2647bfd-a484-4bd3-8b1a-35f09f414b1c_angry-dragon-growl-309.mp3' }} radius={20} volume={2} /> */}
+    <PointSound y={0} x={0} src={{ url: 'https://cdn.hibervr.com/sound/music/cheesy_disco.mp3' }} radius={20} volume={2} />
   </HNode>
 
 
