@@ -1,5 +1,5 @@
 import { MaterialId } from '@hiber3d/hdk-core';
-import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel, useRandom, GLB } from '@hiber3d/hdk-react';
+import { HDKComponent, HNode, Prefab, render, Animation, InfoPanel, useRandom, GLB, SpotLight } from '@hiber3d/hdk-react';
 import { AsteroidSpinning, Distribute, Ground, Hovering, InCircle, Path, RandomPosition, RandomTilt, Spawnpoint, Damaging, OmnipresentSound, Orbiting, Spinning, Portal, Checkpoint, PointSound, For, ImagePanel, AnimateAlongPath, Mesh } from '@hiber3d/hdk-react-components';
 import React from 'react';
 
@@ -42,10 +42,10 @@ const Floor2: HDKComponent = props => (
   </HNode>
 )
 
-const Enemy = ({ colour, points }) => {
+const Enemy = ({ colour, points, duration }) => {
   const random = useRandom();
   const startAt = (random.range(1, 100)) / 100;
-  const duration = random.range(35, 40);
+  // const duration = random.range(35, 40);
   console.log(startAt)
   console.log(duration)
 
@@ -53,11 +53,11 @@ const Enemy = ({ colour, points }) => {
     <AnimateAlongPath
       close={false}
       easing="LINEAR"
-      showKeyframes={true}
-      showPoints={true}
+      showKeyframes={false}
+      showPoints={false}
       tension={1}
       duration={duration}
-      loop="REVERSE"
+      loop="RESTART"
       numberOfItems={100}
       startAt={startAt * duration}
       points={points}
@@ -162,16 +162,23 @@ const CollectibleGLB: HDKComponent = ({ ...props }) => (
 );
 const MonsterGLB: HDKComponent = ({ ...props }) => (
 
-  <GLB  {...props} // 
-    engineProps={{
-      collider: 'box',
-    }}
-
-
-    src="https://uploadthing.com/f/560f2e52-84e6-40cc-9cd6-37bcc484cefa_monster.glb"
-
-  />
-
+  <HNode>
+    <SpotLight openingAngleDegs={30} radius={100} strength={100} color={[255, 0, 0]} y={2} rotX={-75} scaleY={0.5} x={0} z={2.5}>
+      <Mesh id="en_p_light_cone_02" material={'t_light_cone_01' as Material} y={2.2} rotX={180} physical={false} />
+    </SpotLight>
+    <Prefab id="fx_particlesystem_magic_01" y={0} rotY={0} scaleY={2} scaleX={2} scaleZ={2} />
+    <GLB  {...props}
+      scale={20}
+      src="https://uploadthing.com/f/a750d0d0-51af-4ca9-bc63-dff250611813_monster_no_texture.glb"
+    />
+    <Damaging amount={100} knockbackStrength={50} >
+      <HNode engineProps={{
+        collider: { collider: { meshId: "box", size: [3, 3, 3] } },
+      }}>
+      </HNode>
+    </Damaging>
+    <PointSound y={0} x={0} src={{ id: 'a_am_bubbly_fire_01' }} radius={20} volume={2} />
+  </HNode>
 
 
 );
@@ -292,73 +299,83 @@ const World = () => (
 
 
 
-    <Enemy colour="t_gore_01" points={[[45, 0, 45], [45, 0, 45],
-    [63, 0, 45], [63, 0, 45],
-    [65, 0, 59], [65, 0, 59],
-    [45, 0, 60], [45, 0, 60],
-    [45, 0, 80], [45, 0, 80],
-    [100, 0, 81], [100, 0, 81],
-    [100, 0, 95], [100, 0, 95],
-    [79, 0, 95], [79, 0, 95],
-    [79, 0, 110], [79, 0, 110],
-    [100, 0, 109], [100, 0, 109],
-    [100, 0, 125], [100, 0, 125]
-    ]} />
+    <Enemy colour="t_gore_01"
+      duration={40}
+      points={[[45, 0, 45], [45, 0, 45],
+      [63, 0, 45], [63, 0, 45],
+      [65, 0, 59], [65, 0, 59],
+      [45, 0, 60], [45, 0, 60],
+      [45, 0, 80], [45, 0, 80],
+      [100, 0, 81], [100, 0, 81],
+      [100, 0, 95], [100, 0, 95],
+      [79, 0, 95], [79, 0, 95],
+      [79, 0, 110], [79, 0, 110],
+      [100, 0, 109], [100, 0, 109],
+      [100, 0, 125], [100, 0, 125]
+      ]} />
 
-    <Enemy colour="t_lava_01" points={[[5, 0, 5], [5, 0, 5],
-    [5, 0, 30], [5, 0, 30],
-    [29, 0, 30], [29, 0, 30],
-    [45, 0, 30], [45, 0, 30],
-    [45, 0, 45], [45, 0, 45],
-    [64, 0, 45], [64, 0, 45],
-    [63, 0, 60], [63, 0, 60],
-    [72, 0, 60], [72, 0, 60],
-    [72, 0, 70], [72, 0, 70],
-    [90, 0, 70], [90, 0, 70],
-    [55, 0, 70], [55, 0, 70],
-    [73, 0, 70], [73, 0, 70],
-    [73, 0, 60], [73, 0, 60],
-    [100, 0, 60], [100, 0, 60],
-    [100, 0, 80], [100, 0, 80],
-    [46, 0, 80], [46, 0, 80]
-    ]} />
+    <Enemy colour="t_lava_01"
+      duration={60}
+      points={[[5, 0, 5], [5, 0, 5],
+      [5, 0, 30], [5, 0, 30],
+      [29, 0, 30], [29, 0, 30],
+      [45, 0, 30], [45, 0, 30],
+      [45, 0, 45], [45, 0, 45],
+      [64, 0, 45], [64, 0, 45],
+      [63, 0, 60], [63, 0, 60],
+      [72, 0, 60], [72, 0, 60],
+      [72, 0, 70], [72, 0, 70],
+      [90, 0, 70], [90, 0, 70],
+      [55, 0, 70], [55, 0, 70],
+      [73, 0, 70], [73, 0, 70],
+      [73, 0, 60], [73, 0, 60],
+      [100, 0, 60], [100, 0, 60],
+      [100, 0, 80], [100, 0, 80],
+      [46, 0, 80], [46, 0, 80]
+      ]} />
 
-    <Enemy colour="chrome" points={[[140, 0, 5], [140, 0, 5],
-    [140, 0, 30], [140, 0, 30],
-    [115, 0, 30], [115, 0, 30],
-    [115, 0, 95], [115, 0, 95],
-    [115, 0, 125], [115, 0, 125],
-    [140, 0, 125], [140, 0, 125],
-    [140, 0, 140], [140, 0, 140],
-    [81, 0, 140], [81, 0, 140],
-    [80, 0, 126], [80, 0, 126],
-    [100, 0, 125], [100, 0, 125],
-    [45, 0, 110], [45, 0, 110],
-    [45, 0, 126], [45, 0, 126],
-    [65, 0, 126], [65, 0, 126],
-    [65, 0, 140], [65, 0, 140],
-    [6, 0, 140], [6, 0, 140]
-    ]} />
+    <Enemy colour="chrome"
+      duration={50}
+      points={[[140, 0, 5], [140, 0, 5],
+      [140, 0, 30], [140, 0, 30],
+      [115, 0, 30], [115, 0, 30],
+      [115, 0, 95], [115, 0, 95],
+      [115, 0, 125], [115, 0, 125],
+      [140, 0, 125], [140, 0, 125],
+      [140, 0, 140], [140, 0, 140],
+      [81, 0, 140], [81, 0, 140],
+      [80, 0, 126], [80, 0, 126],
+      [100, 0, 125], [100, 0, 125],
+      [45, 0, 110], [45, 0, 110],
+      [45, 0, 126], [45, 0, 126],
+      [65, 0, 126], [65, 0, 126],
+      [65, 0, 140], [65, 0, 140],
+      [6, 0, 140], [6, 0, 140]
+      ]} />
 
-    <Enemy colour="t_rainbow_02" points={[[45, 0, 45], [45, 0, 45],
-    [63, 0, 45], [63, 0, 45],
-    [65, 0, 59], [65, 0, 59],
-    [45, 0, 60], [45, 0, 60],
-    [45, 0, 80], [45, 0, 80],
-    [100, 0, 81], [100, 0, 81],
-    [100, 0, 95], [100, 0, 95],
-    [79, 0, 95], [79, 0, 95],
-    [79, 0, 110], [79, 0, 110],
-    [100, 0, 109], [100, 0, 109],
-    [100, 0, 125], [100, 0, 125]
-    ]} />
+    <Enemy colour="t_swamp_ground"
+      duration={40}
+      points={[[45, 0, 45], [45, 0, 45],
+      [63, 0, 45], [63, 0, 45],
+      [65, 0, 59], [65, 0, 59],
+      [45, 0, 60], [45, 0, 60],
+      [45, 0, 80], [45, 0, 80],
+      [100, 0, 81], [100, 0, 81],
+      [100, 0, 95], [100, 0, 95],
+      [79, 0, 95], [79, 0, 95],
+      [79, 0, 110], [79, 0, 110],
+      [100, 0, 109], [100, 0, 109],
+      [100, 0, 125], [100, 0, 125]
+      ]} />
 
 
 
     <Environment />
 
-    <MonsterGLB x={5.0} y={30} z={5.1} />
-
+    {/* <MonsterGLB material="t_gore_01" x={5.0} y={20} z={5.1} /> */}
+    <SpotLight openingAngleDegs={30} radius={200} strength={50} color="#00aeff" rotX={200} y={20}>
+      <Mesh id="en_p_light_cone_02" material={'t_light_cone_01' as Material} y={2.2} rotX={180} physical={false} />
+    </SpotLight>
 
 
 
@@ -385,7 +402,7 @@ render(<World />, { environment: 'dark_night_01' }); // cold_mountain_01, dark_n
 
 // To do
 // Colour schemes
-// Monster animation -- done 
+// Monster animation -- done
 // Ladders -- done
 // Transparent wall flash -- done
 // Enemy paths -- done
