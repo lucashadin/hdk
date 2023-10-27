@@ -327,7 +327,7 @@ const Goal: HDKComponent = props => {
         easing: 'EASE_IN_OUT_CUBIC',
       }}>
         <HNode x={0.0} y={1640} z={0.0}>
-          <PointSound y={30} x={0} id="a_mu_district_h_01" radius={100} volume={1} />
+          <PointSound y={30} x={0} src={{id:"a_mu_district_h_01"}} radius={100} volume={1} />
           <Prefab
             id="goal_01"
             material="t_neon_red_01"
@@ -481,13 +481,13 @@ const Hole: HDKComponent = props => (
 
 const ThumbnailAll: HDKComponent = props => (
 <HNode x={-10} z={-6} y={-2}>
-<ImagePanel src="https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
+<ImagePanel src={{ url:"https://images.unsplash.com/photo-1530667912788-f976e8ee0bd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" }}
 ratio={1400 / 750} z={0} y={6} x={0} rotY={90} scale={3} />
-<ImagePanel src="https://images.unsplash.com/photo-1579202601184-34a979c427bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
+<ImagePanel src={{ url:"https://images.unsplash.com/photo-1579202601184-34a979c427bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" }}
 ratio={1400 / 750} z={11.2} y={6} x={0} rotY={90} scale={3} />
-<ImagePanel src="https://images.unsplash.com/photo-1674718744870-13c46484fc0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+<ImagePanel src={{ url:"https://images.unsplash.com/photo-1674718744870-13c46484fc0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" }}
 ratio={1400 / 750} z={0} y={0} x={0} rotY={90} scale={3} />
-<ImagePanel src="https://images.unsplash.com/photo-1517825738774-7de9363ef735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1410&q=80" 
+<ImagePanel src={{ url:"https://images.unsplash.com/photo-1517825738774-7de9363ef735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1410&q=80" }}
 ratio={1400 / 750} z={11.2} y={0} x={0} rotY={90} scale={3} />
 
 </HNode>
@@ -497,7 +497,7 @@ ratio={1400 / 750} z={11.2} y={0} x={0} rotY={90} scale={3} />
 
 const Thumbnail: HDKComponent = props => (
 
-  <ImagePanel src="https://images.unsplash.com/photo-1517825738774-7de9363ef735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1410&q=80" 
+  <ImagePanel src={{ url:"https://images.unsplash.com/photo-1517825738774-7de9363ef735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1410&q=80" }}
   ratio={1400 / 750} x={-20} y={490} z={-0.1} rotY={90} rotX={90} rotZ={20} scale={3} />
   
 
@@ -701,7 +701,7 @@ const LevelOne: HDKComponent = props => {
   return (
 
     <HNode y={0}>
-      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+      <PointSound y={30} x={0} src={{id:musicId}} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
@@ -747,7 +747,7 @@ const LevelTwo: HDKComponent = props => {
   return (
 
     <HNode y={160}>
-      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+      <PointSound y={30} x={0} src={{id:musicId}} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
@@ -793,7 +793,7 @@ const LevelThree: HDKComponent = props => {
   return (
 
     <HNode y={320}>
-      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+      <PointSound y={30} x={0} src={{id:musicId}} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
@@ -839,7 +839,7 @@ const LevelFour: HDKComponent = props => {
   return (
 
     <HNode y={480}>
-      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+      <PointSound y={30} x={0} src={{id:musicId}} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
@@ -885,7 +885,7 @@ const LevelFive: HDKComponent = props => {
   return (
 
     <HNode y={640}>
-      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+      <PointSound y={30} x={0} src={{id:musicId}} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
@@ -931,7 +931,7 @@ const LevelSix: HDKComponent = props => {
   return (
 
     <HNode y={800}>
-      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+      <PointSound y={30} x={0} src={{id:musicId}} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
@@ -977,7 +977,7 @@ const LevelSeven: HDKComponent = props => {
   return (
 
     <HNode y={960}>
-      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+      <PointSound y={30} x={0} src={{id:musicId}} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
@@ -1024,7 +1024,7 @@ const LevelEight: HDKComponent = props => {
   return (
 
     <HNode y={1120}>
-      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+      <PointSound y={30} x={0} src={{id:musicId}} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
@@ -1071,7 +1071,7 @@ const LevelNine: HDKComponent = props => {
   return (
 
     <HNode y={1280}>
-      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+      <PointSound y={30} x={0} src={{id:musicId}} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
@@ -1116,7 +1116,7 @@ const LevelTen: HDKComponent = props => {
 
   return (
     <HNode y={1440}>
-      <PointSound y={30} x={0} id={musicId} radius={110} volume={1} />
+      <PointSound y={30} x={0} src={{id:musicId}} radius={110} volume={1} />
 
       <LevelProvider
         levelNumber={levelNumberValue}
@@ -1172,8 +1172,7 @@ const World = () => (
 
 
 
-    {/* <OmnipresentSound id="a_mu_border_of_neo_tokyo_01" volume={1} /> */}
-    {/* <OmnipresentSound id="a_mu_ancient_rite_01" volume={0.5} /> */}
+
 
 
 

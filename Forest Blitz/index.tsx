@@ -115,7 +115,7 @@ const TippingRocks: HDKComponent<TippingRocksProps> = ({ rx = 0, ...props }) => 
 const GroundGroup = () => (
   <HNode>
     {/* <Ground hilly={0.5} y=s{-0.5} material="t_sand_01" water="True" repeatX={1} repeatZ={1} /> */}
-    <Ground hilly={0.0} material="t_bark_01" scaleY = {3} scaleX={0.2} scaleZ={0.1} repeatX={1} repeatZ={1} />
+    <Ground hilly={0.0} material="t_bark_04" scaleY = {3} scaleX={0.2} scaleZ={0.08} repeatX={1} repeatZ={1} />
     {/* <Ground hilly={10} y={40} rotZ={180} scaleX={5} scaleZ={5} material="t_bark_02" repeatX={1} repeatZ={1} /> */}
   </HNode>
 )
@@ -127,13 +127,20 @@ const InvisibleCollectible: HDKComponent = props => {
     <HNode
       {...props}
       engineProps={{
-        rendering: {
-          materialID: "rock_cube_01_t2",
-          meshID: "en_p_trampled_path_01",
-        },
+        colliderIsSensor: {},      
+        collider: {
+          canGenerateEvent: true,
+          collisionMask: 32,
+          collisionGroup: 32,
+          collider: { meshId: "box", form: "mesh", offset: [0, 0, 0], size: [40, 40, 40],  }
+        }, 
+
+
         collectible: {
-          type: "MANDATORY",
-          grabbingRadius: 40,
+          type: 'MANDATORY',
+          pointValue: 1,
+          collectFxId: 'fx_collect_collectible_gem_01',
+          resetFxId: 'fx_reset_collectible_gem_01',
         }
       }}
     />
@@ -166,6 +173,7 @@ const ValleyWalls = () => {
       showPoints={false}
       numberOfItems={250}
       tension={0.8}
+      applyRotation={true}
       points={[
         [78, 0, 60], [132, 0, 132], [192, 0, 201], [282, 10, 225], [378, 20, 177], [378, 30, 72], [294, 40, 51], [216, 40, 78], [129, 40, 129], [69, 20, 189], [60, 0, 288], [69, 0, 381], [120, -20, 459], [195, -30, 507], [291, -30, 519], [375, -20, 492], [447, -10, 426], [468, 0, 303], [354, 5, 276], [285, 10, 309], [252, 15, 384], [291, 20, 450], [366, 25, 486], [465, 30, 573], [540, 35, 630], [636, 20, 624], [714, 5, 579], [735, 0, 489], [726, 0, 372], [690, 0, 267], [624, 0, 180]
 
@@ -355,9 +363,9 @@ const World = () => (
     {/* <Treehouse /> */}
     <GoalDecoration />
     <WelcomeSign x={74.4} y={0.0} z={57.5} rotY={-90} />
-    <OmnipresentSound id="a_am_raven_forest_01" volume={1}/>
-    <OmnipresentSound id="a_mu_creepy_hallow_01" volume={1}/>
-    <OmnipresentSound id="a_mu_ancient_rite_01" volume={0.5}/>
+    <OmnipresentSound src={{ id: "a_am_raven_forest_01" }} />
+    <OmnipresentSound src={{ id: "a_mu_creepy_hallow_01" }} />
+    <OmnipresentSound src={{ id: "a_mu_ancient_rite_01" }} />
 
 
 
