@@ -140,7 +140,13 @@ const CollectibleGLB: HDKComponent = ({ ...props }) => (
     <GLB material='m_emissive_green' z={-2}
 
       engineProps={{
-        collider: undefined,
+        colliderIsSensor: {},      
+        collider: {
+          canGenerateEvent: true,
+          collisionMask: 32,
+          collisionGroup: 32,
+          collider: { meshId: "box", form: "mesh", offset: [0, 0, 0], size: [5, 5, 5],  }
+        }, 
 
 
         collectible: {
@@ -148,8 +154,7 @@ const CollectibleGLB: HDKComponent = ({ ...props }) => (
           pointValue: 1,
           collectFxId: 'fx_collect_collectible_gem_01',
           resetFxId: 'fx_reset_collectible_gem_01',
-          grabbingOffset: [0, -10, 0],
-          grabbingRadius: 4,
+
         },
       }}
       // src="https://uploadthing.com/f/e4c613ff-87eb-4ae8-a5bb-a2378c0e0229_Pacman%20Collectible.glb"
@@ -380,7 +385,7 @@ const World = () => (
         [29, 0, 30], [29, 0, 30],
         [5, 0, 30], [5, 0, 30],
         [5, 0, 5], [5, 0, 5]
-  ]} />
+        ]} />
 
     <Enemy colour="chrome"
       duration={120}
@@ -414,7 +419,7 @@ const World = () => (
         [115, 0, 30], [115, 0, 30],
         [140, 0, 30], [140, 0, 30],
         [140, 0, 5], [140, 0, 5]
-  ]} />
+        ]} />
 
     <Enemy colour="t_swamp_ground"
       duration={60}
@@ -440,13 +445,13 @@ const World = () => (
         [65, 0, 59], [65, 0, 59],
         [63, 0, 45], [63, 0, 45],
         [45, 0, 45], [45, 0, 45]
-  ]} />
+        ]} />
 
 
 
 
     <Environment />
-    <PortalPlatform x={4.7} y={6.0} z={71.2}/>
+    <PortalPlatform x={4.7} y={6.0} z={71.2} />
 
     {/* <HNode x={5.2} y={0.2} z={30.0} rotY={35}>
       <Enemy colour="chrome"
